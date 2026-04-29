@@ -380,8 +380,13 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'Server is running', timestamp: new Date() });
 });
 
-// Start server
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`🚀 MD Fitness Backend running on port ${PORT}`);
-});
+// Export for Vercel
+module.exports = app;
+
+// Start server (Local Only)
+if (process.env.NODE_ENV !== 'production') {
+  const PORT = process.env.PORT || 5000;
+  app.listen(PORT, () => {
+    console.log(`🚀 MD Fitness Backend running on port ${PORT}`);
+  });
+}
