@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MD Fitness Admin Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --orange: #ff2d2d;
+            --accent: #ff8c00;
+            --navy: #000000;
+            --gray-50: #111111;
+            --gray-100: #1a1a1a;
+            --gray-400: #888888;
+            --white: #ffffff;
+            --success: #4caf50;
+            --warning: #ff9800;
+            --danger: #f44336;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0a0a0a;
+            color: var(--white);
+        }
+
+        /* ==================== LOGIN PAGE ==================== */
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, var(--navy) 0%, var(--gray-50) 100%);
+        }
+
+        .login-box {
+            background: var(--gray-100);
+            padding: 50px;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .login-box h1 {
+            text-align: center;
+            margin-bottom: 10px;
+            color: var(--white);
+        }
+
+        .login-box .logo {
+            text-align: center;
+            font-size: 40px;
+            margin-bottom: 20px;
+        }
+
+        .login-box p {
+            text-align: center;
+            color: var(--gray-400);
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--white);
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            background: var(--gray-50);
+            border: 1px solid var(--gray-400);
+            border-radius: 6px;
+            color: var(--white);
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--orange);
+            box-shadow: 0 0 8px rgba(255, 45, 45, 0.3);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            background: var(--orange);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .login-btn:hover {
+            background: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(255, 45, 45, 0.3);
+        }
+
+        .error-message {
+            color: var(--danger);
+            text-align: center;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        /* ==================== DASHBOARD ==================== */
+        .dashboard-container {
+            display: none;
+        }
+
+        .dashboard-nav {
+            background: var(--gray-50);
+            border-bottom: 2px solid var(--orange);
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .dashboard-logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--white);
+        }
+
+        .dashboard-logo span {
+            color: var(--orange);
+        }
+
+        .logout-btn {
+            padding: 8px 20px;
+            background: var(--danger);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .logout-btn:hover {
+            background: #e63946;
+        }
+
+        .dashboard-content {
+            padding: 30px 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: var(--gray-100);
+            padding: 25px;
+            border-radius: 12px;
+            border-left: 4px solid var(--orange);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .stat-card h3 {
+            color: var(--gray-400);
+            font-size: 14px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .stat-card .value {
+            font-size: 32px;
+            font-weight: bold;
+            color: var(--orange);
+        }
+
+        .stat-card.new { border-left-color: var(--accent); }
+        .stat-card.called { border-left-color: var(--success); }
+        .stat-card.joined { border-left-color: var(--orange); }
+        .stat-card.week { border-left-color: var(--warning); }
+
+        /* Controls */
+        .controls {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .controls select,
+        .controls input,
+        .controls button {
+            padding: 10px 15px;
+            background: var(--gray-100);
+            color: var(--white);
+            border: 1px solid var(--gray-400);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .controls input {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .controls button {
+            background: var(--orange);
+            border: none;
+            font-weight: 600;
+        }
+
+        .controls button:hover {
+            background: var(--accent);
+        }
+
+        /* Table */
+        .leads-table {
+            background: var(--gray-100);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: var(--gray-50);
+            border-bottom: 2px solid var(--orange);
+        }
+
+        th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--orange);
+            font-size: 12px;
+            text-transform: uppercase;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid var(--gray-50);
+            font-size: 14px;
+        }
+
+        tbody tr:hover {
+            background: var(--gray-50);
+            transition: background 0.3s;
+        }
+
+        /* Status badge */
+        .status-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-align: center;
+            min-width: 90px;
+        }
+
+        .status-new {
+            background: rgba(255, 152, 0, 0.2);
+            color: var(--warning);
+        }
+
+        .status-called {
+            background: rgba(76, 175, 80, 0.2);
+            color: var(--success);
+        }
+
+        .status-joined {
+            background: rgba(255, 45, 45, 0.2);
+            color: var(--orange);
+        }
+
+        .status-not-interested {
+            background: rgba(244, 67, 54, 0.2);
+            color: var(--danger);
+        }
+
+        /* Actions */
+        .actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .action-btn {
+            padding: 6px 12px;
+            background: var(--orange);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .action-btn:hover {
+            background: var(--accent);
+        }
+
+        .action-btn.danger {
+            background: var(--danger);
+        }
+
+        .action-btn.success {
+            background: var(--success);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--gray-100);
+            padding: 30px;
+            border-radius: 12px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-header h2 {
+            color: var(--white);
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 28px;
+            color: var(--gray-400);
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .close-btn:hover {
+            color: var(--white);
+        }
+
+        .modal-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .modal-form input,
+        .modal-form textarea,
+        .modal-form select {
+            padding: 10px;
+            background: var(--gray-50);
+            border: 1px solid var(--gray-400);
+            border-radius: 6px;
+            color: var(--white);
+            font-size: 14px;
+        }
+
+        .modal-form textarea {
+            resize: vertical;
+            min-height: 100px;
+            font-family: inherit;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .modal-buttons button {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .save-btn {
+            background: var(--orange);
+            color: white;
+        }
+
+        .save-btn:hover {
+            background: var(--accent);
+        }
+
+        .cancel-btn {
+            background: var(--gray-50);
+            color: var(--white);
+        }
+
+        .cancel-btn:hover {
+            background: var(--gray-400);
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 50px;
+            color: var(--gray-400);
+        }
+
+        .empty-state h3 {
+            margin-bottom: 10px;
+            color: var(--white);
+        }
+
+        /* Loader */
+        .loader {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid var(--gray-400);
+            border-radius: 50%;
+            border-top-color: var(--orange);
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .dashboard-content {
+                padding: 20px;
+            }
+
+            .controls {
+                flex-direction: column;
+            }
+
+            .controls input {
+                min-width: 100%;
+            }
+
+            table {
+                font-size: 12px;
+            }
+
+            th, td {
+                padding: 10px;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+
+            .action-btn {
+                width: 100%;
+            }
+        }
+
+        .success-message {
+            background: rgba(76, 175, 80, 0.2);
+            color: var(--success);
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            display: none;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- LOGIN PAGE -->
+    <div class="login-container" id="loginPage">
+        <div class="login-box">
+            <div class="logo">💪</div>
+            <h1>MD Fitness Admin</h1>
+            <p>Lead Management System</p>
+            <form onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" placeholder="admin@mdfitness.in" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="login-btn">Sign In</button>
+                <div id="loginError" class="error-message"></div>
+            </form>
+        </div>
+    </div>
+
+    <!-- DASHBOARD -->
+    <div class="dashboard-container" id="dashboardPage">
+        <!-- Top Nav -->
+        <div class="dashboard-nav">
+            <div class="dashboard-logo">MD <span>FITNESS</span> Admin</div>
+            <button class="logout-btn" onclick="logout()">Logout</button>
+        </div>
+
+        <!-- Content -->
+        <div class="dashboard-content">
+            <h2 style="margin-bottom: 20px; color: #fff;">Lead Management Dashboard</h2>
+
+            <!-- Stats -->
+            <div class="stats-grid" id="statsGrid">
+                <div class="stat-card">
+                    <h3>Total Leads</h3>
+                    <div class="value" id="totalLeads">-</div>
+                </div>
+                <div class="stat-card new">
+                    <h3>New Leads</h3>
+                    <div class="value" id="newLeads">-</div>
+                </div>
+                <div class="stat-card called">
+                    <h3>Called</h3>
+                    <div class="value" id="calledLeads">-</div>
+                </div>
+                <div class="stat-card joined">
+                    <h3>Joined</h3>
+                    <div class="value" id="joinedLeads">-</div>
+                </div>
+                <div class="stat-card week">
+                    <h3>This Week</h3>
+                    <div class="value" id="weekLeads">-</div>
+                </div>
+            </div>
+
+            <!-- Controls -->
+            <div class="controls">
+                <select id="statusFilter" onchange="applyFilters()">
+                    <option value="all">All Statuses</option>
+                    <option value="New">New</option>
+                    <option value="Called">Called</option>
+                    <option value="Joined">Joined</option>
+                    <option value="Not Interested">Not Interested</option>
+                </select>
+                <input type="text" id="searchInput" placeholder="Search by name, phone, or email..." onkeyup="applyFilters()">
+                <button onclick="exportCSV()">📥 Export CSV</button>
+                <button onclick="loadLeads()">🔄 Refresh</button>
+            </div>
+
+            <div id="successMessage" class="success-message"></div>
+
+            <!-- Table -->
+            <div class="leads-table">
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Phone</th>
+                                <th>Email</th>
+                                <th>Goal</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="leadsTableBody">
+                            <tr>
+                                <td colspan="7" style="text-align: center; padding: 30px;">
+                                    <div class="loader"></div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div id="emptyState" class="empty-state" style="display: none;">
+                    <h3>No leads found</h3>
+                    <p>No leads match your search criteria.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- UPDATE STATUS MODAL -->
+    <div class="modal" id="statusModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Update Lead Status</h2>
+                <button class="close-btn" onclick="closeModal('statusModal')">×</button>
+            </div>
+            <form class="modal-form" onsubmit="updateLeadStatus(event)">
+                <div>
+                    <label style="color: #fff; margin-bottom: 5px; display: block;">Lead Name</label>
+                    <input type="text" id="leadName" readonly style="background: var(--gray-50);">
+                </div>
+                <div>
+                    <label style="color: #fff; margin-bottom: 5px; display: block;">New Status</label>
+                    <select id="newStatus" required>
+                        <option value="">Select Status</option>
+                        <option value="New">New</option>
+                        <option value="Called">Called</option>
+                        <option value="Joined">Joined</option>
+                        <option value="Not Interested">Not Interested</option>
+                    </select>
+                </div>
+                <div>
+                    <label style="color: #fff; margin-bottom: 5px; display: block;">Notes</label>
+                    <textarea id="leadNotes" placeholder="Add any notes about this lead..."></textarea>
+                </div>
+                <div class="modal-buttons">
+                    <button type="submit" class="save-btn">Save Changes</button>
+                    <button type="button" class="cancel-btn" onclick="closeModal('statusModal')">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- SEND WHATSAPP MODAL -->
+    <div class="modal" id="whatsappModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Send WhatsApp Message</h2>
+                <button class="close-btn" onclick="closeModal('whatsappModal')">×</button>
+            </div>
+            <form class="modal-form" onsubmit="sendWhatsApp(event)">
+                <div>
+                    <label style="color: #fff; margin-bottom: 5px; display: block;">Lead Name</label>
+                    <input type="text" id="whatsappLeadName" readonly style="background: var(--gray-50);">
+                </div>
+                <div>
+                    <label style="color: #fff; margin-bottom: 5px; display: block;">Phone</label>
+                    <input type="text" id="whatsappPhone" readonly style="background: var(--gray-50);">
+                </div>
+                <div>
+                    <label style="color: #fff; margin-bottom: 5px; display: block;">Message</label>
+                    <textarea id="whatsappMessage" placeholder="Type your message here..." required></textarea>
+                    <small style="color: #888; display: block; margin-top: 5px;">Tip: Use templates like "Your free trial is confirmed!" or "Check out our programs here"</small>
+                </div>
+                <div class="modal-buttons">
+                    <button type="submit" class="save-btn">Send Message</button>
+                    <button type="button" class="cancel-btn" onclick="closeModal('whatsappModal')">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:5000/api';
+        let currentPage = 1;
+        let allLeads = [];
+        let filteredLeads = [];
+        let currentLeadId = null;
+
+        // ==================== AUTHENTICATION ====================
+        function handleLogin(e) {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const errorDiv = document.getElementById('loginError');
+
+            fetch(`${API_URL}/admin/login`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.token) {
+                    localStorage.setItem('adminToken', data.token);
+                    document.getElementById('loginPage').style.display = 'none';
+                    document.getElementById('dashboardPage').style.display = 'block';
+                    loadDashboard();
+                } else {
+                    errorDiv.textContent = data.message || 'Login failed';
+                }
+            })
+            .catch(err => {
+                errorDiv.textContent = 'Connection error. Make sure backend is running!';
+                console.error('Login error:', err);
+            });
+        }
+
+        function logout() {
+            localStorage.removeItem('adminToken');
+            document.getElementById('loginPage').style.display = 'flex';
+            document.getElementById('dashboardPage').style.display = 'none';
+            document.getElementById('email').value = '';
+            document.getElementById('password').value = '';
+        }
+
+        // ==================== DASHBOARD FUNCTIONS ====================
+        function getAuthHeader() {
+            const token = localStorage.getItem('adminToken');
+            return {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            };
+        }
+
+        function loadDashboard() {
+            loadStats();
+            loadLeads();
+        }
+
+        function loadStats() {
+            fetch(`${API_URL}/admin/stats`, {
+                headers: getAuthHeader()
+            })
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById('totalLeads').textContent = data.totalLeads;
+                document.getElementById('newLeads').textContent = data.statusBreakdown.New;
+                document.getElementById('calledLeads').textContent = data.statusBreakdown.Called;
+                document.getElementById('joinedLeads').textContent = data.statusBreakdown.Joined;
+                document.getElementById('weekLeads').textContent = data.leadsThisWeek;
+            })
+            .catch(err => console.error('Stats error:', err));
+        }
+
+        function loadLeads() {
+            fetch(`${API_URL}/admin/leads?page=1&limit=100`, {
+                headers: getAuthHeader()
+            })
+            .then(res => res.json())
+            .then(data => {
+                allLeads = data.leads || [];
+                filteredLeads = allLeads;
+                renderTable();
+                loadStats();
+            })
+            .catch(err => console.error('Leads error:', err));
+        }
+
+        function applyFilters() {
+            const status = document.getElementById('statusFilter').value;
+            const search = document.getElementById('searchInput').value.toLowerCase();
+
+            filteredLeads = allLeads.filter(lead => {
+                const statusMatch = status === 'all' || lead.status === status;
+                const searchMatch = 
+                    lead.name.toLowerCase().includes(search) ||
+                    lead.phone.includes(search) ||
+                    lead.email.toLowerCase().includes(search);
+                return statusMatch && searchMatch;
+            });
+
+            renderTable();
+        }
+
+        function renderTable() {
+            const tbody = document.getElementById('leadsTableBody');
+            const emptyState = document.getElementById('emptyState');
+
+            if (filteredLeads.length === 0) {
+                tbody.innerHTML = '';
+                emptyState.style.display = 'block';
+                return;
+            }
+
+            emptyState.style.display = 'none';
+            tbody.innerHTML = filteredLeads.map(lead => `
+                <tr>
+                    <td><strong>${lead.name}</strong></td>
+                    <td>${lead.phone}</td>
+                    <td>${lead.email}</td>
+                    <td>${lead.goal || '-'}</td>
+                    <td>
+                        <span class="status-badge status-${lead.status.toLowerCase().replace(' ', '-')}">
+                            ${lead.status}
+                        </span>
+                    </td>
+                    <td>${new Date(lead.created_at).toLocaleDateString()}</td>
+                    <td>
+                        <div class="actions">
+                            <button class="action-btn" onclick="openUpdateStatusModal(${lead.id}, '${lead.name}', '${lead.status || ''}', '${(lead.notes || '').replace(/'/g, "\\'")}')">
+                                ✏️ Update
+                            </button>
+                            <button class="action-btn success" onclick="openWhatsAppModal(${lead.id}, '${lead.name}', '${lead.phone}')">
+                                💬 WhatsApp
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // ==================== MODALS ====================
+        function openUpdateStatusModal(leadId, name, status, notes) {
+            currentLeadId = leadId;
+            document.getElementById('leadName').value = name;
+            document.getElementById('newStatus').value = status;
+            document.getElementById('leadNotes').value = notes;
+            document.getElementById('statusModal').classList.add('active');
+        }
+
+        function openWhatsAppModal(leadId, name, phone) {
+            currentLeadId = leadId;
+            document.getElementById('whatsappLeadName').value = name;
+            document.getElementById('whatsappPhone').value = phone;
+            document.getElementById('whatsappMessage').value = '';
+            document.getElementById('whatsappModal').classList.add('active');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+            currentLeadId = null;
+        }
+
+        function updateLeadStatus(e) {
+            e.preventDefault();
+            const status = document.getElementById('newStatus').value;
+            const notes = document.getElementById('leadNotes').value;
+
+            fetch(`${API_URL}/admin/leads/${currentLeadId}`, {
+                method: 'PATCH',
+                headers: getAuthHeader(),
+                body: JSON.stringify({ status, notes })
+            })
+            .then(res => res.json())
+            .then(data => {
+                showSuccess('Lead updated successfully! ✅');
+                closeModal('statusModal');
+                loadLeads();
+            })
+            .catch(err => console.error('Update error:', err));
+        }
+
+        function sendWhatsApp(e) {
+            e.preventDefault();
+            const message = document.getElementById('whatsappMessage').value;
+
+            fetch(`${API_URL}/admin/send-whatsapp/${currentLeadId}`, {
+                method: 'POST',
+                headers: getAuthHeader(),
+                body: JSON.stringify({ message })
+            })
+            .then(res => res.json())
+            .then(data => {
+                showSuccess('WhatsApp sent! 📱');
+                closeModal('whatsappModal');
+            })
+            .catch(err => console.error('WhatsApp error:', err));
+        }
+
+        function exportCSV() {
+            const token = localStorage.getItem('adminToken');
+            window.location.href = `${API_URL}/admin/export-csv?token=${token}`;
+        }
+
+        function showSuccess(message) {
+            const msg = document.getElementById('successMessage');
+            msg.textContent = message;
+            msg.classList.add('show');
+            setTimeout(() => msg.classList.remove('show'), 3000);
+        }
+
+        // ==================== INITIALIZATION ====================
+        window.addEventListener('load', () => {
+            const token = localStorage.getItem('adminToken');
+            if (token) {
+                document.getElementById('loginPage').style.display = 'none';
+                document.getElementById('dashboardPage').style.display = 'block';
+                loadDashboard();
+            }
+        });
+    </script>
+</body>
+</html>

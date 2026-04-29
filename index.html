@@ -479,6 +479,7 @@
                 opacity: 0;
                 transform: translateY(30px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -490,6 +491,7 @@
                 opacity: 0;
                 transform: translateX(-50px);
             }
+
             to {
                 opacity: 1;
                 transform: translateX(0);
@@ -501,6 +503,7 @@
                 opacity: 0;
                 transform: translateX(50px);
             }
+
             to {
                 opacity: 1;
                 transform: translateX(0);
@@ -508,18 +511,24 @@
         }
 
         @keyframes bounce {
-            0%, 100% {
+
+            0%,
+            100% {
                 transform: translateY(0);
             }
+
             50% {
                 transform: translateY(-10px);
             }
         }
 
         @keyframes float {
-            0%, 100% {
+
+            0%,
+            100% {
                 transform: translateY(0px);
             }
+
             50% {
                 transform: translateY(-20px);
             }
@@ -529,6 +538,7 @@
             0% {
                 background-position: -1000px 0;
             }
+
             100% {
                 background-position: 1000px 0;
             }
@@ -538,9 +548,11 @@
             0% {
                 background-position: 0% 50%;
             }
+
             50% {
                 background-position: 100% 50%;
             }
+
             100% {
                 background-position: 0% 50%;
             }
@@ -551,6 +563,7 @@
                 opacity: 0;
                 transform: scale(0.8) rotate(-5deg);
             }
+
             to {
                 opacity: 1;
                 transform: scale(1) rotate(0deg);
@@ -562,6 +575,7 @@
                 opacity: 0;
                 transform: translateY(40px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -569,18 +583,24 @@
         }
 
         @keyframes pulse {
-            0%, 100% {
+
+            0%,
+            100% {
                 box-shadow: 0 0 0 0 rgba(255, 45, 45, 0.7);
             }
+
             50% {
                 box-shadow: 0 0 0 15px rgba(255, 45, 45, 0);
             }
         }
 
         @keyframes glow {
-            0%, 100% {
+
+            0%,
+            100% {
                 text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
             }
+
             50% {
                 text-shadow: 0 0 20px rgba(255, 215, 0, 1), 0 0 30px rgba(255, 45, 45, 0.6);
             }
@@ -590,21 +610,27 @@
             0% {
                 border-color: rgba(255, 215, 0, 0.2);
             }
+
             50% {
                 border-color: var(--orange);
             }
+
             100% {
                 border-color: rgba(255, 215, 0, 0.2);
             }
         }
 
         @keyframes wiggle {
-            0%, 100% {
+
+            0%,
+            100% {
                 transform: rotate(0deg);
             }
+
             25% {
                 transform: rotate(-2deg);
             }
+
             75% {
                 transform: rotate(2deg);
             }
@@ -731,10 +757,21 @@
             animation: slideInLeft 0.6s ease-out;
         }
 
-        .whyus-feat:nth-child(1) { animation-delay: 0.1s; }
-        .whyus-feat:nth-child(2) { animation-delay: 0.2s; }
-        .whyus-feat:nth-child(3) { animation-delay: 0.3s; }
-        .whyus-feat:nth-child(4) { animation-delay: 0.4s; }
+        .whyus-feat:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .whyus-feat:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .whyus-feat:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .whyus-feat:nth-child(4) {
+            animation-delay: 0.4s;
+        }
 
         /* Pulsing call-to-action */
         .wa-float {
@@ -759,13 +796,33 @@
             animation: fadeInUp 0.4s ease-out;
         }
 
-        .mobile-menu a:nth-child(1) { animation-delay: 0.05s; }
-        .mobile-menu a:nth-child(2) { animation-delay: 0.1s; }
-        .mobile-menu a:nth-child(3) { animation-delay: 0.15s; }
-        .mobile-menu a:nth-child(4) { animation-delay: 0.2s; }
-        .mobile-menu a:nth-child(5) { animation-delay: 0.25s; }
-        .mobile-menu a:nth-child(6) { animation-delay: 0.3s; }
-        .mobile-menu a:nth-child(7) { animation-delay: 0.35s; }
+        .mobile-menu a:nth-child(1) {
+            animation-delay: 0.05s;
+        }
+
+        .mobile-menu a:nth-child(2) {
+            animation-delay: 0.1s;
+        }
+
+        .mobile-menu a:nth-child(3) {
+            animation-delay: 0.15s;
+        }
+
+        .mobile-menu a:nth-child(4) {
+            animation-delay: 0.2s;
+        }
+
+        .mobile-menu a:nth-child(5) {
+            animation-delay: 0.25s;
+        }
+
+        .mobile-menu a:nth-child(6) {
+            animation-delay: 0.3s;
+        }
+
+        .mobile-menu a:nth-child(7) {
+            animation-delay: 0.35s;
+        }
 
         /* Parallax effect for hero */
         .hero-left {
@@ -777,11 +834,25 @@
             animation: slideUpFade 0.7s ease-out;
         }
 
-        .gallery-item:nth-child(1) { animation-delay: 0.1s; }
-        .gallery-item:nth-child(2) { animation-delay: 0.2s; }
-        .gallery-item:nth-child(3) { animation-delay: 0.3s; }
-        .gallery-item:nth-child(4) { animation-delay: 0.4s; }
-        .gallery-item:nth-child(5) { animation-delay: 0.5s; }
+        .gallery-item:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .gallery-item:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .gallery-item:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .gallery-item:nth-child(4) {
+            animation-delay: 0.4s;
+        }
+
+        .gallery-item:nth-child(5) {
+            animation-delay: 0.5s;
+        }
 
         /* Form input focus animation */
         .form-group input:focus,
@@ -2108,35 +2179,58 @@
 
         /* ── SOCIAL PROOF COUNTER ── */
         .social-proof-banner {
-            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(255, 45, 45, 0.1) 100%);
-            border: 1.5px solid rgba(255, 215, 0, 0.2);
-            border-radius: 16px;
+            background: #ffffff;
+            border-radius: 24px;
             padding: 48px;
             margin-top: 72px;
             text-align: center;
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 32px
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.4);
+            color: #111;
         }
 
         .proof-item {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 12px
+            gap: 8px;
         }
 
-        .proof-num {
+        .proof-icon {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .proof-num-wrap {
+            font-family: 'Outfit', sans-serif;
             font-size: 48px;
             font-weight: 800;
-            color: var(--orange);
-            line-height: 1
+            color: #111;
+            line-height: 1;
+            display: flex;
+            align-items: baseline;
+            justify-content: center;
+        }
+
+        .proof-suffix {
+            font-size: 28px;
+            color: #0088ff;
+            margin-left: 2px;
+        }
+
+        .proof-title {
+            font-size: 16px;
+            font-weight: 800;
+            color: #111;
+            margin-top: 4px;
         }
 
         .proof-label {
-            font-size: 15px;
-            color: #aaa;
-            font-weight: 500
+            font-size: 13px;
+            color: #666;
+            font-weight: 400;
         }
 
         /* ── RESPONSIVE UPDATES ── */
@@ -2154,8 +2248,8 @@
             }
 
             .social-proof-banner {
-                grid-template-columns: 1fr;
-                gap: 24px
+                grid-template-columns: 1fr 1fr;
+                gap: 32px
             }
         }
 
@@ -2180,8 +2274,6 @@
             <li><a href="#">HOME</a></li>
             <li><a href="#story">ABOUT ME</a></li>
             <li><a href="#services">PROGRAMS</a></li>
-            <li><a href="#transformations">TRANSFORMATIONS</a></li>
-            <li><a href="#instagram">INSTAGRAM</a></li>
             <li><a href="#contact">CONTACT</a></li>
             <li><a href="#" style="color: #fff; display: flex; align-items: center; gap: 5px;">🛒 <span>(0)</span></a>
             </li>
@@ -2198,8 +2290,6 @@
         <a href="#">HOME</a>
         <a href="#story">ABOUT ME</a>
         <a href="#services">PROGRAMS</a>
-        <a href="#transformations">TRANSFORMATIONS</a>
-        <a href="#instagram">INSTAGRAM</a>
         <a href="#contact">CONTACT</a>
         <a href="#" class="cta">📱 GET STARTED</a>
     </div>
@@ -2350,7 +2440,7 @@
                     <div class="whyus-feat">
                         <div class="feat-check">✓</div>
                         <div>
-                            <div class="feat-title">Open 5 AM – 11 PM, every single day</div>
+                            <div class="feat-title">Open 5 AM – 10 PM, Mon-Sat</div>
                             <div class="feat-sub">Early birds and night owls both welcome. No excuses — we're always
                                 open when you are.</div>
                         </div>
@@ -2551,16 +2641,40 @@
         <!-- Social Proof Banner -->
         <div class="social-proof-banner reveal">
             <div class="proof-item">
-                <div class="proof-num">500+</div>
-                <div class="proof-label">Members Transformed</div>
+                <div class="proof-icon">⭐</div>
+                <div class="proof-num-wrap">
+                    <span class="proof-num counter-val" data-target="4.9">0</span>
+                    <span class="proof-suffix">★</span>
+                </div>
+                <div class="proof-title">Google Rating</div>
+                <div class="proof-label">Rated 4.9 across platforms</div>
             </div>
             <div class="proof-item">
-                <div class="proof-num">10+</div>
-                <div class="proof-label">Years in Business</div>
+                <div class="proof-icon">😁</div>
+                <div class="proof-num-wrap">
+                    <span class="proof-num counter-val" data-target="3200">0</span>
+                    <span class="proof-suffix">+</span>
+                </div>
+                <div class="proof-title">Active Members</div>
+                <div class="proof-label">Currently achieving goals</div>
             </div>
             <div class="proof-item">
-                <div class="proof-num">18+</div>
-                <div class="proof-label">Expert Trainers</div>
+                <div class="proof-icon">🏆</div>
+                <div class="proof-num-wrap">
+                    <span class="proof-num counter-val" data-target="15">0</span>
+                    <span class="proof-suffix">+</span>
+                </div>
+                <div class="proof-title">Years Experience</div>
+                <div class="proof-label">Trusted fitness expertise</div>
+            </div>
+            <div class="proof-item">
+                <div class="proof-icon">💯</div>
+                <div class="proof-num-wrap">
+                    <span class="proof-num counter-val" data-target="98">0</span>
+                    <span class="proof-suffix">%</span>
+                </div>
+                <div class="proof-title">Recommend Us</div>
+                <div class="proof-label">Member satisfaction survey</div>
             </div>
         </div>
     </section>
@@ -2909,119 +3023,7 @@
         </div>
     </section>
 
-    <!-- BEFORE & AFTER TRANSFORMATIONS -->
-    <section class="section" id="transformations">
-        <div class="section-center reveal">
-            <div class="eyebrow">Real Transformations</div>
-            <h2 class="section-title">Member Body Transformation Stories</h2>
-            <p class="section-sub">These aren't celebrity before/afters. These are regular Meerut people who committed
-                to their goals and got extraordinary results.</p>
-        </div>
-        <div class="transformations-grid">
-            <div class="transformation-card reveal">
-                <div class="transformation-images">
-                    <div class="transformation-image">
-                        <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=400&q=80"
-                            alt="Rahul Before" />
-                        <div class="transformation-label before">BEFORE</div>
-                    </div>
-                    <div class="transformation-image">
-                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80"
-                            alt="Rahul After" />
-                        <div class="transformation-label after">AFTER</div>
-                    </div>
-                </div>
-                <div class="transformation-body">
-                    <div class="transformation-name">Rahul Kashyap</div>
-                    <div class="transformation-meta">28 yrs | 6 months • Pro Plan</div>
-                    <div class="transformation-divider"></div>
-                    <div class="transformation-results">
-                        <div class="transformation-result">
-                            Weight: <strong>95 kg → 73 kg</strong>
-                        </div>
-                        <div class="transformation-result">
-                            Fat Loss: <strong>22 kg</strong>
-                        </div>
-                        <div class="transformation-result">
-                            Waist: <strong>38" → 32"</strong>
-                        </div>
-                    </div>
-                    <div class="transformation-quote">
-                        "Arjun's programming was impeccable. The nutrition plan made dieting easy, not restrictive. I
-                        feel like a different person."
-                    </div>
-                </div>
-            </div>
-            <div class="transformation-card reveal">
-                <div class="transformation-images">
-                    <div class="transformation-image">
-                        <img src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=400&q=80"
-                            alt="Priya Before" />
-                        <div class="transformation-label before">BEFORE</div>
-                    </div>
-                    <div class="transformation-image">
-                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&q=80"
-                            alt="Priya After" />
-                        <div class="transformation-label after">AFTER</div>
-                    </div>
-                </div>
-                <div class="transformation-body">
-                    <div class="transformation-name">Priya Sharma</div>
-                    <div class="transformation-meta">32 yrs | 4 months • Elite Plan</div>
-                    <div class="transformation-divider"></div>
-                    <div class="transformation-results">
-                        <div class="transformation-result">
-                            Weight: <strong>68 kg → 56 kg</strong>
-                        </div>
-                        <div class="transformation-result">
-                            Fat Loss: <strong>12 kg</strong>
-                        </div>
-                        <div class="transformation-result">
-                            Fitness: <strong>Low → High</strong>
-                        </div>
-                    </div>
-                    <div class="transformation-quote">
-                        "The women's zone made me comfortable. Priya's yoga + Arjun's strength = complete
-                        transformation. My kids are proud of me!"
-                    </div>
-                </div>
-            </div>
-            <div class="transformation-card reveal">
-                <div class="transformation-images">
-                    <div class="transformation-image">
-                        <img src="https://images.unsplash.com/photo-1545236819-d3e4d0c4b8e0?w=400&q=80"
-                            alt="Rohit Before" />
-                        <div class="transformation-label before">BEFORE</div>
-                    </div>
-                    <div class="transformation-image">
-                        <img src="https://images.unsplash.com/photo-1540497905390-41cc32be8020?w=400&q=80"
-                            alt="Rohit After" />
-                        <div class="transformation-label after">AFTER</div>
-                    </div>
-                </div>
-                <div class="transformation-body">
-                    <div class="transformation-name">Rohit Verma</div>
-                    <div class="transformation-meta">26 yrs | 5 months • Elite Plan</div>
-                    <div class="transformation-divider"></div>
-                    <div class="transformation-results">
-                        <div class="transformation-result">
-                            Weight: <strong>82 kg → 78 kg</strong>
-                        </div>
-                        <div class="transformation-result">
-                            Muscle Gain: <strong>+6 kg</strong>
-                        </div>
-                        <div class="transformation-result">
-                            Strength: <strong>+40%</strong>
-                        </div>
-                    </div>
-                    <div class="transformation-quote">
-                        "Went from skinny-fat to lean and muscular. Rohit's CrossFit training + Arjun's meal plan =
-                        unstoppable. Best investment ever!"
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+
     <section class="section" id="faq">
         <div class="section-center reveal">
             <div class="eyebrow">FAQ</div>
@@ -3096,8 +3098,11 @@
                     <div class="contact-ico">📍</div>
                     <div>
                         <div class="contact-lbl">Address</div>
-                        <div class="contact-val">First Floor, IndusInd Bank, A Pocket A-339</div>
-                        <div class="contact-val-sub">Ganga Nagar, Meerut, UP 250001</div>
+                        <div class="contact-val">First floor, IndusInd Bank, A-339, A Pocket, Ganga Nagar, Meerut</div>
+                        <a href="https://www.google.com/maps/place/MD+Fitness+Gym/@29.0046023,77.749215,17z/data=!3m1!4b1!4m6!3m5!1s0x390c7b4d75d0bc9d:0xfe20beb21863ceea!8m2!3d29.0045976!4d77.7517899!16s%2Fg%2F11w4jwqswg?entry=ttu&g_ep=EgoyMDI2MDQyNi4wIKXMDSoASAFQAw%3D%3D"
+                            target="_blank"
+                            style="color:var(--orange); font-size:12px; text-decoration:underline; display:inline-block; margin-top:5px;">View
+                            on Google Maps →</a>
                     </div>
                 </div>
                 <div class="contact-item">
@@ -3164,9 +3169,9 @@
         </div>
         <div class="map-wrap reveal">
             <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3493.6358134!2d77.7137!3d29.0090!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390c64faf71c84cb%3A0xe51025785055263a!2sGanga%20Nagar%2C%20Meerut%2C%20Uttar%20Pradesh%2C%20India!5e0!3m2!1sen!2sin!4v1714323200000!5m2!1sen!2sin"
-                allowfullscreen="" loading="lazy">
-            </iframe>
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3489.4185049251505!2d77.75178989999999!3d29.0045976!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390c7b4d75d0bc9d%3A0xfe20beb21863ceea!2sMD%20Fitness%20Gym!5e0!3m2!1sen!2sin!4v1777488700815!5m2!1sen!2sin"
+                width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
     </section>
 
@@ -3180,6 +3185,7 @@
                 </a>
                 <p>Meerut's most trusted fitness destination. Over 10 years of helping people look, feel, and perform
                     their best.</p>
+                <p style="font-size: 12px; margin-top: 10px; opacity: 0.8;">📍 A-339, A Pocket, Ganga Nagar, Meerut</p>
             </div>
             <div class="footer-col">
                 <h5>Programs</h5>
@@ -3198,7 +3204,7 @@
                     <li><a href="#story">Our Story</a></li>
                     <li><a href="#schedule">Class Schedule</a></li>
                     <li><a href="#trainers">Our Trainers</a></li>
-                    <li><a href="#transformations">Transformations</a></li>
+
                     <li><a href="#membership">Membership Plans</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
@@ -3284,6 +3290,38 @@
                 document.getElementById('mobileMenu').classList.remove('active');
             }
         });
+
+        // Number Counter Animation
+        const counterObs = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const counters = entry.target.querySelectorAll('.counter-val');
+                    counters.forEach(counter => {
+                        const target = +counter.getAttribute('data-target');
+                        const isFloat = target % 1 !== 0;
+                        const duration = 2000;
+                        const steps = 60;
+                        const fps = duration / steps;
+                        const increment = target / steps;
+
+                        let current = 0;
+                        const updateCounter = () => {
+                            current += increment;
+                            if (current < target) {
+                                counter.innerText = isFloat ? current.toFixed(1) : Math.ceil(current);
+                                setTimeout(updateCounter, fps);
+                            } else {
+                                counter.innerText = isFloat ? target.toFixed(1) : target;
+                            }
+                        };
+                        updateCounter();
+                    });
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        document.querySelectorAll('.social-proof-banner').forEach(el => counterObs.observe(el));
     </script>
 </body>
 
