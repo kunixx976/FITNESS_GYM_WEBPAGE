@@ -141,7 +141,13 @@
         .hero-left {
             position: relative;
             z-index: 5;
-            padding-left: 2%;
+            padding: 0;
+            width: 100%;
+            max-width: 900px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
         }
 
         .hero-right {
@@ -172,17 +178,7 @@
             pointer-events: none;
         }
 
-        .hero-left {
-            position: relative;
-            z-index: 5;
-            padding: 0;
-            width: 100%;
-            max-width: 900px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-        }
+
 
         .hero-badge {
             display: inline-flex;
@@ -543,19 +539,7 @@
             }
         }
 
-        @keyframes gradientShift {
-            0% {
-                background-position: 0% 50%;
-            }
 
-            50% {
-                background-position: 100% 50%;
-            }
-
-            100% {
-                background-position: 0% 50%;
-            }
-        }
 
         @keyframes scaleUpRotate {
             from {
@@ -593,17 +577,7 @@
             }
         }
 
-        @keyframes glow {
 
-            0%,
-            100% {
-                text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
-            }
-
-            50% {
-                text-shadow: 0 0 20px rgba(255, 215, 0, 1), 0 0 30px rgba(255, 45, 45, 0.6);
-            }
-        }
 
         @keyframes rotateBorder {
             0% {
@@ -704,28 +678,7 @@
             animation: bounce 0.5s ease-in-out 1;
         }
 
-        /* Gradient animated background */
-        .hero-left {
-            background: linear-gradient(-45deg, rgba(255, 45, 45, 0.05), rgba(255, 215, 0, 0.05), rgba(255, 45, 45, 0.05));
-            background-size: 400% 400%;
-            animation: gradientShift 8s ease infinite;
-            border-radius: 20px;
-            padding: 2%;
-        }
 
-        /* Icon pop animation */
-        .service-icon {
-            animation: float 3s ease-in-out infinite;
-        }
-
-        .float-icon {
-            animation: bounce 2s ease-in-out infinite;
-        }
-
-        /* Text glow for titles */
-        .hero-title {
-            animation: glow 2.5s ease-in-out infinite;
-        }
 
         .section-title {
             position: relative;
@@ -2329,6 +2282,7 @@
                 </div>
             </div>
         </div>
+
 
         <!-- RIGHT SIDE IMAGE (CUTOUT STYLE) -->
         <div class="hero-right">
