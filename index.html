@@ -5,6 +5,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>MD Fitness & Gym | Meerut's #1 Fitness Center</title>
+    <!-- AOS Library for Scroll Animations -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <link
         href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@300;400;700&family=Inter:wght@400;600&display=swap"
         rel="stylesheet" />
@@ -1818,6 +1821,186 @@
             transform: translateY(0)
         }
 
+        /* ── PARALLAX EFFECTS ── */
+        .parallax-element {
+            will-change: transform;
+        }
+
+        /* Enhanced Card Hover Effects */
+        .service-card {
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-style: preserve-3d;
+        }
+
+        .service-card:hover {
+            box-shadow: 0 30px 60px rgba(255, 45, 45, 0.3);
+            border-color: var(--orange);
+        }
+
+        .trainer-card,
+        .testi-card,
+        .plan-card,
+        .transformation-card {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+        }
+
+        .trainer-card:hover,
+        .testi-card:hover,
+        .transformation-card:hover {
+            box-shadow: 0 30px 60px rgba(255, 45, 45, 0.3);
+            border-color: var(--orange);
+            transform: translateY(-8px);
+        }
+
+        /* Button Premium Effects */
+        .btn-orange {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 4px 15px rgba(255, 45, 45, 0.2);
+        }
+
+        .btn-orange::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn-orange:hover::after {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-orange:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(255, 45, 45, 0.4);
+        }
+
+        .btn-orange:active {
+            transform: translateY(-1px);
+        }
+
+        .btn-outline-white {
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-outline-white::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 215, 0, 0.1);
+            transition: left 0.4s ease;
+            z-index: -1;
+        }
+
+        .btn-outline-white:hover::before {
+            left: 100%;
+        }
+
+        .btn-outline-white:hover {
+            transform: translateY(-2px);
+            border-color: var(--orange);
+            box-shadow: 0 8px 20px rgba(255, 215, 0, 0.2);
+        }
+
+        /* Text Gradient Animation on Hover */
+        .section-title {
+            background: linear-gradient(90deg, #fff 0%, #fff 100%);
+            background-size: 100% 100%;
+            transition: all 0.4s ease;
+        }
+
+        .section-title:hover {
+            text-shadow: 0 0 20px rgba(255, 45, 45, 0.3);
+        }
+
+        /* Gallery Stagger Animation */
+        .gallery-item {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform: scale(1);
+        }
+
+        .gallery-item:hover {
+            box-shadow: 0 20px 40px rgba(255, 45, 45, 0.3);
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.08) rotate(1deg);
+        }
+
+        /* Instagram Grid Enhanced */
+        .instagram-post {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .instagram-post:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(255, 45, 45, 0.3);
+        }
+
+        /* Floating Animation for Elements */
+        @keyframes floatingAnimation {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        .hero-float-card {
+            animation: floatingAnimation 3s ease-in-out infinite;
+        }
+
+        /* Pulse Animation Enhanced */
+        @keyframes enhancedPulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(255, 45, 45, 0.7);
+                transform: scale(1);
+            }
+            50% {
+                box-shadow: 0 0 0 15px rgba(255, 45, 45, 0);
+                transform: scale(1.05);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(255, 45, 45, 0);
+                transform: scale(1);
+            }
+        }
+
+        .wa-float {
+            animation: enhancedPulse 2s infinite;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .wa-float:hover {
+            animation: enhancedPulse 0.7s infinite;
+            transform: scale(1.15);
+        }
+
+        /* Stagger Animation Delays */
+        [data-aos] {
+            opacity: 0;
+        }
+
+        [data-aos].aos-animate {
+            opacity: 1;
+        }
+
         /* ── SCHEDULE TABLE ── */
         .schedule-cell {
             padding: 14px 16px;
@@ -2247,23 +2430,23 @@
     </div>
 
     <!-- HERO -->
-    <section class="hero">
-        <div class="hero-left">
+    <section class="hero" data-parallax="0.3">
+        <div class="hero-left" data-aos="fade-up" data-aos-duration="900">
             <h1 class="hero-title" style="position: relative;">
                 IT'S ALL ABOUT WHAT YOU<br>
                 CAN ACHIEVE
             </h1>
 
-            <p class="hero-desc">
+            <p class="hero-desc" data-aos="fade-up" data-aos-delay="100" data-aos-duration="900">
                 Empower yourself to make the changes you need to make!
             </p>
 
-            <div class="hero-actions">
+            <div class="hero-actions" data-aos="fade-up" data-aos-delay="200" data-aos-duration="900">
                 <a href="#contact" class="btn-orange">Let's Get Started</a>
                 <a href="#membership" class="btn-outline-white">View Plans</a>
             </div>
 
-            <div class="hero-trust">
+            <div class="hero-trust" data-aos="fade-up" data-aos-delay="300" data-aos-duration="900">
                 <div class="trust-item">
                     <div class="trust-num">3,200+</div>
                     <div class="trust-label">Active Members</div>
@@ -2285,55 +2468,55 @@
 
 
         <!-- RIGHT SIDE IMAGE (CUTOUT STYLE) -->
-        <div class="hero-right">
+        <div class="hero-right" data-parallax="0.5">
             <img src="The-best-Workout-Wallpaper-HD-removebg-preview.png" class="hero-cutout">
         </div>
     </section>
 
     <!-- SERVICES / PROGRAMS -->
     <section class="section" id="services">
-        <div class="section-center reveal">
+        <div class="section-center" data-aos="fade-up" data-aos-duration="800">
             <div class="eyebrow">What We Offer</div>
             <h2 class="section-title">Our Training Programs</h2>
             <p class="section-sub">From beginners to advanced athletes — we have a program built for every fitness goal.
             </p>
         </div>
         <div class="services-grid">
-            <div class="service-card reveal">
+            <div class="service-card reveal" data-aos="fade-up" data-aos-delay="100">
                 <div class="service-badge">Most Popular</div>
                 <div class="service-icon">🏋️</div>
                 <div class="service-name">Strength Training</div>
                 <p class="service-desc">Build muscle and raw power with progressive overload programs. Expert guidance
                     for all levels.</p>
             </div>
-            <div class="service-card reveal">
+            <div class="service-card reveal" data-aos="fade-up" data-aos-delay="150">
                 <div class="service-badge">Premium</div>
                 <div class="service-icon">🔥</div>
                 <div class="service-name">HIIT & Cardio</div>
                 <p class="service-desc">High-intensity interval training designed to torch fat and build elite
                     endurance.</p>
             </div>
-            <div class="service-card reveal">
+            <div class="service-card reveal" data-aos="fade-up" data-aos-delay="200">
                 <div class="service-badge">Elite</div>
                 <div class="service-icon">🥊</div>
                 <div class="service-name">CrossFit</div>
                 <p class="service-desc">Functional fitness at its finest. Develop agility, strength, and mental grit
                     daily.</p>
             </div>
-            <div class="service-card reveal">
+            <div class="service-card reveal" data-aos="fade-up" data-aos-delay="100">
                 <div class="service-badge">Aesthetic</div>
                 <div class="service-icon">🧘</div>
                 <div class="service-name">Yoga & Flexibility</div>
                 <p class="service-desc">Improve mobility, reduce injury risk, and build mental clarity with our
                     certified gurus.</p>
             </div>
-            <div class="service-card reveal">
+            <div class="service-card reveal" data-aos="fade-up" data-aos-delay="150">
                 <div class="service-badge">Specialist</div>
                 <div class="service-icon">👤</div>
                 <div class="service-name">Personal Training</div>
                 <p class="service-desc">One-on-one coaching tailored to your specific body type and long-term goals.</p>
             </div>
-            <div class="service-card reveal">
+            <div class="service-card reveal" data-aos="fade-up" data-aos-delay="200">
                 <div class="service-badge">Restorative</div>
                 <div class="service-icon">🥗</div>
                 <div class="service-name">Diet & Nutrition</div>
@@ -2346,7 +2529,7 @@
     <!-- WHY US / ABOUT -->
     <section class="section section-alt" id="about">
         <div class="whyus-grid">
-            <div class="whyus-img-wrap reveal">
+            <div class="whyus-img-wrap reveal" data-aos="fade-right" data-aos-duration="900">
                 <img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=700&q=85"
                     alt="PowerZone interior" />
                 <div class="whyus-badge">
@@ -2354,13 +2537,13 @@
                     <div class="whyus-badge-text">Years of Excellence</div>
                 </div>
             </div>
-            <div class="reveal">
+            <div data-aos="fade-left" data-aos-duration="900">
                 <div class="eyebrow">Why MD Fitness</div>
                 <h2 class="section-title">Not Just a Gym —<br>A Community</h2>
                 <p class="section-sub">We built MD Fitness because Meerut deserved a fitness space that matches
                     international standards without the international price tag.</p>
                 <div class="whyus-features">
-                    <div class="whyus-feat">
+                    <div class="whyus-feat" data-aos="fade-left" data-aos-delay="100">
                         <div class="feat-check">✓</div>
                         <div>
                             <div class="feat-title">18,000 sq ft fully air-conditioned facility</div>
@@ -2368,7 +2551,7 @@
                                 functional training — no crowding, ever.</div>
                         </div>
                     </div>
-                    <div class="whyus-feat">
+                    <div class="whyus-feat" data-aos="fade-left" data-aos-delay="150">
                         <div class="feat-check">✓</div>
                         <div>
                             <div class="feat-title">Premium imported equipment</div>
@@ -2376,7 +2559,7 @@
                                 brands used in 5-star hotel gyms.</div>
                         </div>
                     </div>
-                    <div class="whyus-feat">
+                    <div class="whyus-feat" data-aos="fade-left" data-aos-delay="200">
                         <div class="feat-check">✓</div>
                         <div>
                             <div class="feat-title">Separate women's training area</div>
@@ -2384,7 +2567,7 @@
                                 comfortable, safe, and judgement-free.</div>
                         </div>
                     </div>
-                    <div class="whyus-feat">
+                    <div class="whyus-feat" data-aos="fade-left" data-aos-delay="250">
                         <div class="feat-check">✓</div>
                         <div>
                             <div class="feat-title">Open 5 AM – 10 PM, Mon-Sat</div>
@@ -2628,14 +2811,7 @@
 
     <!-- MEMBERSHIP PLANS (moved after founder section)
     <section class="section" id="membership">
-        <div class="section-center reveal">
-            <div class="eyebrow">Membership Plans</div>
-            <h2 class="section-title">Simple, Transparent Pricing</h2>
-            <p class="section-sub">No hidden fees. No lock-in contracts. Just great fitness at a fair price — pick what
-                works for you.</p>
-        </div>
-        <div class="plans-grid">
-            <div class="plan-card reveal">
+        <div class="section-center" data-aos="fade-up" data-aos-duration="800" data-aos="zoom-in" data-aos-delay="0">
                 <div class="plan-name">Starter</div>
                 <div class="plan-price"><sup>₹</sup>1,299<sub>/mo</sub></div>
                 <p class="plan-desc">Perfect if you're just getting started and want to explore the gym at your own
@@ -2689,14 +2865,14 @@
 
     <!-- TRAINERS -->
     <section class="section section-alt" id="trainers">
-        <div class="section-center reveal">
+        <div class="section-center" data-aos="fade-up" data-aos-duration="800">
             <div class="eyebrow">Meet the Team</div>
             <h2 class="section-title">Our Expert Trainers & Instructors</h2>
             <p class="section-sub">Certified, experienced, and passionate — our trainers and yoga instructors are here
                 to guide you to success.</p>
         </div>
         <div class="trainers-grid">
-            <div class="trainer-card reveal">
+            <div class="trainer-card reveal" data-aos="zoom-in" data-aos-delay="0">
                 <img src="https://images.unsplash.com/photo-1534367610401-9f5ed68180aa?w=400&q=80" alt="Arjun Sharma"
                     class="trainer-img" />
                 <div class="trainer-body">
@@ -2708,7 +2884,7 @@
                     </div>
                 </div>
             </div>
-            <div class="trainer-card reveal">
+            <div class="trainer-card reveal" data-aos="zoom-in" data-aos-delay="100">
                 <img src="https://images.unsplash.com/photo-1548690312-e3b507d8c110?w=400&q=80" alt="Priya Mehta"
                     class="trainer-img" />
                 <div class="trainer-body">
@@ -2719,7 +2895,7 @@
                         Expert in Hatha, Vinyasa & Power Yoga. Specializes in flexibility and mind-body wellness.</div>
                 </div>
             </div>
-            <div class="trainer-card reveal">
+            <div class="trainer-card reveal" data-aos="zoom-in" data-aos-delay="200">
                 <img src="https://images.unsplash.com/photo-1567013127542-490d757e51fc?w=400&q=80" alt="Rohit Verma"
                     class="trainer-img" />
                 <div class="trainer-body">
@@ -2730,7 +2906,7 @@
                         Certified. Regional competitor. Expert in functional fitness and conditioning programs.</div>
                 </div>
             </div>
-            <div class="trainer-card reveal">
+            <div class="trainer-card reveal" data-aos="zoom-in" data-aos-delay="300">
                 <img src="https://images.unsplash.com/photo-1594381898411-846e7d193883?w=400&q=80" alt="Sneha Kapoor"
                     class="trainer-img" />
                 <div class="trainer-body">
@@ -2787,14 +2963,14 @@
 
     <!-- TESTIMONIALS -->
     <section class="section" id="testimonials">
-        <div class="section-center reveal">
+        <div class="section-center" data-aos="fade-up" data-aos-duration="800">
             <div class="eyebrow">Member Success Stories</div>
             <h2 class="section-title">Real Reviews From Real Members</h2>
             <p class="section-sub">Our members speak louder than any marketing claim. Here are their unfiltered success
                 stories from Google Reviews and member feedback.</p>
         </div>
         <div class="testi-grid">
-            <div class="testi-card reveal">
+            <div class="testi-card reveal" data-aos="fade-up" data-aos-delay="100">
                 <div class="stars">★★★★★</div>
                 <p class="testi-text">"The gym has a really nice and motivating environment. The interior is clean and
                     modern, with bright lights and mirrors all around. The equipments are well-maintained and there’s
@@ -2807,7 +2983,7 @@
                     </div>
                 </div>
             </div>
-            <div class="testi-card reveal">
+            <div class="testi-card reveal" data-aos="fade-up" data-aos-delay="150">
                 <div class="stars">★★★★★</div>
                 <p class="testi-text">"For those seeking a premier gym in Meerut, this establishment stands as the
                     optimal choice."</p>
@@ -3082,20 +3258,20 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label>Full Name</label>
-                            <input type="text" placeholder="Your name" required />
+                            <input type="text" id="lead_name" placeholder="Your name" required />
                         </div>
                         <div class="form-group">
                             <label>Phone Number</label>
-                            <input type="tel" placeholder="+91 XXXXX XXXXX" required />
+                            <input type="tel" id="lead_phone" placeholder="+91 XXXXX XXXXX" required />
                         </div>
                     </div>
                     <div class="form-group">
                         <label>Email Address</label>
-                        <input type="email" placeholder="your@email.com" />
+                        <input type="email" id="lead_email" placeholder="your@email.com" required />
                     </div>
                     <div class="form-group">
                         <label>Interested In</label>
-                        <select>
+                        <select id="lead_interest">
                             <option value="" disabled selected>Select a program or plan</option>
                             <option>Free Trial Session</option>
                             <option>Starter Membership</option>
@@ -3191,16 +3367,51 @@
         }
 
         // Form
-        function handleForm(e) {
+        async function handleForm(e) {
             e.preventDefault();
             const btn = e.target.querySelector('.form-submit');
-            btn.textContent = '✓ We\'ll call you within 30 minutes!';
-            btn.style.background = '#16a34a';
-            setTimeout(() => {
-                btn.textContent = 'Book My Free Trial →';
-                btn.style.background = '';
-                e.target.reset();
-            }, 4000);
+            const originalText = btn.textContent;
+
+            const name = document.getElementById('lead_name').value;
+            const phone = document.getElementById('lead_phone').value;
+            const email = document.getElementById('lead_email').value;
+            const interest = document.getElementById('lead_interest').value;
+            const goal = document.getElementById('lead_goal').value;
+
+            try {
+                btn.disabled = true;
+                btn.textContent = '⏱ Submitting...';
+
+                const response = await fetch('/api/submit-lead', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, phone, email, interest, goal })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    btn.textContent = '✓ Booking Confirmed!';
+                    btn.style.background = '#16a34a';
+                    e.target.reset();
+                    setTimeout(() => {
+                        btn.textContent = originalText;
+                        btn.style.background = '';
+                        btn.disabled = false;
+                    }, 5000);
+                } else {
+                    throw new Error(data.message || 'Submission failed');
+                }
+            } catch (error) {
+                console.error('Lead submission error:', error);
+                btn.textContent = '❌ Error. Try again.';
+                btn.style.background = '#dc2626';
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.style.background = '';
+                    btn.disabled = false;
+                }, 3000);
+            }
         }
 
         // Scroll to contact
@@ -3269,7 +3480,208 @@
         }, { threshold: 0.5 });
 
         document.querySelectorAll('.social-proof-banner').forEach(el => counterObs.observe(el));
+
+        /* ── ADVANCED MOTION EFFECTS ── */
+        
+        // Initialize AOS (Animate On Scroll)
+        AOS.init({
+            duration: 800,
+            easing: 'ease-out-cubic',
+            once: false,
+            mirror: true,
+            offset: 100,
+            delay: 0
+        });
+
+        // Parallax Scrolling Effect
+        const parallaxElements = document.querySelectorAll('[data-parallax]');
+        let ticking = false;
+
+        function updateParallax() {
+            const scrolled = window.pageYOffset;
+            
+            parallaxElements.forEach(element => {
+                const speed = element.getAttribute('data-parallax');
+                const yPos = scrolled * speed;
+                element.style.transform = `translateY(${yPos}px)`;
+            });
+            
+            ticking = false;
+        }
+
+        function onScroll() {
+            if (!ticking) {
+                window.requestAnimationFrame(updateParallax);
+                ticking = true;
+            }
+        }
+
+        window.addEventListener('scroll', onScroll, { passive: true });
+
+        // Enhanced Hover Effects for Cards
+        const cards = document.querySelectorAll('.service-card, .trainer-card, .testi-card, .plan-card, .transformation-card, .instagram-post');
+        
+        cards.forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transition = 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+            });
+            
+            card.addEventListener('mousemove', function(e) {
+                const rect = this.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateX = (y - centerY) * 0.05;
+                const rotateY = (centerX - x) * 0.05;
+                
+                this.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'perspective(1000px) rotateX(0) rotateY(0)';
+            });
+        });
+
+        // Button Ripple Effect
+        const buttons = document.querySelectorAll('.btn-orange, .btn-outline-white, .plan-btn');
+        
+        buttons.forEach(button => {
+            button.addEventListener('click', function(e) {
+                const rect = this.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                const x = e.clientX - rect.left - size / 2;
+                const y = e.clientY - rect.top - size / 2;
+                
+                const ripple = document.createElement('span');
+                ripple.style.width = ripple.style.height = size + 'px';
+                ripple.style.left = x + 'px';
+                ripple.style.top = y + 'px';
+                ripple.classList.add('ripple');
+                
+                this.appendChild(ripple);
+                
+                setTimeout(() => ripple.remove(), 600);
+            });
+        });
+
+        // Smooth Scroll Intersections
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const scrollObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationPlayState = 'running';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('[data-aos]').forEach(el => {
+            scrollObserver.observe(el);
+        });
+
+        // Mouse Follow Effect (Optional - subtle movement)
+        const mouseFollowElements = document.querySelectorAll('[data-mouse-follow]');
+        let mouseX = 0;
+        let mouseY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        function updateMouseFollow() {
+            mouseFollowElements.forEach(element => {
+                const rect = element.getBoundingClientRect();
+                const elementCenterX = rect.left + rect.width / 2;
+                const elementCenterY = rect.top + rect.height / 2;
+                
+                const distance = 30;
+                const angle = Math.atan2(mouseY - elementCenterY, mouseX - elementCenterX);
+                
+                const x = Math.cos(angle) * distance;
+                const y = Math.sin(angle) * distance;
+                
+                element.style.transform = `translate(${x * 0.1}px, ${y * 0.1}px)`;
+            });
+            
+            requestAnimationFrame(updateMouseFollow);
+        }
+
+        if (mouseFollowElements.length > 0) {
+            updateMouseFollow();
+        }
     </script>
+
+    <!-- Ripple Effect Styles -->
+    <style>
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.6);
+            transform: scale(0);
+            animation: ripple-animation 0.6s ease-out;
+            pointer-events: none;
+        }
+
+        @keyframes ripple-animation {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        /* Smooth scroll behavior enhancement */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* AOS Animation Customizations */
+        [data-aos="fade-up"] {
+            opacity: 0;
+            transform: translate3d(0, 40px, 0);
+        }
+
+        [data-aos="fade-up"].aos-animate {
+            opacity: 1;
+            transform: translate3d(0, 0, 0);
+        }
+
+        [data-aos="fade-left"] {
+            opacity: 0;
+            transform: translate3d(-40px, 0, 0);
+        }
+
+        [data-aos="fade-left"].aos-animate {
+            opacity: 1;
+            transform: translate3d(0, 0, 0);
+        }
+
+        [data-aos="fade-right"] {
+            opacity: 0;
+            transform: translate3d(40px, 0, 0);
+        }
+
+        [data-aos="fade-right"].aos-animate {
+            opacity: 1;
+            transform: translate3d(0, 0, 0);
+        }
+
+        [data-aos="zoom-in"] {
+            opacity: 0;
+            transform: translate3d(0, 0, 0) scale3d(0.9, 0.9, 0.9);
+        }
+
+        [data-aos="zoom-in"].aos-animate {
+            opacity: 1;
+            transform: translate3d(0, 0, 0) scale3d(1, 1, 1);
+        }
+    </style>
 </body>
 
 </html>
