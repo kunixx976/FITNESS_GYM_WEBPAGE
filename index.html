@@ -110,15 +110,11 @@
         }
 
         .nav-logo {
-            display: flex;
-            align-items: center;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 28px;
+            letter-spacing: 3px;
+            color: var(--white);
             text-decoration: none;
-        }
-
-        .nav-logo img {
-            height: 50px;
-            width: auto;
-            object-fit: contain;
         }
 
         .nav-logo span {
@@ -221,8 +217,8 @@
         .hero-content {
             position: relative;
             z-index: 2;
-            padding: 120px 5% 80px;
-            max-width: 760px;
+            padding: 140px 5% 100px;
+            max-width: 900px;
         }
 
         .hero-tag {
@@ -249,12 +245,13 @@
 
         .hero-h1 {
             font-family: 'Bebas Neue', sans-serif;
-            font-size: clamp(72px, 11vw, 140px);
-            line-height: 0.92;
-            letter-spacing: 2px;
-            margin-bottom: 30px;
+            font-size: clamp(56px, 10vw, 115px);
+            line-height: 1.0;
+            letter-spacing: 1px;
+            margin-bottom: 24px;
             opacity: 0;
             animation: fadeUp 0.7s 0.4s forwards;
+            text-transform: uppercase;
         }
 
         .hero-h1 em {
@@ -1299,6 +1296,21 @@
                 display: flex;
             }
         }
+
+        @media (max-width: 600px) {
+            .hero-h1 {
+                font-size: clamp(42px, 12vw, 56px);
+                line-height: 1.1;
+            }
+
+            .hero-content {
+                padding: 100px 6% 60px;
+            }
+
+            .stat-num {
+                font-size: 32px;
+            }
+        }
     </style>
 </head>
 
@@ -1316,9 +1328,7 @@
 
     <!-- ══ NAV ══ -->
     <nav id="navbar">
-        <a href="#" class="nav-logo">
-            <img src="md-logo.png" alt="MD Fitness Logo">
-        </a>
+        <a href="#" class="nav-logo">MD <span>Fitness</span></a>
         <ul class="nav-links">
             <li><a href="#features">Features</a></li>
             <li><a href="#plans">Plans</a></li>
@@ -1692,9 +1702,7 @@
     <footer>
         <div class="footer-grid">
             <div class="footer-brand">
-                <div class="nav-logo">
-                    <img src="md-logo.png" alt="MD Fitness Logo" style="height: 40px;">
-                </div>
+                <div class="nav-logo" style="font-size:24px;">MD <span style="color:var(--red);">Fitness</span></div>
                 <p>Delhi's premium fitness destination. Transforming bodies, building champions — since 2020.</p>
                 <div class="footer-socials">
                     <a href="#" class="social-icon">📸</a>
