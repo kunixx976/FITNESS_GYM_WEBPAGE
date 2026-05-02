@@ -152,7 +152,7 @@ app.post('/api/submit-lead', async (req, res) => {
       Ganga Nagar, Meerut, UP 250001</p>
       <h3>🕐 Gym Hours:</h3>
       <p>Monday - Sunday: 5:00 AM - 11:00 PM</p>
-      <p>You can also reach us on WhatsApp: <strong>+91-98178-93210</strong></p>
+      <p>You can also reach us on WhatsApp: <strong>+91-6396436526</strong></p>
       <hr>
       <p>See you soon at MD Fitness! 💪</p>
       <p>Best regards,<br/><strong>MD Fitness Team</strong></p>
@@ -167,7 +167,7 @@ app.post('/api/submit-lead', async (req, res) => {
 
     // 4. Send WhatsApp message via Wati.io (if enabled)
     if (process.env.WATI_API_KEY && process.env.WATI_PHONE_NUMBER_ID) {
-      const whatsappMessage = `Hi ${name}! 👋 Welcome to MD Fitness 💪\n\nYour free trial is booked! ✅\n\nWe'll call you within 30 mins at ${phone}.\n\n📍 Gym: Ganga Nagar, Meerut\n⏰ Hours: 5AM - 11PM\n🔗 WhatsApp: +91-98178-93210\n\n— MD Fitness Team`;
+      const whatsappMessage = `Hi ${name}! 👋 Welcome to MD Fitness 💪\n\nYour free trial is booked! ✅\n\nWe'll call you within 30 mins at ${phone}.\n\n📍 Gym: Ganga Nagar, Meerut\n⏰ Hours: 5AM - 11PM\n🔗 WhatsApp: +91-6396436526\n\n— MD Fitness Team`;
 
       try {
         await axios.post(
