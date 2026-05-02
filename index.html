@@ -258,6 +258,7 @@
         .hero-h1 em {
             color: var(--red);
             font-style: normal;
+            text-shadow: 0 0 20px rgba(255, 45, 45, 0.4);
         }
 
         .hero-sub {
@@ -272,8 +273,9 @@
 
         .hero-btns {
             display: flex;
-            gap: 16px;
-            flex-wrap: wrap;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 10px;
             opacity: 0;
             animation: fadeUp 0.7s 0.8s forwards;
         }
@@ -282,16 +284,16 @@
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            background: var(--red);
+            background: #e31e24;
             color: var(--white);
-            padding: 16px 32px;
-            font-weight: 700;
-            font-size: 14px;
-            letter-spacing: 1.5px;
+            padding: 18px 40px;
+            font-weight: 800;
+            font-size: 15px;
+            letter-spacing: 1px;
             text-transform: uppercase;
             text-decoration: none;
-            border-radius: 3px;
-            border: 2px solid var(--red);
+            border-radius: 8px;
+            border: none;
             transition: background 0.25s, transform 0.25s, box-shadow 0.25s;
         }
 
@@ -1349,12 +1351,11 @@
         <div class="hero-grid-lines"></div>
         <div class="hero-content">
             <div class="hero-tag">Premium Fitness · Delhi NCR</div>
-            <h1 class="hero-h1">STOP<br>WISHING.<br><em>START</em><br>LIFTING.</h1>
-            <p class="hero-sub">AI-powered training, expert coaches, and premium equipment — engineered to transform
-                your body and your mindset.</p>
+            <h1 class="hero-h1">STOP GUESSING.<br>START <em>EVOLVING.</em></h1>
+            <p class="hero-sub">Your 360° fitness transformation, powered by AI and engineered for your biology.</p>
             <div class="hero-btns">
-                <a href="#join" class="btn-primary">▶ Get 1-Day Pass for ₹1</a>
-                <a href="#plans" class="btn-outline">View Memberships</a>
+                <a href="#join" class="btn-primary">START YOUR EVOLUTION →</a>
+                <p style="font-size: 13px; color: var(--gray-light); margin-top: 12px; letter-spacing: 0.5px;">Get a 1-Day Pro Pass for <strong>₹1</strong></p>
             </div>
             <div class="hero-stats">
                 <div class="stat-item">
