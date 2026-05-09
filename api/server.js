@@ -6,6 +6,8 @@ const nodemailer = require('nodemailer');
 const axios = require('axios');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
+const rateLimit = require('express-rate-limit');
+const { body, validationResult } = require('express-validator');
 
 // Load environment variables
 dotenv.config();
@@ -16,6 +18,30 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.static('public'));
+
+// Rate Limiting
+const leadLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 5, // max 5 submissions per IP
+  message: { error: 'Too many submissions. Please try again later.' }
+});
+
+const loginLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 10, // max 10 login attempts
+  message: { error: 'Too many login attempts.' }
+});
+
+app.use('/api/submit-lead', leadLimiter);
+app.use('/api/admin/login', loginLimiter);
+
+// Validation Rules
+const validateLead = [
+  body('name').trim().notEmpty().isLength({ min: 2, max: 50 }),
+  body('phone').trim().matches(/^[6-9]\d{9}$/).withMessage('Invalid Indian phone number'),
+  body('email').optional().isEmail().normalizeEmail(),
+  body('goal').isIn(['weight-loss', 'muscle-gain', 'fitness', 'other']),
+];
 
 // Supabase Client
 const supabase = createClient(
@@ -84,15 +110,30 @@ app.post('/api/admin/login', async (req, res) => {
 // ================== LEAD SUBMISSION ==================
 
 // Submit contact form - Save lead + send emails + WhatsApp
-app.post('/api/submit-lead', async (req, res) => {
-  const { name, phone, email, interest, goal } = req.body;
-
-  // Validation
-  if (!name || !phone || !email || !goal) {
-    return res.status(400).json({ message: 'All fields are required' });
+app.post('/api/submit-lead', validateLead, async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
   }
 
+  const { name, phone, email, interest, goal } = req.body;
+
   try {
+    // 0. Check for existing lead with this phone number
+    const { data: existing } = await supabase
+      .from('leads')
+      .select('id, created_at')
+      .eq('phone', phone)
+      .maybeSingle();
+
+    if (existing) {
+      return res.json({
+        success: true,
+        message: 'Already registered! We will contact you soon.',
+        duplicate: true
+      });
+    }
+
     // 1. Save lead to database
     const { data: lead, error: insertError } = await supabase
       .from('leads')
@@ -199,6 +240,29 @@ app.post('/api/submit-lead', async (req, res) => {
   }
 });
 
+// ================== WEBHOOKS ==================
+
+// Wati.io Webhook - Auto-update status when lead replies
+app.post('/api/webhook/wati', async (req, res) => {
+  const { phone, event } = req.body;
+
+  try {
+    if (event === 'message_replied') {
+      const { error } = await supabase
+        .from('leads')
+        .update({ status: 'Called', updated_at: new Date() }) // Using 'Called' or 'Joined' as per existing schema status types
+        .eq('phone', phone);
+
+      if (error) throw error;
+      console.log(`Lead status updated for ${phone} via webhook`);
+    }
+    res.sendStatus(200);
+  } catch (error) {
+    console.error('Webhook error:', error);
+    res.sendStatus(500);
+  }
+});
+
 // ================== ADMIN PANEL APIs ==================
 
 // Get all leads (with pagination & filters)
@@ -264,32 +328,57 @@ app.patch('/api/admin/leads/:id', verifyToken, async (req, res) => {
 // Get lead stats (for dashboard)
 app.get('/api/admin/stats', verifyToken, async (req, res) => {
   try {
-    // Total leads
+    const weekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+
+    // 1. Total leads count
     const { count: totalLeads } = await supabase
       .from('leads')
-      .select('*', { count: 'exact' });
+      .select('*', { count: 'exact', head: true });
 
-    // Leads this week
-    const weekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+    // 2. Leads this week count
     const { count: leadsThisWeek } = await supabase
       .from('leads')
-      .select('*', { count: 'exact' })
+      .select('*', { count: 'exact', head: true })
       .gte('created_at', weekAgo.toISOString());
 
-    // Status breakdown
-    const { data: statusData } = await supabase.from('leads').select('status');
+    // 3. Status and Goal breakdown (fetching data for processing)
+    const { data: allData, error: fetchError } = await supabase
+      .from('leads')
+      .select('status, goal, created_at');
 
+    if (fetchError) throw fetchError;
+
+    // Process breakdowns
     const statusBreakdown = {
-      New: statusData.filter((l) => l.status === 'New').length,
-      Called: statusData.filter((l) => l.status === 'Called').length,
-      Joined: statusData.filter((l) => l.status === 'Joined').length,
-      NotInterested: statusData.filter((l) => l.status === 'Not Interested').length,
+      New: allData.filter((l) => l.status === 'New').length,
+      Called: allData.filter((l) => l.status === 'Called').length,
+      Joined: allData.filter((l) => l.status === 'Joined').length,
+      NotInterested: allData.filter((l) => l.status === 'Not Interested').length,
     };
+
+    const goalBreakdown = allData.reduce((acc, { goal }) => {
+      if (goal) {
+        acc[goal] = (acc[goal] || 0) + 1;
+      }
+      return acc;
+    }, {});
+
+    // 4. Daily trend for last 7 days
+    const dailyTrend = {};
+    for (let i = 0; i < 7; i++) {
+      const d = new Date();
+      d.setDate(d.getDate() - i);
+      const dateStr = d.toISOString().split('T')[0];
+      dailyTrend[dateStr] = allData.filter(l => l.created_at.startsWith(dateStr)).length;
+    }
 
     res.json({
       totalLeads,
       leadsThisWeek,
       statusBreakdown,
+      goalBreakdown,
+      dailyTrend,
+      joinedCount: statusBreakdown.Joined,
       timestamp: new Date(),
     });
   } catch (error) {
