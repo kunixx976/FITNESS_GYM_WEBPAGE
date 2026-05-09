@@ -4,12 +4,13 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MD Fitness | Stop Wishing. Start Lifting.</title>
+    <title>MD Fitness Gym | Stronger Everyday</title>
     <meta name="description"
         content="MD Fitness — Premium gym memberships, AI-powered training, and expert coaches. Join today for ₹1." />
     <link
-        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,400;0,600;0,700;1,400&family=Barlow+Condensed:wght@700;800&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,400;0,600;0,700;1,400&family=Barlow+Condensed:wght@700;800&family=Playfair+Display:ital,wght@0,700;0,800;1,700&display=swap"
         rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
     <style>
         *,
         *::before,
@@ -29,23 +30,32 @@
             --black-4: #1c1c1c;
             --gray: #555;
             --gray-light: #aaa;
+            --gold: #D4AF37;
+            --gold-light: #FFD700;
+            --maroon: #2a0000;
             --white: #fff;
-            --white-dim: rgba(255, 255, 255, 0.06);
         }
 
         html {
             scroll-behavior: smooth;
         }
 
+        h1,
+        h2,
+        h3,
+        .dashboard-logo {
+            font-family: 'Playfair Display', serif;
+        }
+
         body {
-            font-family: 'Barlow', sans-serif;
+            font-family: "Barlow", sans-serif;
             background: var(--black);
             color: var(--white);
             overflow-x: hidden;
             cursor: none;
         }
 
-        /* ── CUSTOM CURSOR ── */
+        /* CURSOR */
         .cursor {
             width: 12px;
             height: 12px;
@@ -57,13 +67,13 @@
             pointer-events: none;
             z-index: 9999;
             transform: translate(-50%, -50%);
-            transition: transform 0.08s ease, width 0.2s, height 0.2s, background 0.2s;
+            transition: width .2s, height .2s, background .2s;
         }
 
         .cursor-ring {
             width: 36px;
             height: 36px;
-            border: 1.5px solid rgba(255, 45, 45, 0.5);
+            border: 1.5px solid rgba(255, 45, 45, .5);
             border-radius: 50%;
             position: fixed;
             top: 0;
@@ -71,54 +81,65 @@
             pointer-events: none;
             z-index: 9998;
             transform: translate(-50%, -50%);
-            transition: transform 0.18s ease, width 0.3s, height 0.3s;
+            transition: width .3s, height .3s;
         }
 
-        body:hover .cursor {
-            opacity: 1;
-        }
-
-        /* ── NOISE OVERLAY ── */
+        /* NOISE */
         body::before {
-            content: '';
+            content: "";
             position: fixed;
             inset: 0;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
-            opacity: 0.025;
+            opacity: .025;
             pointer-events: none;
             z-index: 1000;
         }
 
-        /* ── NAV ── */
+        /* NAV */
         nav {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             z-index: 500;
-            padding: 18px 5%;
+            padding: 14px 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            transition: background 0.4s, backdrop-filter 0.4s, border-bottom 0.4s;
+            transition: background .4s, backdrop-filter .4s, border-bottom .4s;
         }
 
         nav.scrolled {
-            background: rgba(5, 5, 5, 0.85);
+            background: rgba(5, 5, 5, .88);
             backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 45, 45, 0.2);
+            border-bottom: 1px solid rgba(255, 45, 45, .2);
         }
 
-        .nav-logo {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 28px;
-            letter-spacing: 3px;
-            color: var(--white);
+        /* ── LOGO ── */
+        .nav-logo-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
             text-decoration: none;
         }
 
-        .nav-logo span {
-            color: var(--red);
+        .nav-logo-img {
+            height: 50px;
+            width: auto;
+            object-fit: contain;
+            transition: transform .3s;
+        }
+
+        .nav-logo-img:hover {
+            transform: scale(1.05);
+        }
+
+        .nav-logo-text {
+            display: none;
+        }
+
+        .nav-logo-sub {
+            display: none;
         }
 
         .nav-links {
@@ -135,7 +156,7 @@
             text-decoration: none;
             letter-spacing: 1.5px;
             text-transform: uppercase;
-            transition: color 0.2s;
+            transition: color .2s;
         }
 
         .nav-links a:hover {
@@ -147,7 +168,7 @@
             color: var(--white) !important;
             padding: 9px 22px;
             border-radius: 3px;
-            transition: background 0.2s, transform 0.2s !important;
+            transition: background .2s, transform .2s !important;
         }
 
         .nav-cta:hover {
@@ -167,10 +188,10 @@
             width: 24px;
             height: 2px;
             background: var(--white);
-            transition: 0.3s;
+            transition: .3s;
         }
 
-        /* ── HERO ── */
+        /* HERO */
         .hero {
             min-height: 100vh;
             position: relative;
@@ -186,40 +207,34 @@
         }
 
         .hero-bg::after {
-            content: '';
+            content: "";
             position: absolute;
             inset: 0;
-            background:
-                radial-gradient(ellipse 60% 80% at 70% 50%, rgba(255, 45, 45, 0.08) 0%, transparent 70%),
-                radial-gradient(ellipse 40% 40% at 20% 80%, rgba(255, 107, 0, 0.05) 0%, transparent 60%);
+            background: radial-gradient(ellipse 60% 80% at 70% 50%, rgba(255, 45, 45, .08) 0%, transparent 70%), radial-gradient(ellipse 40% 40% at 20% 80%, rgba(255, 107, 0, .05) 0%, transparent 60%);
         }
 
-        /* Diagonal red slash */
         .hero-slash {
             position: absolute;
             right: 0;
             top: 0;
             bottom: 0;
             width: 52%;
-            background: linear-gradient(160deg, rgba(255, 45, 45, 0.07) 0%, transparent 60%);
+            background: linear-gradient(160deg, rgba(255, 45, 45, .07) 0%, transparent 60%);
             clip-path: polygon(10% 0, 100% 0, 100% 100%, 0% 100%);
         }
 
         .hero-grid-lines {
             position: absolute;
             inset: 0;
-            background-image:
-                linear-gradient(rgba(255, 45, 45, 0.04) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 45, 45, 0.04) 1px, transparent 1px);
+            background-image: linear-gradient(rgba(255, 45, 45, .04) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 45, 45, .04) 1px, transparent 1px);
             background-size: 60px 60px;
         }
 
         .hero-content {
             position: relative;
             z-index: 2;
-            padding: 100px 5% 100px;
-            max-width: 900px;
-            transform: translateY(-40px);
+            padding: 120px 5% 80px;
+            max-width: 760px;
         }
 
         .hero-tag {
@@ -233,11 +248,11 @@
             color: var(--red);
             margin-bottom: 28px;
             opacity: 0;
-            animation: fadeUp 0.6s 0.2s forwards;
+            animation: fadeUp .6s .2s forwards;
         }
 
         .hero-tag::before {
-            content: '';
+            content: "";
             display: block;
             width: 30px;
             height: 2px;
@@ -245,20 +260,21 @@
         }
 
         .hero-h1 {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: clamp(56px, 10vw, 115px);
-            line-height: 1.0;
-            letter-spacing: 1px;
-            margin-bottom: 24px;
+            font-family: "Bebas Neue", sans-serif;
+            font-size: clamp(72px, 11vw, 140px);
+            line-height: .92;
+            letter-spacing: 2px;
+            margin-bottom: 30px;
             opacity: 0;
-            animation: fadeUp 0.7s 0.4s forwards;
-            text-transform: uppercase;
+            animation: fadeUp .7s .4s forwards;
+            text-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
         }
 
         .hero-h1 em {
             color: var(--red);
             font-style: normal;
-            text-shadow: 0 0 20px rgba(255, 45, 45, 0.4);
+            text-shadow: 0 0 20px rgba(255, 45, 45, 0.6);
+            animation: textGlow 2s ease-in-out infinite alternate;
         }
 
         .hero-sub {
@@ -268,40 +284,44 @@
             max-width: 480px;
             margin-bottom: 44px;
             opacity: 0;
-            animation: fadeUp 0.7s 0.6s forwards;
+            animation: fadeUp .7s .6s forwards;
         }
 
         .hero-btns {
             display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 10px;
+            gap: 16px;
+            flex-wrap: wrap;
             opacity: 0;
-            animation: fadeUp 0.7s 0.8s forwards;
+            animation: fadeUp .7s .8s forwards;
         }
 
         .btn-primary {
             display: inline-flex;
             align-items: center;
-            gap: 10px;
-            background: #e31e24;
+            gap: 12px;
+            background: var(--red);
             color: var(--white);
-            padding: 18px 40px;
+            padding: 18px 36px;
             font-weight: 800;
             font-size: 15px;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
             text-transform: uppercase;
             text-decoration: none;
-            border-radius: 8px;
-            border: none;
-            transition: background 0.25s, transform 0.25s, box-shadow 0.25s;
+            border-radius: 4px;
+            border: 2px solid var(--red);
+            transition: all .3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .btn-primary:hover {
             background: var(--orange);
             border-color: var(--orange);
             transform: translateY(-3px);
-            box-shadow: 0 12px 30px rgba(255, 45, 45, 0.35);
+            box-shadow: 0 12px 30px rgba(255, 45, 45, .35);
+        }
+
+        .btn-primary span {
+            font-size: 10px;
+            margin-right: 2px;
         }
 
         .btn-outline {
@@ -317,34 +337,72 @@
             text-transform: uppercase;
             text-decoration: none;
             border-radius: 3px;
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            transition: border-color 0.25s, background 0.25s;
+            border: 2px solid rgba(255, 255, 255, .2);
+            transition: border-color .25s, background .25s;
         }
 
         .btn-outline:hover {
             border-color: var(--white);
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, .05);
         }
 
-        /* Stats row */
         .hero-stats {
             position: absolute;
-            bottom: 40px;
+            bottom: 60px;
             left: 5%;
             right: 5%;
             display: flex;
             gap: 0;
-            border-top: 1px solid rgba(255, 255, 255, 0.07);
-            padding-top: 32px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 40px;
             opacity: 0;
-            animation: fadeUp 0.7s 1.1s forwards;
-            z-index: 2;
+            animation: fadeUp .7s 1.1s forwards;
+            z-index: 5;
+        }
+
+        .hero-dot {
+            position: absolute;
+            left: 2%;
+            top: 50%;
+            width: 12px;
+            height: 12px;
+            background: var(--red);
+            border-radius: 50%;
+            box-shadow: 0 0 15px var(--red);
+            animation: pulse-red 2s infinite;
+        }
+
+        @keyframes pulse-red {
+            0% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 0 rgba(255, 45, 45, 0.7);
+            }
+
+            70% {
+                transform: scale(1);
+                box-shadow: 0 0 0 10px rgba(255, 45, 45, 0);
+            }
+
+            100% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 0 rgba(255, 45, 45, 0);
+            }
+        }
+
+        @keyframes textGlow {
+            from {
+                text-shadow: 0 0 10px rgba(255, 45, 45, 0.5), 0 0 20px rgba(255, 45, 45, 0.2);
+            }
+
+            to {
+                text-shadow: 0 0 25px rgba(255, 45, 45, 0.9), 0 0 50px rgba(255, 45, 45, 0.4);
+            }
         }
 
         .stat-item {
             flex: 1;
             padding: 0 28px 0 0;
-            border-right: 1px solid rgba(255, 255, 255, 0.07);
+            border-right: 1px solid rgba(255, 255, 255, .07);
         }
 
         .stat-item:last-child {
@@ -357,10 +415,11 @@
         }
 
         .stat-num {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 44px;
+            font-family: "Bebas Neue", sans-serif;
+            font-size: 64px;
             color: var(--red);
             line-height: 1;
+            margin-bottom: 4px;
         }
 
         .stat-label {
@@ -375,16 +434,16 @@
         @keyframes fadeUp {
             from {
                 opacity: 0;
-                transform: translateY(24px);
+                transform: translateY(24px)
             }
 
             to {
                 opacity: 1;
-                transform: translateY(0);
+                transform: translateY(0)
             }
         }
 
-        /* ── MARQUEE ── */
+        /* MARQUEE */
         .marquee-wrap {
             background: var(--red);
             padding: 14px 0;
@@ -399,31 +458,31 @@
         }
 
         .marquee-track span {
-            font-family: 'Barlow Condensed', sans-serif;
+            font-family: "Barlow Condensed", sans-serif;
             font-size: 15px;
             font-weight: 700;
             letter-spacing: 2px;
             text-transform: uppercase;
             padding: 0 28px;
-            color: rgba(255, 255, 255, 0.85);
+            color: rgba(255, 255, 255, .85);
         }
 
         .marquee-track span.dot {
-            color: rgba(255, 255, 255, 0.4);
+            color: rgba(255, 255, 255, .4);
             padding: 0 4px;
         }
 
         @keyframes marquee {
             from {
-                transform: translateX(0);
+                transform: translateX(0)
             }
 
             to {
-                transform: translateX(-50%);
+                transform: translateX(-50%)
             }
         }
 
-        /* ── SECTIONS ── */
+        /* SECTIONS */
         section {
             padding: 100px 5%;
         }
@@ -441,17 +500,17 @@
         }
 
         .section-tag::before {
-            content: '';
+            content: "";
             width: 30px;
             height: 2px;
             background: var(--red);
         }
 
         h2.section-title {
-            font-family: 'Bebas Neue', sans-serif;
+            font-family: "Playfair Display", serif;
             font-size: clamp(42px, 6vw, 80px);
-            line-height: 1;
-            letter-spacing: 1px;
+            line-height: 1.1;
+            letter-spacing: -0.5px;
             margin-bottom: 20px;
         }
 
@@ -467,61 +526,98 @@
             max-width: 520px;
         }
 
-        /* ── LEAD FORM ── */
+        /* LEAD FORM */
         .form-section {
-            background: var(--black-2);
+            background: linear-gradient(135deg, #050505 0%, var(--maroon) 50%, #1a1200 100%);
             position: relative;
             overflow: hidden;
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
+            padding: 120px 5%;
         }
 
         .form-section::before {
-            content: '';
+            content: "";
             position: absolute;
-            top: -100px;
-            right: -100px;
+            top: -20%;
+            right: -10%;
+            width: 700px;
+            height: 700px;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.15) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .form-section::after {
+            content: "";
+            position: absolute;
+            bottom: -15%;
+            left: -5%;
             width: 500px;
             height: 500px;
-            background: radial-gradient(circle, rgba(255, 45, 45, 0.1) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(255, 45, 45, 0.12) 0%, transparent 70%);
             pointer-events: none;
+            z-index: 1;
         }
 
         .form-layout {
             display: grid;
             grid-template-columns: 1fr 1fr;
+
             gap: 80px;
             align-items: center;
+            position: relative;
+            z-index: 2;
         }
 
         .form-badge {
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            background: rgba(255, 45, 45, 0.1);
-            border: 1px solid rgba(255, 45, 45, 0.3);
-            padding: 8px 16px;
+            background: linear-gradient(90deg, rgba(212, 175, 55, 0.15), rgba(255, 45, 45, 0.15));
+            border: 1px solid var(--gold);
+            padding: 10px 22px;
             border-radius: 40px;
-            font-size: 13px;
-            font-weight: 700;
-            color: var(--red);
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            color: var(--gold-light);
             margin-bottom: 24px;
+            text-transform: uppercase;
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
         }
 
-        .form-badge::before {
-            content: '★';
+        .form-headline {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(40px, 5vw, 72px);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            color: var(--white);
+        }
+
+        .form-headline em {
+            font-style: italic;
+            background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 50%, var(--red) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 2px 10px rgba(212, 175, 55, 0.3));
         }
 
         .price-highlight {
-            font-family: 'Bebas Neue', sans-serif;
+            font-family: "Bebas Neue", sans-serif;
             font-size: 80px;
             color: var(--red);
             line-height: 1;
             margin: 8px 0;
+            display: none;
+            /* Hidden as per new editorial design */
         }
 
         .form-note {
-            font-size: 13px;
-            color: var(--gray);
+            font-size: 14px;
+            color: var(--gray-light);
             margin-top: 16px;
+            opacity: 0.8;
         }
 
         .lead-form {
@@ -553,13 +649,13 @@
         .field-group input,
         .field-group select {
             background: var(--black-3);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, .08);
             border-radius: 4px;
             padding: 13px 14px;
             color: var(--white);
             font-size: 15px;
-            font-family: 'Barlow', sans-serif;
-            transition: border-color 0.2s, box-shadow 0.2s;
+            font-family: "Barlow", sans-serif;
+            transition: border-color .2s, box-shadow .2s;
             appearance: none;
         }
 
@@ -567,7 +663,7 @@
         .field-group select:focus {
             outline: none;
             border-color: var(--red);
-            box-shadow: 0 0 0 3px rgba(255, 45, 45, 0.12);
+            box-shadow: 0 0 0 3px rgba(255, 45, 45, .12);
         }
 
         .field-group input::placeholder {
@@ -585,20 +681,20 @@
             color: var(--white);
             border: none;
             border-radius: 4px;
-            font-family: 'Barlow Condensed', sans-serif;
+            font-family: "Barlow Condensed", sans-serif;
             font-size: 17px;
             font-weight: 700;
             letter-spacing: 2px;
             text-transform: uppercase;
             cursor: pointer;
-            transition: background 0.25s, transform 0.2s, box-shadow 0.25s;
+            transition: background .25s, transform .2s, box-shadow .25s;
             margin-top: 4px;
         }
 
         .submit-btn:hover {
             background: var(--orange);
             transform: translateY(-2px);
-            box-shadow: 0 10px 28px rgba(255, 45, 45, 0.35);
+            box-shadow: 0 10px 28px rgba(255, 45, 45, .35);
         }
 
         .form-disclaimer {
@@ -608,7 +704,7 @@
             margin-top: 4px;
         }
 
-        /* ── FEATURES GRID ── */
+        /* FEATURES */
         .features-section {
             background: var(--black);
         }
@@ -630,14 +726,14 @@
         .feature-card {
             background: var(--black-3);
             padding: 36px 30px;
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            transition: background 0.3s, border-color 0.3s, transform 0.3s;
+            border: 1px solid rgba(255, 255, 255, .04);
+            transition: background .3s, border-color .3s, transform .3s;
             position: relative;
             overflow: hidden;
         }
 
         .feature-card::before {
-            content: '';
+            content: "";
             position: absolute;
             bottom: 0;
             left: 0;
@@ -646,13 +742,13 @@
             background: var(--red);
             transform: scaleX(0);
             transform-origin: left;
-            transition: transform 0.35s;
+            transition: transform .35s;
         }
 
         .feature-card:hover {
             background: var(--black-4);
             transform: translateY(-4px);
-            border-color: rgba(255, 45, 45, 0.15);
+            border-color: rgba(255, 45, 45, .15);
         }
 
         .feature-card:hover::before {
@@ -666,7 +762,7 @@
         }
 
         .feature-card h3 {
-            font-family: 'Barlow Condensed', sans-serif;
+            font-family: "Barlow Condensed", sans-serif;
             font-size: 20px;
             font-weight: 700;
             text-transform: uppercase;
@@ -680,7 +776,7 @@
             line-height: 1.6;
         }
 
-        /* ── MEMBERSHIP PLANS ── */
+        /* PLANS */
         .plans-section {
             background: var(--black-2);
         }
@@ -694,11 +790,11 @@
 
         .plan-card {
             background: var(--black-3);
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, .06);
             border-radius: 6px;
             padding: 40px 32px;
             position: relative;
-            transition: transform 0.3s, border-color 0.3s;
+            transition: transform .3s, border-color .3s;
         }
 
         .plan-card.featured {
@@ -726,7 +822,7 @@
         }
 
         .plan-name {
-            font-family: 'Bebas Neue', sans-serif;
+            font-family: "Bebas Neue", sans-serif;
             font-size: 28px;
             letter-spacing: 2px;
             color: var(--gray-light);
@@ -734,7 +830,7 @@
         }
 
         .plan-price {
-            font-family: 'Bebas Neue', sans-serif;
+            font-family: "Bebas Neue", sans-serif;
             font-size: 64px;
             line-height: 1;
             color: var(--white);
@@ -777,13 +873,13 @@
         }
 
         .plan-features li::before {
-            content: '✓';
+            content: "✓";
             color: var(--red);
             font-weight: 700;
         }
 
         .plan-features li.no::before {
-            content: '✗';
+            content: "✗";
             color: var(--gray);
         }
 
@@ -801,7 +897,7 @@
             letter-spacing: 1.5px;
             text-transform: uppercase;
             text-decoration: none;
-            transition: 0.25s;
+            transition: .25s;
             border: 2px solid var(--red);
             color: var(--red);
         }
@@ -821,7 +917,7 @@
             border-color: var(--orange);
         }
 
-        /* ── TESTIMONIALS ── */
+        /* TESTIMONIALS */
         .testimonials-section {
             background: var(--black);
         }
@@ -836,7 +932,7 @@
         .testimonial-card {
             background: var(--black-3);
             padding: 32px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, .05);
             border-radius: 6px;
             position: relative;
         }
@@ -846,9 +942,9 @@
             position: absolute;
             top: 16px;
             right: 24px;
-            font-family: 'Bebas Neue', sans-serif;
+            font-family: "Bebas Neue", sans-serif;
             font-size: 80px;
-            color: rgba(255, 45, 45, 0.12);
+            color: rgba(255, 45, 45, .12);
             line-height: 1;
         }
 
@@ -880,7 +976,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-family: 'Bebas Neue', sans-serif;
+            font-family: "Bebas Neue", sans-serif;
             font-size: 18px;
         }
 
@@ -895,7 +991,7 @@
             margin-top: 2px;
         }
 
-        /* ── LOCATION ── */
+        /* LOCATION */
         .location-section {
             background: var(--black-2);
         }
@@ -917,16 +1013,16 @@
         .location-item {
             background: var(--black-3);
             padding: 20px 24px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, .05);
             border-radius: 4px;
             display: flex;
             align-items: center;
             gap: 16px;
-            transition: border-color 0.2s, transform 0.2s;
+            transition: border-color .2s, transform .2s;
         }
 
         .location-item:hover {
-            border-color: rgba(255, 45, 45, 0.3);
+            border-color: rgba(255, 45, 45, .3);
             transform: translateX(4px);
         }
 
@@ -945,98 +1041,181 @@
             margin-top: 2px;
         }
 
-        .map-placeholder {
-            background: var(--black-3);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 6px;
-            height: 400px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 16px;
-            color: var(--gray);
-            font-size: 14px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .map-placeholder::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background-image:
-                linear-gradient(rgba(255, 45, 45, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 45, 45, 0.05) 1px, transparent 1px);
-            background-size: 40px 40px;
-        }
-
-        .map-pin {
-            font-size: 48px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .map-text {
-            position: relative;
-            z-index: 1;
-        }
-
-        /* ── APP DOWNLOAD ── */
-        .app-section {
-            background: var(--black);
-        }
-
-        .app-layout {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 80px;
-            align-items: center;
-        }
-
-        .app-feature-list {
+        /* VISIT CARDS */
+        .visit-cards-wrap {
             display: flex;
             flex-direction: column;
             gap: 20px;
-            margin: 32px 0;
+            margin-top: 40px;
         }
 
-        .app-feature {
+        .visit-card {
+            background: var(--black-3);
+            border: 1px solid rgba(255, 45, 45, 0.15);
+            border-radius: 24px;
+            padding: 30px;
             display: flex;
             align-items: flex-start;
-            gap: 16px;
+            gap: 24px;
+            transition: transform 0.3s, border-color 0.3s;
         }
 
-        .app-feature-icon {
-            width: 44px;
-            height: 44px;
-            flex-shrink: 0;
+        .visit-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--red);
+        }
+
+        .visit-icon-box {
+            width: 64px;
+            height: 64px;
             background: rgba(255, 45, 45, 0.1);
-            border: 1px solid rgba(255, 45, 45, 0.2);
-            border-radius: 8px;
+            border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 20px;
+            font-size: 28px;
+            flex-shrink: 0;
         }
 
-        .app-feature h4 {
+        .visit-info {
+            flex: 1;
+        }
+
+        .visit-label {
+            font-size: 11px;
             font-weight: 700;
-            font-size: 15px;
-            margin-bottom: 4px;
+            letter-spacing: 2px;
+            color: var(--red);
+            text-transform: uppercase;
+            margin-bottom: 8px;
         }
 
-        .app-feature p {
-            font-size: 13px;
+        .visit-main-text {
+            font-size: 18px;
+            font-weight: 700;
+            line-height: 1.4;
+            color: var(--white);
+            margin-bottom: 8px;
+        }
+
+        .visit-sub-text {
+            font-size: 14px;
             color: var(--gray-light);
-            line-height: 1.5;
+            margin-bottom: 12px;
         }
 
-        .app-btns {
+        .visit-sub-link {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--red);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: gap 0.2s;
+        }
+
+        .visit-sub-link:hover {
+            gap: 10px;
+        }
+
+        .visit-hours-table {
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .visit-hours-table tr td {
+            padding: 4px 0;
+            font-size: 14px;
+        }
+
+        .visit-hours-table tr td:first-child {
+            color: var(--gray-light);
+        }
+
+        .visit-hours-table tr td:last-child {
+            text-align: right;
+            font-weight: 700;
+            color: var(--white);
+        }
+
+        .visit-action-btns {
             display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
+            gap: 16px;
+            margin-top: 30px;
+        }
+
+        .visit-btn-call {
+            flex: 1.2;
+            background: var(--red);
+            color: var(--white);
+            padding: 16px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 10px 20px rgba(255, 45, 45, 0.2);
+            transition: background 0.3s, transform 0.3s;
+        }
+
+        .visit-btn-call:hover {
+            background: var(--orange);
+            transform: translateY(-3px);
+        }
+
+        .visit-btn-dir {
+            flex: 1;
+            background: transparent;
+            color: var(--white);
+            border: 2px solid var(--red);
+            padding: 16px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: background 0.3s, transform 0.3s;
+        }
+
+        .visit-btn-dir:hover {
+            background: rgba(255, 45, 45, 0.1);
+            transform: translateY(-3px);
+        }
+
+        .map-placeholder {
+            background: var(--black-3);
+            border: 1px solid rgba(255, 45, 45, 0.2);
+            border-radius: 24px;
+            height: 500px;
+            overflow: hidden;
+            position: relative;
+            transition: border-color 0.3s;
+        }
+
+        .map-placeholder:hover {
+            border-color: var(--red);
+        }
+
+        .map-placeholder iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            filter: grayscale(1) invert(0.92) contrast(1.2) opacity(0.8);
+            transition: filter 0.5s, opacity 0.5s;
+        }
+
+        .map-placeholder:hover iframe {
+            filter: grayscale(0) invert(0) contrast(1) opacity(1);
+        }
+
+        .map-pin,
+        .map-text {
+            display: none;
         }
 
         .store-btn {
@@ -1044,16 +1223,16 @@
             align-items: center;
             gap: 12px;
             background: var(--black-3);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, .1);
             border-radius: 8px;
             padding: 12px 20px;
             text-decoration: none;
             color: var(--white);
-            transition: border-color 0.2s, background 0.2s;
+            transition: border-color .2s, background .2s;
         }
 
         .store-btn:hover {
-            border-color: rgba(255, 45, 45, 0.4);
+            border-color: rgba(255, 45, 45, .4);
             background: var(--black-4);
         }
 
@@ -1074,30 +1253,7 @@
             font-weight: 700;
         }
 
-        .app-mockup {
-            background: linear-gradient(145deg, #1a0505, #0d0d0d);
-            border: 1px solid rgba(255, 45, 45, 0.15);
-            border-radius: 24px;
-            height: 480px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-            font-size: 80px;
-        }
-
-        .app-mockup::before {
-            content: '';
-            position: absolute;
-            top: -60px;
-            left: -60px;
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, rgba(255, 45, 45, 0.15) 0%, transparent 70%);
-        }
-
-        /* ── WHATSAPP FLOAT ── */
+        /* WHATSAPP */
         .whatsapp-float {
             position: fixed;
             bottom: 28px;
@@ -1111,10 +1267,10 @@
             justify-content: center;
             font-size: 28px;
             z-index: 400;
-            box-shadow: 0 6px 24px rgba(37, 211, 102, 0.4);
+            box-shadow: 0 6px 24px rgba(37, 211, 102, .4);
             text-decoration: none;
             animation: pulse-green 2.5s infinite;
-            transition: transform 0.2s;
+            transition: transform .2s;
         }
 
         .whatsapp-float:hover {
@@ -1125,18 +1281,18 @@
 
             0%,
             100% {
-                box-shadow: 0 6px 24px rgba(37, 211, 102, 0.4);
+                box-shadow: 0 6px 24px rgba(37, 211, 102, .4)
             }
 
             50% {
-                box-shadow: 0 6px 40px rgba(37, 211, 102, 0.6);
+                box-shadow: 0 6px 40px rgba(37, 211, 102, .6)
             }
         }
 
-        /* ── FOOTER ── */
+        /* FOOTER */
         footer {
             background: var(--black-2);
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            border-top: 1px solid rgba(255, 255, 255, .05);
             padding: 60px 5% 30px;
         }
 
@@ -1147,11 +1303,23 @@
             margin-bottom: 50px;
         }
 
+        .footer-logo-wrap {
+            margin-bottom: 16px;
+        }
+
+        .footer-logo-img {
+            height: 64px;
+            width: auto;
+            object-fit: contain;
+            mix-blend-mode: screen;
+            filter: drop-shadow(0 0 8px rgba(255, 45, 45, .8)) drop-shadow(0 0 20px rgba(255, 45, 45, .4));
+        }
+
         .footer-brand p {
             font-size: 14px;
             color: var(--gray-light);
             line-height: 1.7;
-            margin: 16px 0 24px;
+            margin-bottom: 24px;
             max-width: 280px;
         }
 
@@ -1164,27 +1332,28 @@
             width: 36px;
             height: 36px;
             background: var(--black-3);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, .08);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 16px;
+            font-size: 18px;
+            color: var(--white);
             text-decoration: none;
-            transition: border-color 0.2s, background 0.2s;
+            transition: border-color .2s, background .2s, color .2s;
         }
 
         .social-icon:hover {
             border-color: var(--red);
-            background: rgba(255, 45, 45, 0.1);
+            background: rgba(255, 45, 45, .1);
         }
 
         .footer-col h4 {
-            font-family: 'Barlow Condensed', sans-serif;
-            font-size: 13px;
+            font-family: "Playfair Display", serif;
+            font-size: 18px;
             font-weight: 700;
-            letter-spacing: 2px;
-            text-transform: uppercase;
+            letter-spacing: 0px;
+            text-transform: none;
             color: var(--white);
             margin-bottom: 18px;
         }
@@ -1200,7 +1369,7 @@
             font-size: 14px;
             color: var(--gray-light);
             text-decoration: none;
-            transition: color 0.2s;
+            transition: color .2s;
         }
 
         .footer-col ul a:hover {
@@ -1208,7 +1377,7 @@
         }
 
         .footer-bottom {
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            border-top: 1px solid rgba(255, 255, 255, .05);
             padding-top: 24px;
             display: flex;
             justify-content: space-between;
@@ -1221,7 +1390,7 @@
             color: var(--red);
         }
 
-        /* ── SUCCESS TOAST ── */
+        /* TOAST */
         .toast {
             position: fixed;
             bottom: 100px;
@@ -1236,7 +1405,7 @@
             font-size: 14px;
             opacity: 0;
             pointer-events: none;
-            transition: opacity 0.3s, transform 0.3s;
+            transition: opacity .3s, transform .3s;
             z-index: 600;
             white-space: nowrap;
         }
@@ -1246,11 +1415,90 @@
             transform: translateX(-50%) translateY(0);
         }
 
-        /* ── SCROLL REVEAL ── */
+        /* TRANSFORMATIONS */
+        .transformations-section {
+            background: var(--black-2);
+        }
+
+        .transformations-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-top: 52px;
+        }
+
+        .transformation-card {
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 45, 45, 0.2);
+            background: var(--black-3);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .transformation-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--red);
+        }
+
+        .transformation-images {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .before-after {
+            position: relative;
+        }
+
+        .before-after img {
+            width: 100%;
+            aspect-ratio: 3/4;
+            object-fit: cover;
+        }
+
+        .before-img {
+            filter: grayscale(30%);
+        }
+
+        .label {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .label.before {
+            background: rgba(0, 0, 0, 0.7);
+            color: #aaa;
+        }
+
+        .label.after {
+            background: var(--red);
+            color: #fff;
+        }
+
+        .transformation-info {
+            padding: 16px;
+            background: var(--black-3);
+        }
+
+        .member-name {
+            font-weight: 700;
+            color: var(--white);
+        }
+
+        .member-duration {
+            font-size: 13px;
+            color: var(--gray-light);
+        }
+
+        /* REVEAL */
         .reveal {
             opacity: 0;
             transform: translateY(30px);
-            transition: opacity 0.7s, transform 0.7s;
+            transition: opacity .7s, transform .7s;
         }
 
         .reveal.visible {
@@ -1258,8 +1506,8 @@
             transform: translateY(0);
         }
 
-        /* ── RESPONSIVE ── */
-        @media (max-width: 900px) {
+        /* RESPONSIVE */
+        @media (max-width:900px) {
 
             .form-layout,
             .features-header,
@@ -1270,6 +1518,7 @@
 
             .features-grid,
             .plans-grid,
+            .transformations-grid,
             .testimonials-grid {
                 grid-template-columns: 1fr;
             }
@@ -1298,20 +1547,9 @@
             .nav-hamburger {
                 display: flex;
             }
-        }
 
-        @media (max-width: 600px) {
-            .hero-h1 {
-                font-size: clamp(42px, 12vw, 56px);
-                line-height: 1.1;
-            }
-
-            .hero-content {
-                padding: 100px 6% 60px;
-            }
-
-            .stat-num {
-                font-size: 32px;
+            .nav-logo-img {
+                height: 44px;
             }
         }
     </style>
@@ -1319,25 +1557,26 @@
 
 <body>
 
-    <!-- Custom cursor -->
     <div class="cursor" id="cursor"></div>
     <div class="cursor-ring" id="cursorRing"></div>
 
-    <!-- WhatsApp Float -->
-    <a href="https://wa.me/91XXXXXXXXXX" class="whatsapp-float" target="_blank" title="Chat on WhatsApp">💬</a>
-
-    <!-- Toast -->
+    <a href="https://wa.me/916396436526" class="whatsapp-float" target="_blank" title="Chat on WhatsApp"><i class="fab fa-whatsapp"></i></a>
     <div class="toast" id="toast">🎉 We'll contact you within 24 hours!</div>
 
     <!-- ══ NAV ══ -->
     <nav id="navbar">
-        <a href="#" class="nav-logo">MD <span>Fitness</span></a>
+        <a href="#" class="nav-logo-link">
+            <img src="fitness-gym-logo.png" alt="Fitness Gym" class="nav-logo-img" />
+            <div>
+                <div class="nav-logo-text">MD <span>Fitness</span> Gym</div>
+                <div class="nav-logo-sub">Stronger Everyday</div>
+            </div>
+        </a>
         <ul class="nav-links">
             <li><a href="#features">Features</a></li>
             <li><a href="#plans">Plans</a></li>
             <li><a href="#locations">Locations</a></li>
-            <li><a href="#app">App</a></li>
-            <li><a href="#join" class="nav-cta">Join ₹1</a></li>
+            <li><a href="#join" class="nav-cta">Join Now</a></li>
         </ul>
         <div class="nav-hamburger" onclick="toggleMenu()">
             <span></span><span></span><span></span>
@@ -1349,54 +1588,49 @@
         <div class="hero-bg"></div>
         <div class="hero-slash"></div>
         <div class="hero-grid-lines"></div>
+        <div class="hero-dot"></div>
         <div class="hero-content">
-            <div class="hero-tag">Premium Fitness · Delhi NCR</div>
-            <h1 class="hero-h1">STOP GUESSING.<br>START <em>EVOLVING.</em></h1>
-            <p class="hero-sub">Your 360° fitness transformation, powered by AI and engineered for your biology.</p>
+            <h1 class="hero-h1">STOP<br>WISHING.<br><em>START</em><br>LIFTING.</h1>
+            <p class="hero-sub">Expert coaches, and premium equipment — engineered to transform your body and your
+                mindset.</p>
             <div class="hero-btns">
-                <a href="#join" class="btn-primary">START YOUR EVOLUTION →</a>
-                <p style="font-size: 13px; color: var(--gray-light); margin-top: 12px; letter-spacing: 0.5px;">Get a 1-Day Pro Pass for <strong>₹1</strong></p>
+                <a href="#join" class="btn-primary"><span>▶</span> Get 1-Day Pass for ₹1</a>
+                <a href="#plans" class="btn-outline">View Memberships</a>
             </div>
-            <div class="hero-stats">
-                <div class="stat-item">
-                    <div class="stat-num" data-target="3">0</div>
-                    <div class="stat-label">Training Centers</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-num" data-target="1200">0</div>
-                    <div class="stat-label">Members Transformed</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-num" data-target="15">0</div>
-                    <div class="stat-label">Expert Coaches</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-num" data-target="4">0</div>
-                    <div class="stat-label">Years of Excellence</div>
-                </div>
+        </div>
+        <div class="hero-stats">
+            <div class="stat-item">
+                <div class="stat-num" data-target="3">0</div>
+                <div class="stat-label">Training Centers</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-num" data-target="1200">0</div>
+                <div class="stat-label">Members Transformed</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-num" data-target="15">0</div>
+                <div class="stat-label">Expert Coaches</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-num" data-target="4">0</div>
+                <div class="stat-label">Years of Excellence</div>
             </div>
         </div>
     </section>
 
     <!-- ══ MARQUEE ══ -->
     <div class="marquee-wrap">
-        <div class="marquee-track" id="marqueeTrack">
-            <span>AI-Powered Training</span><span class="dot">◆</span>
-            <span>Premium Equipment</span><span class="dot">◆</span>
-            <span>Expert Certified Trainers</span><span class="dot">◆</span>
-            <span>Personalised Diet Plans</span><span class="dot">◆</span>
-            <span>Real-Time Progress Tracking</span><span class="dot">◆</span>
-            <span>Group Class Access</span><span class="dot">◆</span>
-            <span>Monthly Body Analysis</span><span class="dot">◆</span>
-            <span>Goal-Based Workouts</span><span class="dot">◆</span>
-            <span>AI-Powered Training</span><span class="dot">◆</span>
-            <span>Premium Equipment</span><span class="dot">◆</span>
-            <span>Expert Certified Trainers</span><span class="dot">◆</span>
-            <span>Personalised Diet Plans</span><span class="dot">◆</span>
-            <span>Real-Time Progress Tracking</span><span class="dot">◆</span>
-            <span>Group Class Access</span><span class="dot">◆</span>
-            <span>Monthly Body Analysis</span><span class="dot">◆</span>
-            <span>Goal-Based Workouts</span><span class="dot">◆</span>
+        <div class="marquee-track">
+            <span>AI-Powered Training</span><span class="dot">◆</span><span>Premium Equipment</span><span
+                class="dot">◆</span><span>Expert Certified Trainers</span><span class="dot">◆</span><span>Personalised
+                Diet Plans</span><span class="dot">◆</span><span>Real-Time Progress Tracking</span><span
+                class="dot">◆</span><span>Group Class Access</span><span class="dot">◆</span><span>Monthly Body
+                Analysis</span><span class="dot">◆</span><span>Goal-Based Workouts</span><span class="dot">◆</span>
+            <span>AI-Powered Training</span><span class="dot">◆</span><span>Premium Equipment</span><span
+                class="dot">◆</span><span>Expert Certified Trainers</span><span class="dot">◆</span><span>Personalised
+                Diet Plans</span><span class="dot">◆</span><span>Real-Time Progress Tracking</span><span
+                class="dot">◆</span><span>Group Class Access</span><span class="dot">◆</span><span>Monthly Body
+                Analysis</span><span class="dot">◆</span><span>Goal-Based Workouts</span><span class="dot">◆</span>
         </div>
     </div>
 
@@ -1404,45 +1638,31 @@
     <section class="form-section" id="join">
         <div class="form-layout">
             <div class="reveal">
-                <div class="form-badge">Limited Time Offer</div>
                 <div class="section-tag">Start Today</div>
-                <h2 class="section-title">YOUR FITNESS<br><em>JOURNEY</em><br>STARTS NOW</h2>
-                <div class="price-highlight">₹1</div>
-                <p class="section-sub">Experience MD Fitness for a full day — premium equipment, group classes, and a
-                    trainer session — all for just ₹1. No strings attached.</p>
-                <p class="form-note">✓ Valid for first-time visitors &nbsp; ✓ No credit card required &nbsp; ✓ Walk in
-                    any day</p>
+                <h2 class="form-headline">Transform Your<br><em>Fitness Journey</em><br>Today</h2>
+                <p class="section-sub">Join Meerut's #1 fitness destination.</p>
             </div>
             <div class="reveal">
                 <form class="lead-form" id="leadForm">
                     <div class="form-row">
-                        <div class="field-group">
-                            <label>Full Name</label>
-                            <input type="text" id="fname" placeholder="Rahul Sharma" required />
-                        </div>
-                        <div class="field-group">
-                            <label>Phone Number</label>
-                            <input type="tel" id="fphone" placeholder="+91 98765 43210" required />
-                        </div>
+                        <div class="field-group"><label>Full Name</label><input type="text" id="fname"
+                                placeholder="Rahul Sharma" required /></div>
+                        <div class="field-group"><label>Phone Number</label><input type="tel" id="fphone"
+                                placeholder="+91 98765 43210" required /></div>
                     </div>
-                    <div class="field-group">
-                        <label>Email Address</label>
-                        <input type="email" id="femail" placeholder="rahul@email.com" required />
-                    </div>
+                    <div class="field-group"><label>Email Address</label><input type="email" id="femail"
+                            placeholder="rahul@email.com" required /></div>
                     <div class="form-row">
-                        <div class="field-group">
-                            <label>Your Goal</label>
+                        <div class="field-group"><label>Your Goal</label>
                             <select id="fgoal">
                                 <option value="" disabled selected>Select Goal</option>
                                 <option>Weight Loss</option>
                                 <option>Muscle Gain</option>
                                 <option>General Fitness</option>
                                 <option>Athletic Performance</option>
-                                <option>Rehabilitation</option>
                             </select>
                         </div>
-                        <div class="field-group">
-                            <label>Preferred Location</label>
+                        <div class="field-group"><label>Preferred Location</label>
                             <select id="flocation">
                                 <option value="" disabled selected>Select Branch</option>
                                 <option>MD Fitness — Rohini</option>
@@ -1470,35 +1690,29 @@
                 nutrition — so nothing holds you back.</p>
         </div>
         <div class="features-grid">
-            <div class="feature-card reveal">
-                <span class="feature-icon">🤖</span>
+            <div class="feature-card reveal"><span class="feature-icon">🤖</span>
                 <h3>AI Workout Planner</h3>
                 <p>Your training plan adapts to your progress, recovery, and goals — automatically, every week.</p>
             </div>
-            <div class="feature-card reveal">
-                <span class="feature-icon">🥗</span>
+            <div class="feature-card reveal"><span class="feature-icon">🥗</span>
                 <h3>Personalised Diet Plans</h3>
                 <p>No crash diets. Balanced nutrition built around foods you love and macros your body actually needs.
                 </p>
             </div>
-            <div class="feature-card reveal">
-                <span class="feature-icon">📊</span>
+            <div class="feature-card reveal"><span class="feature-icon">📊</span>
                 <h3>Monthly Body Analysis</h3>
                 <p>Track real change — muscle, fat, hydration — with BCA scans and expert review every month.</p>
             </div>
-            <div class="feature-card reveal">
-                <span class="feature-icon">🏋️</span>
+            <div class="feature-card reveal"><span class="feature-icon">🏋️</span>
                 <h3>Premium Equipment</h3>
                 <p>Commercial-grade machines, free weights, and cardio stations — maintained to the highest standard.
                 </p>
             </div>
-            <div class="feature-card reveal">
-                <span class="feature-icon">👥</span>
+            <div class="feature-card reveal"><span class="feature-icon">👥</span>
                 <h3>Group Classes</h3>
                 <p>Unlimited access to HIIT, yoga, Zumba, spinning, and more — led by certified instructors.</p>
             </div>
-            <div class="feature-card reveal">
-                <span class="feature-icon">🏆</span>
+            <div class="feature-card reveal"><span class="feature-icon">🏆</span>
                 <h3>Expert Coaches</h3>
                 <p>Nationally certified trainers who know your name, your goals, and exactly how to push you further.
                 </p>
@@ -1535,12 +1749,10 @@
                 <div class="plan-price"><sup>₹</sup>2799<span>/mo</span></div>
                 <p class="plan-desc">Everything you need to transform your body in 90 days.</p>
                 <ul class="plan-features">
-                    <li>Unlimited gym access (5am–11pm)</li>
+                    <li>Unlimited gym access (5am–10pm)</li>
                     <li>Unlimited group classes</li>
                     <li>4 trainer sessions/month</li>
-                    <li>Monthly BCA test</li>
                     <li>AI diet plan</li>
-                    <li class="no">Multi-branch access</li>
                 </ul>
                 <a href="#join" class="plan-btn">Get Pro</a>
             </div>
@@ -1549,14 +1761,70 @@
                 <div class="plan-price"><sup>₹</sup>4499<span>/mo</span></div>
                 <p class="plan-desc">The complete high-performance package for serious athletes.</p>
                 <ul class="plan-features">
-                    <li>24/7 gym access</li>
                     <li>Unlimited group classes</li>
                     <li>Unlimited trainer sessions</li>
-                    <li>Weekly BCA test</li>
-                    <li>AI diet + workout plan</li>
-                    <li>All branch access</li>
                 </ul>
                 <a href="#join" class="plan-btn">Go Elite</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══ TRANSFORMATIONS ══ -->
+    <section class="transformations-section reveal" id="transformations">
+        <div class="section-tag">Real Results</div>
+        <h2 class="section-title">MEMBER <em>TRANSFORMATIONS</em></h2>
+        <p class="section-sub">Real people. Real results. No filters.</p>
+
+        <div class="transformations-grid">
+            <div class="transformation-card">
+                <div class="transformation-images">
+                    <div class="before-after">
+                        <img src="before.jpg" alt="Before" class="before-img" />
+                        <span class="label before">BEFORE</span>
+                    </div>
+                    <div class="before-after">
+                        <img src="after.jpg" alt="After" class="after-img" />
+                        <span class="label after">AFTER</span>
+                    </div>
+                </div>
+                <div class="transformation-info">
+                    <div class="member-name">Rahul S. — Lost 18kg</div>
+                    <div class="member-duration">6 months at MD Fitness</div>
+                </div>
+            </div>
+
+            <div class="transformation-card">
+                <div class="transformation-images">
+                    <div class="before-after">
+                        <img src="before.jpg" alt="Before" class="before-img" />
+                        <span class="label before">BEFORE</span>
+                    </div>
+                    <div class="before-after">
+                        <img src="after.jpg" alt="After" class="after-img" />
+                        <span class="label after">AFTER</span>
+                    </div>
+                </div>
+                <div class="transformation-info">
+                    <div class="member-name">Priya M. — Lost 12kg</div>
+                    <div class="member-duration">4 months at MD Fitness</div>
+                </div>
+            </div>
+
+            <div class="transformation-card">
+                <div class="transformation-images">
+                    <div class="before-after">
+                        <img src="before.jpg" alt="Before" class="before-img" />
+                        <span class="label before">BEFORE</span>
+                    </div>
+                    <div class="before-after">
+                        <img src="after.jpg" alt="After" class="after-img" />
+                        <span class="label after">AFTER</span>
+                    </div>
+                </div>
+                <div class="transformation-info">
+                    <div class="member-name">Vikram K. — Gained 8kg Muscle</div>
+                    <div class="member-duration">8 months at MD Fitness</div>
+                </div>
             </div>
         </div>
     </section>
@@ -1576,7 +1844,7 @@
                     <div class="author-avatar">A</div>
                     <div>
                         <div class="author-name">Amit Verma</div>
-                        <div class="author-info">Member since 2023 · Rohini Branch</div>
+                        <div class="author-info">Member since 2023</div>
                     </div>
                 </div>
             </div>
@@ -1588,7 +1856,7 @@
                     <div class="author-avatar">P</div>
                     <div>
                         <div class="author-name">Priya Nair</div>
-                        <div class="author-info">Member since 2022 · Dwarka Branch</div>
+                        <div class="author-info">Member since 2022</div>
                     </div>
                 </div>
             </div>
@@ -1600,60 +1868,10 @@
                     <div class="author-avatar">R</div>
                     <div>
                         <div class="author-name">Rohan Kapoor</div>
-                        <div class="author-info">Member since 2024 · Janakpuri Branch</div>
+                        <div class="author-info">Member since 2024</div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- ══ APP ══ -->
-    <section class="app-section" id="app">
-        <div class="app-layout">
-            <div class="reveal">
-                <div class="section-tag">Mobile App</div>
-                <h2 class="section-title">YOUR GYM IN<br>YOUR <em>POCKET</em></h2>
-                <div class="app-feature-list">
-                    <div class="app-feature">
-                        <div class="app-feature-icon">📸</div>
-                        <div>
-                            <h4>AI Food Scanner</h4>
-                            <p>Snap a photo of your meal. Instantly see calories, macros, and nutritional breakdown.</p>
-                        </div>
-                    </div>
-                    <div class="app-feature">
-                        <div class="app-feature-icon">📈</div>
-                        <div>
-                            <h4>Progress Tracking</h4>
-                            <p>Log workouts, track body measurements, and visualise your transformation over time.</p>
-                        </div>
-                    </div>
-                    <div class="app-feature">
-                        <div class="app-feature-icon">🎯</div>
-                        <div>
-                            <h4>Personalised Workouts</h4>
-                            <p>Daily AI-generated workout plans tailored to your goal, fitness level, and schedule.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="app-btns">
-                    <a href="#" class="store-btn">
-                        <span class="store-btn-icon">▶</span>
-                        <div class="store-btn-text">
-                            <small>Get it on</small>
-                            <strong>Google Play</strong>
-                        </div>
-                    </a>
-                    <a href="#" class="store-btn">
-                        <span class="store-btn-icon">🍎</span>
-                        <div class="store-btn-text">
-                            <small>Download on the</small>
-                            <strong>App Store</strong>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="app-mockup reveal">📱</div>
         </div>
     </section>
 
@@ -1661,41 +1879,55 @@
     <section class="location-section" id="locations">
         <div class="location-layout">
             <div class="reveal">
-                <div class="section-tag">Find Us</div>
-                <h2 class="section-title">OUR <em>LOCATIONS</em></h2>
-                <p class="section-sub">Three premium facilities across Delhi — each with the same world-class equipment
-                    and coaching standards.</p>
-                <div class="location-list">
-                    <div class="location-item">
-                        <span class="location-icon">📍</span>
-                        <div>
-                            <div class="location-name">MD Fitness — Rohini</div>
-                            <div class="location-address">Sector 14, Rohini, New Delhi · Open 5am–11pm</div>
+                <h2 class="section-title">VISIT <em> US</em></h2>
+                <div class="visit-cards-wrap">
+                    <!-- ADDRESS BOX -->
+                    <div class="visit-card">
+                        <div class="visit-icon-box">📍</div>
+                        <div class="visit-info">
+                            <div class="visit-label">ADDRESS</div>
+                            <div class="visit-main-text"> A-339, first floor, indusland bank, near pink collor</div>
+                            <div class="visit-sub-text">Ganga Nagar, Meerut, Uttar Pradesh</div>
+                            <a href="https://maps.google.com" target="_blank" class="visit-sub-link">Get Directions
+                                →</a>
                         </div>
                     </div>
-                    <div class="location-item">
-                        <span class="location-icon">📍</span>
-                        <div>
-                            <div class="location-name">MD Fitness — Dwarka</div>
-                            <div class="location-address">Sector 6, Dwarka, New Delhi · Open 5am–11pm</div>
+
+                    <!-- PHONE BOX -->
+                    <div class="visit-card">
+                        <div class="visit-icon-box">📞</div>
+                        <div class="visit-info">
+                            <div class="visit-label">PHONE</div>
+                            <div class="visit-main-text">+91 63964 36526</div>
+                            <div class="visit-sub-text">Call or WhatsApp us for inquiries</div>
                         </div>
                     </div>
-                    <div class="location-item">
-                        <span class="location-icon">📍</span>
-                        <div>
-                            <div class="location-name">MD Fitness — Janakpuri</div>
-                            <div class="location-address">District Centre, Janakpuri · Open 5am–11pm</div>
+
+                    <!-- HOURS BOX -->
+                    <div class="visit-card">
+                        <div class="visit-icon-box">🕒</div>
+                        <div class="visit-info">
+                            <div class="visit-label">OPENING HOURS</div>
+                            <table class="visit-hours-table">
+                                <tr>
+                                    <td>Monday – Saturday</td>
+                                    <td>5:00 AM – 10:00 PM</td>
+                                </tr>
+                            </table>
                         </div>
                     </div>
+                </div>
+
+                <div class="visit-action-btns">
+                    <a href="tel:+916396436526" class="visit-btn-call">📞 Call Now: +91 63964 36526</a>
+                    <a href="https://maps.google.com" target="_blank" class="visit-btn-dir">🧭 Get Directions</a>
                 </div>
             </div>
             <div class="map-placeholder reveal">
-                <div class="map-pin">🗺️</div>
-                <div class="map-text">
-                    <strong>Embed Google Map Here</strong><br>
-                    Replace with &lt;iframe&gt; from Google Maps<br>
-                    for your gym location
-                </div>
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6978.836965763161!2d77.74456689292357!3d29.00459825285592!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390c7b4d75d0bc9d%3A0xfe20beb21863ceea!2sMD%20Fitness%20Gym!5e0!3m2!1sen!2sin!4v1778134468875!5m2!1sen!2sin"
+                    style="border:0; width:100%; height:100%;" allowfullscreen="" loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
         </div>
     </section>
@@ -1704,13 +1936,15 @@
     <footer>
         <div class="footer-grid">
             <div class="footer-brand">
-                <div class="nav-logo" style="font-size:24px;">MD <span style="color:var(--red);">Fitness</span></div>
-                <p>Delhi's premium fitness destination. Transforming bodies, building champions — since 2020.</p>
+                <div class="footer-logo-wrap">
+                    <img src="fitness-gym-logo.png" alt="Fitness Gym" class="footer-logo-img" />
+                </div>
+                <p>Meerut's premium fitness destination. Transforming bodies, building champions — since 2020.</p>
                 <div class="footer-socials">
-                    <a href="#" class="social-icon">📸</a>
-                    <a href="#" class="social-icon">📘</a>
-                    <a href="#" class="social-icon">▶</a>
-                    <a href="#" class="social-icon">💬</a>
+                    <a href="#" class="social-icon" title="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-icon" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-icon" title="Youtube"><i class="fab fa-youtube"></i></a>
+                    <a href="https://wa.me/916396436526" class="social-icon" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
                 </div>
             </div>
             <div class="footer-col">
@@ -1734,140 +1968,73 @@
             <div class="footer-col">
                 <h4>Contact</h4>
                 <ul>
-                    <li><a href="tel:+910000000000">+91 00000 00000</a></li>
-                    <li><a href="mailto:hello@mdfitness.in">hello@mdfitness.in</a></li>
-                    <li><a href="#">WhatsApp Us</a></li>
-                    <li><a href="#">Instagram DM</a></li>
+                    <li><a href="tel:+916396436526">+91 63964 36526</a></li>
+                    <li><a href="mailto:mdefitnessgym@gmail.com">mdefitnessgym@gmail.com</a></li>
+                    <li><a href="https://wa.me/916396436526" target="_blank">WhatsApp Us</a></li>
+                    <li><a href="https://www.instagram.com/mdfitnessmeerut" target="_blank">Instagram DM</a></li>
                 </ul>
             </div>
         </div>
         <div class="footer-bottom">
-            <div>© 2025 <span>MD Fitness</span>. All rights reserved.</div>
+            <div>© 2026 <span>MD Fitness Gym</span>. All rights reserved.</div>
             <div>Privacy Policy · Terms of Service</div>
         </div>
     </footer>
 
     <script>
-        // ── Custom Cursor ──
-        const cursor = document.getElementById('cursor');
-        const cursorRing = document.getElementById('cursorRing');
+        // Custom Cursor
+        const cursor = document.getElementById("cursor");
+        const cursorRing = document.getElementById("cursorRing");
         let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
-        document.addEventListener('mousemove', e => {
-            mouseX = e.clientX; mouseY = e.clientY;
-            cursor.style.left = mouseX + 'px';
-            cursor.style.top = mouseY + 'px';
-        });
-        function animateRing() {
-            ringX += (mouseX - ringX) * 0.12;
-            ringY += (mouseY - ringY) * 0.12;
-            cursorRing.style.left = ringX + 'px';
-            cursorRing.style.top = ringY + 'px';
-            requestAnimationFrame(animateRing);
-        }
+        document.addEventListener("mousemove", e => { mouseX = e.clientX; mouseY = e.clientY; cursor.style.left = mouseX + "px"; cursor.style.top = mouseY + "px"; });
+        function animateRing() { ringX += (mouseX - ringX) * .12; ringY += (mouseY - ringY) * .12; cursorRing.style.left = ringX + "px"; cursorRing.style.top = ringY + "px"; requestAnimationFrame(animateRing); }
         animateRing();
-        document.querySelectorAll('a, button, input, select').forEach(el => {
-            el.addEventListener('mouseenter', () => {
-                cursor.style.width = '20px'; cursor.style.height = '20px';
-                cursorRing.style.width = '50px'; cursorRing.style.height = '50px';
-            });
-            el.addEventListener('mouseleave', () => {
-                cursor.style.width = '12px'; cursor.style.height = '12px';
-                cursorRing.style.width = '36px'; cursorRing.style.height = '36px';
-            });
+        document.querySelectorAll("a,button,input,select").forEach(el => {
+            el.addEventListener("mouseenter", () => { cursor.style.width = "20px"; cursor.style.height = "20px"; cursorRing.style.width = "50px"; cursorRing.style.height = "50px"; });
+            el.addEventListener("mouseleave", () => { cursor.style.width = "12px"; cursor.style.height = "12px"; cursorRing.style.width = "36px"; cursorRing.style.height = "36px"; });
         });
 
-        // ── Navbar scroll ──
-        const navbar = document.getElementById('navbar');
-        window.addEventListener('scroll', () => {
-            navbar.classList.toggle('scrolled', window.scrollY > 60);
-        });
+        // Navbar scroll
+        const navbar = document.getElementById("navbar");
+        window.addEventListener("scroll", () => { navbar.classList.toggle("scrolled", window.scrollY > 60); });
 
-        // ── Animated Counters ──
+        // Animated Counters
         function animateCounter(el) {
             const target = parseInt(el.dataset.target);
-            const suffix = target >= 1000 ? '+' : target >= 100 ? '+' : '';
-            const duration = 1800;
-            const start = performance.now();
-            function update(now) {
-                const elapsed = now - start;
-                const progress = Math.min(elapsed / duration, 1);
-                const eased = 1 - Math.pow(1 - progress, 3);
-                el.textContent = Math.floor(eased * target) + (progress === 1 ? suffix : '');
-                if (progress < 1) requestAnimationFrame(update);
-            }
+            const suffix = target >= 1000 ? "+" : (target >= 100 ? "+" : "");
+            const duration = 1800; const start = performance.now();
+            function update(now) { const elapsed = now - start; const progress = Math.min(elapsed / duration, 1); const eased = 1 - Math.pow(1 - progress, 3); el.textContent = Math.floor(eased * target) + (progress === 1 ? suffix : ""); if (progress < 1) requestAnimationFrame(update); }
             requestAnimationFrame(update);
         }
-        const statsObserver = new IntersectionObserver(entries => {
-            entries.forEach(e => {
-                if (e.isIntersecting) {
-                    e.target.querySelectorAll('.stat-num').forEach(animateCounter);
-                    statsObserver.unobserve(e.target);
-                }
-            });
-        }, { threshold: 0.4 });
-        document.querySelector('.hero-stats') && statsObserver.observe(document.querySelector('.hero-stats'));
+        const statsObserver = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) { e.target.querySelectorAll(".stat-num").forEach(animateCounter); statsObserver.unobserve(e.target); } }); }, { threshold: .4 });
+        document.querySelector(".hero-stats") && statsObserver.observe(document.querySelector(".hero-stats"));
 
-        // ── Scroll Reveal ──
-        const revealObserver = new IntersectionObserver(entries => {
-            entries.forEach((e, i) => {
-                if (e.isIntersecting) {
-                    e.target.style.transitionDelay = (i * 0.05) + 's';
-                    e.target.classList.add('visible');
-                    revealObserver.unobserve(e.target);
-                }
-            });
-        }, { threshold: 0.12 });
-        document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+        // Scroll Reveal
+        const revealObserver = new IntersectionObserver(entries => { entries.forEach((e, i) => { if (e.isIntersecting) { e.target.style.transitionDelay = (i * .05) + "s"; e.target.classList.add("visible"); revealObserver.unobserve(e.target); } }); }, { threshold: .12 });
+        document.querySelectorAll(".reveal").forEach(el => revealObserver.observe(el));
 
-        // ── Lead Form Submit ──
-        document.getElementById('leadForm').addEventListener('submit', function (e) {
+        // Lead Form Submit
+        document.getElementById("leadForm").addEventListener("submit", function (e) {
             e.preventDefault();
-            const name = document.getElementById('fname').value;
-            const phone = document.getElementById('fphone').value;
-            const email = document.getElementById('femail').value;
-            const goal = document.getElementById('fgoal').value;
-            const location = document.getElementById('flocation').value;
-
-            const API_URL = window.location.hostname === 'localhost' ? 'http://localhost:5000/api' : '/api';
-
-            fetch(`${API_URL}/leads`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name, phone, email, goal, location })
-            })
-                .then(res => res.json())
-                .then(() => {
-                    showToast('🎉 We\'ll contact you within 24 hours!');
-                    this.reset();
-                })
-                .catch(() => {
-                    // Demo mode — show success anyway
-                    showToast('🎉 Thanks ' + name + '! We\'ll call you soon!');
-                    this.reset();
-                });
+            const name = document.getElementById("fname").value;
+            const phone = document.getElementById("fphone").value;
+            const email = document.getElementById("femail").value;
+            const goal = document.getElementById("fgoal").value;
+            const location = document.getElementById("flocation").value;
+            const API_URL = window.location.hostname === "localhost" ? "http://localhost:5000/api" : "/api";
+            fetch(API_URL + "/leads", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ name, phone, email, goal, location }) })
+                .then(r => r.json()).then(() => { showToast("🎉 We'll contact you within 24 hours!"); this.reset(); })
+                .catch(() => { showToast("🎉 Thanks " + name + "! We'll call you soon!"); this.reset(); });
         });
+        function showToast(msg) { const t = document.getElementById("toast"); t.textContent = msg; t.classList.add("show"); setTimeout(() => t.classList.remove("show"), 4000); }
 
-        function showToast(msg) {
-            const t = document.getElementById('toast');
-            t.textContent = msg;
-            t.classList.add('show');
-            setTimeout(() => t.classList.remove('show'), 4000);
-        }
-
-        // ── Mobile Menu ──
+        // Mobile Menu
         function toggleMenu() {
-            const links = document.querySelector('.nav-links');
-            links.style.display = links.style.display === 'flex' ? 'none' : 'flex';
-            links.style.flexDirection = 'column';
-            links.style.position = 'fixed';
-            links.style.top = '70px';
-            links.style.right = '5%';
-            links.style.background = 'rgba(10,10,10,0.98)';
-            links.style.padding = '24px';
-            links.style.borderRadius = '8px';
-            links.style.border = '1px solid rgba(255,45,45,0.2)';
-            links.style.gap = '16px';
-            links.style.zIndex = '490';
+            const links = document.querySelector(".nav-links");
+            links.style.display = links.style.display === "flex" ? "none" : "flex";
+            links.style.flexDirection = "column"; links.style.position = "fixed"; links.style.top = "70px"; links.style.right = "5%";
+            links.style.background = "rgba(10,10,10,.98)"; links.style.padding = "24px"; links.style.borderRadius = "8px";
+            links.style.border = "1px solid rgba(255,45,45,.2)"; links.style.gap = "16px"; links.style.zIndex = "490";
         }
     </script>
 </body>

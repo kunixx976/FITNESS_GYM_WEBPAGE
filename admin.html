@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MD Fitness Admin Dashboard</title>
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Inter:wght@400;600&family=Playfair+Display:ital,wght@0,700;0,800;1,700&display=swap" rel="stylesheet" />
     <style>
         * {
             margin: 0;
@@ -34,7 +34,7 @@
         }
 
         h1, h2, h3, .dashboard-logo {
-            font-family: 'Outfit', sans-serif;
+            font-family: 'Playfair Display', serif;
         }
 
         /* ==================== LOGIN PAGE ==================== */
@@ -143,13 +143,27 @@
         }
 
         .dashboard-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
             font-size: 24px;
             font-weight: bold;
             color: var(--white);
         }
 
+        .dashboard-logo img {
+            height: 35px;
+            width: auto;
+        }
+
         .dashboard-logo span {
             color: var(--orange);
+        }
+
+        .login-box .logo img {
+            height: 60px;
+            width: auto;
+            margin-bottom: 20px;
         }
 
         .logout-btn {
@@ -540,7 +554,7 @@
     <!-- LOGIN PAGE -->
     <div class="login-container" id="loginPage">
         <div class="login-box">
-            <div class="logo">💪</div>
+            <div class="logo"><img src="fitness-gym-logo.png" alt="Fitness Gym Logo"></div>
             <h1>MD Fitness Admin</h1>
             <p>Lead Management System</p>
             <form onsubmit="handleLogin(event)">
@@ -562,7 +576,10 @@
     <div class="dashboard-container" id="dashboardPage">
         <!-- Top Nav -->
         <div class="dashboard-nav">
-            <div class="dashboard-logo">MD <span>FITNESS</span> Admin</div>
+            <div class="dashboard-logo">
+                <img src="fitness-gym-logo.png" alt="Logo">
+                MD <span>FITNESS</span> Admin
+            </div>
             <button class="logout-btn" onclick="logout()">Logout</button>
         </div>
 

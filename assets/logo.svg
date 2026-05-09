@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 140">
+  <!-- Shield -->
+  <path d="M 80 15 L 130 8 L 130 65 Q 130 105 80 125 Q 30 105 30 65 L 30 8 Z" fill="none" stroke="#E8E8E8" stroke-width="2.5" opacity="0.7"/>
+  
+  <!-- Dumbbell Left Weight -->
+  <circle cx="55" cy="52" r="11" fill="#FFD700"/>
+  <ellipse cx="55" cy="52" rx="11" ry="11" fill="none" stroke="#FFA500" stroke-width="1" opacity="0.6"/>
+  
+  <!-- Dumbbell Bar Left -->
+  <rect x="66" y="50" width="8" height="4" fill="#CC0000"/>
+  
+  <!-- Dumbbell Center Bar -->
+  <rect x="74" y="50" width="52" height="4" fill="#999999"/>
+  
+  <!-- Dumbbell Bar Right -->
+  <rect x="126" y="50" width="8" height="4" fill="#CC0000"/>
+  
+  <!-- Dumbbell Right Weight -->
+  <circle cx="145" cy="52" r="11" fill="#FFD700"/>
+  <ellipse cx="145" cy="52" rx="11" ry="11" fill="none" stroke="#FFA500" stroke-width="1" opacity="0.6"/>
+  
+  <!-- Text: Fitness Fort -->
+  <text x="180" y="58" font-family="'Playfair Display', serif" font-size="48" font-weight="700" fill="#E8E8E8" letter-spacing="1">Fitness Fort</text>
+  
+  <!-- Text: Stronger Everyday -->
+  <text x="188" y="105" font-family="'Barlow Condensed', sans-serif" font-size="13" font-weight="700" fill="#999999" letter-spacing="2.5" text-transform="uppercase">STRONGER EVERYDAY</text>
+</svg>
