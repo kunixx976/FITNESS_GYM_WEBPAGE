@@ -2277,7 +2277,7 @@
             
             const API_URL = window.location.hostname === "localhost" ? "http://localhost:5000/api" : "/api";
             
-            fetch(API_URL + "/leads", { 
+            fetch(API_URL + "/submit-lead", { 
                 method: "POST", 
                 headers: { "Content-Type": "application/json" }, 
                 body: JSON.stringify({ name, phone, email, goal, location }) 
