@@ -506,34 +506,26 @@
         }
 
         /* Responsive */
-        @media (max-width: 768px) {
-            .dashboard-content {
-                padding: 20px;
-            }
+        /* Responsive */
+        @media (max-width: 900px) {
+            .dashboard-nav { padding: 15px 4%; flex-direction: column; gap: 15px; text-align: center; }
+            .stats-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+            .stat-card { padding: 15px; }
+            .stat-card .value { font-size: 24px; }
+            .stat-card h3 { font-size: 11px; }
+        }
 
-            .controls {
-                flex-direction: column;
-            }
-
-            .controls input {
-                min-width: 100%;
-            }
-
-            table {
-                font-size: 12px;
-            }
-
-            th, td {
-                padding: 10px;
-            }
-
-            .actions {
-                flex-direction: column;
-            }
-
-            .action-btn {
-                width: 100%;
-            }
+        @media (max-width: 600px) {
+            .dashboard-content { padding: 15px; }
+            .stats-grid { grid-template-columns: 1fr; }
+            .controls { flex-direction: column; }
+            .controls input, .controls select, .controls button { width: 100%; }
+            
+            table { min-width: 600px; } /* Force scroll instead of squishing */
+            .table-wrapper { border-radius: 8px; }
+            
+            .modal-content { width: 95%; padding: 20px; }
+            .login-box { padding: 30px 20px; }
         }
 
         .success-message {
