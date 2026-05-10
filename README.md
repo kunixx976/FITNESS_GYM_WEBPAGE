@@ -1,6 +1,6 @@
 # 🏋️ MD Fitness Gym — Premium Fitness Destination
 
-![MD Fitness Header](https://github.com/kunixx976/FITNESS_GYM_WEBPAGE/blob/main/md-logo.png?raw=true)
+![MD Fitness Header]
 
 MD Fitness is a high-end, premium fitness website designed for Meerut's premier gym. It combines state-of-the-art aesthetics with functional lead generation and member management features.
 
