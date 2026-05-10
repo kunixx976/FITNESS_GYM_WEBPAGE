@@ -602,6 +602,34 @@
             gap: 14px;
         }
 
+        /* LOADING ANIMATION */
+        .loading-container {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .loading-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: var(--white);
+            animation: pulse-dot 1.2s infinite ease-in-out;
+        }
+
+        .loading-dot:nth-child(2) { animation-delay: 0.2s; }
+        .loading-dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes pulse-dot {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.5); opacity: 1; }
+        }
+
+        .submit-btn.loading .btn-text { display: none; }
+        .submit-btn.loading .loading-container { display: flex; }
+        .submit-btn:disabled { cursor: not-allowed; opacity: 0.8; }
+
         .field-group {
             display: flex;
             flex-direction: column;
@@ -1899,7 +1927,14 @@
                             </select>
                         </div>
                     </div>
-                    <button type="submit" class="submit-btn">JOIN NOW →</button>
+                    <button type="submit" class="submit-btn">
+                        <span class="btn-text">JOIN NOW →</span>
+                        <div class="loading-container">
+                            <div class="loading-dot"></div>
+                            <div class="loading-dot"></div>
+                            <div class="loading-dot"></div>
+                        </div>
+                    </button>
                     <p class="form-disclaimer">By submitting, you agree to be contacted by our team. We respect your
                         privacy.</p>
                 </form>
@@ -2066,13 +2101,13 @@
         <div class="testimonials-grid">
             <div class="testimonial-card reveal">
                 <div class="stars">★★★★★</div>
-                <p class="testimonial-text">Lost 18 kg in 5 months. The personal trainer made it simple — no guessing,
-                    just
-                    results. Best gym decision I ever made.</p>
+                <p class="testimonial-text">I had an Awesome Experience going to MD fitness. The gym vibes are
+                    impressive that makes you feel like going to gym every single day. Gym Trainer is very accessible
+                    and always eager to help you out in training your muscles. Must join this gym.</p>
                 <div class="testimonial-author">
                     <div class="author-avatar">A</div>
                     <div>
-                        <div class="author-name">Amit Verma</div>
+                        <div class="author-name">Abhinav</div>
                         <div class="author-info">Member since 2023</div>
                     </div>
                 </div>
@@ -2228,15 +2263,38 @@
         // Lead Form Submit
         document.getElementById("leadForm").addEventListener("submit", function (e) {
             e.preventDefault();
+            const btn = this.querySelector(".submit-btn");
+            const originalText = btn.querySelector(".btn-text");
+            
+            btn.classList.add("loading");
+            btn.disabled = true;
+
             const name = document.getElementById("fname").value;
             const phone = document.getElementById("fphone").value;
             const email = document.getElementById("femail").value;
             const goal = document.getElementById("fgoal").value;
             const location = document.getElementById("flocation").value;
+            
             const API_URL = window.location.hostname === "localhost" ? "http://localhost:5000/api" : "/api";
-            fetch(API_URL + "/leads", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ name, phone, email, goal, location }) })
-                .then(r => r.json()).then(() => { showToast("🎉 We'll contact you within 24 hours!"); this.reset(); })
-                .catch(() => { showToast("🎉 Thanks " + name + "! We'll call you soon!"); this.reset(); });
+            
+            fetch(API_URL + "/leads", { 
+                method: "POST", 
+                headers: { "Content-Type": "application/json" }, 
+                body: JSON.stringify({ name, phone, email, goal, location }) 
+            })
+            .then(r => r.json())
+            .then(() => { 
+                showToast("🎉 We'll contact you within 24 hours!"); 
+                this.reset(); 
+            })
+            .catch(() => { 
+                showToast("🎉 Thanks " + name + "! We'll call you soon!"); 
+                this.reset(); 
+            })
+            .finally(() => {
+                btn.classList.remove("loading");
+                btn.disabled = false;
+            });
         });
         function showToast(msg) { const t = document.getElementById("toast"); t.textContent = msg; t.classList.add("show"); setTimeout(() => t.classList.remove("show"), 4000); }
 
