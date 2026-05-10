@@ -6,7 +6,10 @@
   "scripts": {
     "start": "node api/server.js",
     "dev": "nodemon api/server.js",
-    "build": "echo 'No build step required'"
+    "build": "echo 'Build skipped'"
+  },
+  "engines": {
+    "node": "18.x"
   },
   "keywords": [
     "fitness",
