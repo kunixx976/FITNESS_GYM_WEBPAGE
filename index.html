@@ -51,50 +51,8 @@
             background: var(--black);
             color: var(--white);
             overflow-x: hidden;
-            cursor: none;
         }
 
-        /* HIDE CURSOR ON TOUCH */
-        @media (hover: none) and (pointer: coarse) {
-
-            .cursor,
-            .cursor-ring {
-                display: none !important;
-            }
-
-            body {
-                cursor: auto !important;
-            }
-        }
-
-        /* CURSOR */
-        .cursor {
-            width: 12px;
-            height: 12px;
-            background: var(--red);
-            border-radius: 50%;
-            position: fixed;
-            top: 0;
-            left: 0;
-            pointer-events: none;
-            z-index: 9999;
-            transform: translate(-50%, -50%);
-            transition: width .2s, height .2s, background .2s;
-        }
-
-        .cursor-ring {
-            width: 36px;
-            height: 36px;
-            border: 1.5px solid rgba(255, 45, 45, .5);
-            border-radius: 50%;
-            position: fixed;
-            top: 0;
-            left: 0;
-            pointer-events: none;
-            z-index: 9998;
-            transform: translate(-50%, -50%);
-            transition: width .3s, height .3s;
-        }
 
         /* NOISE */
         body::before {
@@ -1679,12 +1637,26 @@
                 grid-template-columns: 1fr;
             }
 
+            .hero {
+                flex-direction: column;
+                align-items: flex-start;
+                min-height: auto;
+                padding-bottom: 60px;
+            }
+
+            .hero-content {
+                width: 100%;
+                max-width: none;
+                padding-top: 140px;
+            }
+
             .hero-stats {
                 position: static;
                 display: grid;
                 grid-template-columns: 1fr 1fr;
-                gap: 20px;
-                margin-top: 60px;
+                gap: 15px;
+                margin-top: 40px;
+                width: 100%;
                 border: none;
                 padding-top: 0;
             }
@@ -1716,8 +1688,12 @@
             }
 
             .hero-h1 {
-                font-size: 56px;
+                font-size: 48px;
                 line-height: 1;
+            }
+
+            .hero-stats {
+                grid-template-columns: 1fr;
             }
 
             .hero-sub {
@@ -1787,8 +1763,6 @@
 
 <body>
 
-    <div class="cursor" id="cursor"></div>
-    <div class="cursor-ring" id="cursorRing"></div>
 
     <a href="https://wa.me/916396436526" class="whatsapp-float" target="_blank" title="Chat on WhatsApp"><i
             class="fab fa-whatsapp"></i></a>
@@ -2238,17 +2212,6 @@
     </footer>
 
     <script>
-        // Custom Cursor
-        const cursor = document.getElementById("cursor");
-        const cursorRing = document.getElementById("cursorRing");
-        let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
-        document.addEventListener("mousemove", e => { mouseX = e.clientX; mouseY = e.clientY; cursor.style.left = mouseX + "px"; cursor.style.top = mouseY + "px"; });
-        function animateRing() { ringX += (mouseX - ringX) * .12; ringY += (mouseY - ringY) * .12; cursorRing.style.left = ringX + "px"; cursorRing.style.top = ringY + "px"; requestAnimationFrame(animateRing); }
-        animateRing();
-        document.querySelectorAll("a,button,input,select").forEach(el => {
-            el.addEventListener("mouseenter", () => { cursor.style.width = "20px"; cursor.style.height = "20px"; cursorRing.style.width = "50px"; cursorRing.style.height = "50px"; });
-            el.addEventListener("mouseleave", () => { cursor.style.width = "12px"; cursor.style.height = "12px"; cursorRing.style.width = "36px"; cursorRing.style.height = "36px"; });
-        });
 
         // Navbar scroll
         const navbar = document.getElementById("navbar");
