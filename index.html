@@ -618,17 +618,40 @@
             animation: pulse-dot 1.2s infinite ease-in-out;
         }
 
-        .loading-dot:nth-child(2) { animation-delay: 0.2s; }
-        .loading-dot:nth-child(3) { animation-delay: 0.4s; }
-
-        @keyframes pulse-dot {
-            0%, 100% { transform: scale(1); opacity: 0.5; }
-            50% { transform: scale(1.5); opacity: 1; }
+        .loading-dot:nth-child(2) {
+            animation-delay: 0.2s;
         }
 
-        .submit-btn.loading .btn-text { display: none; }
-        .submit-btn.loading .loading-container { display: flex; }
-        .submit-btn:disabled { cursor: not-allowed; opacity: 0.8; }
+        .loading-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes pulse-dot {
+
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 0.5;
+            }
+
+            50% {
+                transform: scale(1.5);
+                opacity: 1;
+            }
+        }
+
+        .submit-btn.loading .btn-text {
+            display: none;
+        }
+
+        .submit-btn.loading .loading-container {
+            display: flex;
+        }
+
+        .submit-btn:disabled {
+            cursor: not-allowed;
+            opacity: 0.8;
+        }
 
         .field-group {
             display: flex;
@@ -1918,25 +1941,16 @@
                                 <option>Athletic Performance</option>
                             </select>
                         </div>
-                        <div class="field-group"><label>Preferred Location</label>
-                            <select id="flocation">
-                                <option value="" disabled selected>Select Branch</option>
-                                <option>MD Fitness — Rohini</option>
-                                <option>MD Fitness — Dwarka</option>
-                                <option>MD Fitness — Janakpuri</option>
-                            </select>
-                        </div>
-                    </div>
-                    <button type="submit" class="submit-btn">
-                        <span class="btn-text">JOIN NOW →</span>
-                        <div class="loading-container">
-                            <div class="loading-dot"></div>
-                            <div class="loading-dot"></div>
-                            <div class="loading-dot"></div>
-                        </div>
-                    </button>
-                    <p class="form-disclaimer">By submitting, you agree to be contacted by our team. We respect your
-                        privacy.</p>
+                        <button type="submit" class="submit-btn">
+                            <span class="btn-text">JOIN NOW →</span>
+                            <div class="loading-container">
+                                <div class="loading-dot"></div>
+                                <div class="loading-dot"></div>
+                                <div class="loading-dot"></div>
+                            </div>
+                        </button>
+                        <p class="form-disclaimer">By submitting, you agree to be contacted by our team. We respect your
+                            privacy.</p>
                 </form>
             </div>
         </div>
@@ -1949,8 +1963,8 @@
                 <div class="section-tag">Why MD Fitness</div>
                 <h2 class="section-title">EVERYTHING<br>YOU <em>NEED</em></h2>
             </div>
-            <p class="section-sub">We've built a complete fitness ecosystem — from cutting-edge equipment to AI-powered
-                nutrition — so nothing holds you back.</p>
+            <p class="section-sub">We've built a complete fitness ecosystem — from cutting-edge equipment & nutrition —
+                so nothing holds you back.</p>
         </div>
         <div class="features-grid">
             <div class="feature-card reveal"><span class="feature-icon">🤖</span>
@@ -2265,7 +2279,7 @@
             e.preventDefault();
             const btn = this.querySelector(".submit-btn");
             const originalText = btn.querySelector(".btn-text");
-            
+
             btn.classList.add("loading");
             btn.disabled = true;
 
@@ -2274,27 +2288,27 @@
             const email = document.getElementById("femail").value;
             const goal = document.getElementById("fgoal").value;
             const location = document.getElementById("flocation").value;
-            
+
             const API_URL = window.location.hostname === "localhost" ? "http://localhost:5000/api" : "/api";
-            
-            fetch(API_URL + "/submit-lead", { 
-                method: "POST", 
-                headers: { "Content-Type": "application/json" }, 
-                body: JSON.stringify({ name, phone, email, goal, location }) 
+
+            fetch(API_URL + "/submit-lead", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ name, phone, email, goal, location })
             })
-            .then(r => r.json())
-            .then(() => { 
-                showToast("🎉 We'll contact you within 24 hours!"); 
-                this.reset(); 
-            })
-            .catch(() => { 
-                showToast("🎉 Thanks " + name + "! We'll call you soon!"); 
-                this.reset(); 
-            })
-            .finally(() => {
-                btn.classList.remove("loading");
-                btn.disabled = false;
-            });
+                .then(r => r.json())
+                .then(() => {
+                    showToast("🎉 We'll contact you within 24 hours!");
+                    this.reset();
+                })
+                .catch(() => {
+                    showToast("🎉 Thanks " + name + "! We'll call you soon!");
+                    this.reset();
+                })
+                .finally(() => {
+                    btn.classList.remove("loading");
+                    btn.disabled = false;
+                });
         });
         function showToast(msg) { const t = document.getElementById("toast"); t.textContent = msg; t.classList.add("show"); setTimeout(() => t.classList.remove("show"), 4000); }
 

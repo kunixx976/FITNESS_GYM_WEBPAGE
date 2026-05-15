@@ -155,7 +155,17 @@ app.post('/api/submit-lead', validateLead, async (req, res) => {
       throw insertError;
     }
 
-    // 2. Send email to admin (gym owner)
+    // Respond immediately without waiting for emails/WhatsApp
+    res.json({
+      success: true,
+      message: "Thanks! We'll contact you within 2 hours.",
+      leadId: lead.id,
+    });
+
+    // 2. Send emails and WhatsApp in the background (non-blocking)
+    // ========================================================
+
+    // Email to admin
     const adminEmailHtml = `
       <h2>New Lead Submission! 🎉</h2>
       <p><strong>Name:</strong> ${name}</p>
@@ -168,14 +178,14 @@ app.post('/api/submit-lead', validateLead, async (req, res) => {
       <p><a href="${process.env.ADMIN_DASHBOARD_URL}">View in Admin Dashboard</a></p>
     `;
 
-    await emailTransporter.sendMail({
+    emailTransporter.sendMail({
       from: process.env.EMAIL_USER,
       to: process.env.ADMIN_EMAIL,
       subject: `🎯 New Lead: ${name} - Book Free Trial`,
       html: adminEmailHtml,
-    });
+    }).catch(err => console.error('Admin email error:', err.message));
 
-    // 3. Send auto-reply email to user
+    // Email to user
     const userEmailHtml = `
       <h2>Welcome to MD Fitness! 💪</h2>
       <p>Hi ${name},</p>
@@ -199,41 +209,30 @@ app.post('/api/submit-lead', validateLead, async (req, res) => {
       <p>Best regards,<br/><strong>MD Fitness Team</strong></p>
     `;
 
-    await emailTransporter.sendMail({
+    emailTransporter.sendMail({
       from: process.env.EMAIL_USER,
       to: email,
       subject: 'Your Free Trial is Booked! 🎉 - MD Fitness',
       html: userEmailHtml,
-    });
+    }).catch(err => console.error('User email error:', err.message));
 
-    // 4. Send WhatsApp message via Wati.io (if enabled)
+    // WhatsApp message via Wati.io (non-blocking)
     if (process.env.WATI_API_KEY && process.env.WATI_PHONE_NUMBER_ID) {
       const whatsappMessage = `Hi ${name}! 👋 Welcome to MD Fitness 💪\n\nYour free trial is booked! ✅\n\nWe'll call you within 30 mins at ${phone}.\n\n📍 Gym: Ganga Nagar, Meerut\n⏰ Hours: 5AM - 11PM\n🔗 WhatsApp: +91-6396436526\n\n— MD Fitness Team`;
 
-      try {
-        await axios.post(
-          `https://wati.io/api/v1/sendSessionMessage/${process.env.WATI_PHONE_NUMBER_ID}`,
-          {
-            phoneNumber: phone.replace(/\D/g, ''),
-            message: whatsappMessage,
+      axios.post(
+        `https://wati.io/api/v1/sendSessionMessage/${process.env.WATI_PHONE_NUMBER_ID}`,
+        {
+          phoneNumber: phone.replace(/\D/g, ''),
+          message: whatsappMessage,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${process.env.WATI_API_KEY}`,
           },
-          {
-            headers: {
-              Authorization: `Bearer ${process.env.WATI_API_KEY}`,
-            },
-          }
-        );
-      } catch (whatsappError) {
-        console.error('WhatsApp send error:', whatsappError.message);
-        // Don't fail the entire request if WhatsApp fails
-      }
+        }
+      ).catch(err => console.error('WhatsApp send error:', err.message));
     }
-
-    res.json({
-      success: true,
-      message: 'Lead saved! Check your email for confirmation.',
-      leadId: lead.id,
-    });
   } catch (error) {
     console.error('Lead submission error:', error);
     res.status(500).json({ message: 'Error processing your request' });
