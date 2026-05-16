@@ -29,10 +29,44 @@
             --black-4: #1c1c1c;
             --gray: #555;
             --gray-light: #aaa;
-            --gold: #D4AF37;
             --gold-light: #FFD700;
             --maroon: #2a0000;
             --white: #fff;
+            --border-color: rgba(255, 255, 255, 0.05);
+            --card-bg: rgba(255, 255, 255, 0.02);
+        }
+
+        [data-theme="light"] {
+            --red: #ff2d2d;
+            --red-dark: #c0171a;
+            --orange: #ff6b00;
+            --black: #ffffff;
+            --black-2: #f8f8f8;
+            --black-3: #eeeeee;
+            --black-4: #e0e0e0;
+            --gray: #888;
+            --gray-light: #444;
+            --white: #111;
+            --border-color: rgba(0, 0, 0, 0.1);
+            --card-bg: rgba(0, 0, 0, 0.03);
+        }
+
+        [data-theme="light"] body::before {
+            opacity: .05;
+            filter: invert(1);
+        }
+
+        [data-theme="light"] .hero-bg {
+            background: linear-gradient(135deg, var(--black-2) 0%, var(--black) 40%, var(--black-3) 100%);
+        }
+
+        [data-theme="light"] nav.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        [data-theme="light"] .form-section {
+            background: linear-gradient(135deg, var(--black-2) 0%, var(--maroon) 50%, var(--black-3) 100%);
         }
 
         html {
@@ -112,6 +146,24 @@
             display: none;
         }
 
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 20px;
+            cursor: pointer;
+            transition: color 0.3s, transform 0.3s;
+            padding: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .theme-toggle:hover {
+            color: var(--orange);
+            transform: rotate(15deg);
+        }
+
         .nav-links {
             display: flex;
             gap: 32px;
@@ -173,7 +225,7 @@
         .hero-bg {
             position: absolute;
             inset: 0;
-            background: linear-gradient(135deg, #0a0000 0%, #050505 40%, #0a0005 100%);
+            background: linear-gradient(135deg, var(--black-2) 0%, var(--black) 40%, var(--black-2) 100%);
         }
 
         .hero-bg::after {
@@ -498,7 +550,7 @@
 
         /* LEAD FORM */
         .form-section {
-            background: linear-gradient(135deg, #050505 0%, var(--maroon) 50%, #1a1200 100%);
+            background: linear-gradient(135deg, var(--black) 0%, var(--maroon) 50%, var(--black-3) 100%);
             position: relative;
             overflow: hidden;
             border-top: 1px solid rgba(212, 175, 55, 0.2);
@@ -638,14 +690,6 @@
                 transform: scale(1.5);
                 opacity: 1;
             }
-        }
-
-        .submit-btn.loading .btn-text {
-            display: none;
-        }
-
-        .submit-btn.loading .loading-container {
-            display: flex;
         }
 
         .submit-btn:disabled {
@@ -1600,7 +1644,7 @@
             display: inline-flex;
             align-items: center;
             gap: 12px;
-            background: rgba(255, 255, 255, 0.05);
+            background: var(--card-bg);
             padding: 12px 30px;
             border-radius: 8px;
             border: 1px dashed rgba(255, 45, 45, 0.5);
@@ -1613,6 +1657,66 @@
             color: var(--red);
             font-weight: 800;
             font-size: 20px;
+        }
+
+        /* FAQ SECTION */
+        .faq-section {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            margin-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 20px 0;
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 18px;
+            font-weight: 600;
+            text-align: left;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .faq-question:hover {
+            color: var(--orange);
+        }
+
+        .faq-icon {
+            font-size: 24px;
+            color: var(--orange);
+            transition: transform 0.3s;
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, padding 0.3s ease;
+            color: var(--gray-light);
+            font-size: 16px;
+            line-height: 1.6;
+            padding: 0 15px;
+        }
+
+        .faq-item.active .faq-question {
+            color: var(--orange);
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(45deg);
+        }
+
+        .faq-item.active .faq-answer {
+            padding: 0 15px 20px;
+            max-height: 300px;
         }
 
         /* RESPONSIVE */
@@ -1832,6 +1936,8 @@
             <li><a href="#features">Features</a></li>
             <li><a href="#plans">Plans</a></li>
             <li><a href="#locations">Locations</a></li>
+            <li><button class="theme-toggle" id="themeToggle" aria-label="Toggle Theme"><i
+                        class="fas fa-sun"></i></button></li>
             <li><a href="#join" class="nav-cta">Join Now</a></li>
         </ul>
         <div class="nav-hamburger" onclick="toggleMenu()">
@@ -1850,7 +1956,7 @@
             <p class="hero-sub">Expert coaches, and premium equipment — engineered to transform your body and your
                 mindset.</p>
             <div class="hero-btns">
-                <a href="#join" class="btn-primary"><span>▶</span> Get 1-Day Pass for ₹1</a>
+                <a href="#join" class="btn-primary"><span>▶</span> REGISTER NOW </a>
                 <a href="#plans" class="btn-outline">View Memberships</a>
             </div>
         </div>
@@ -1935,19 +2041,14 @@
                         <div class="field-group"><label>Your Goal</label>
                             <select id="fgoal">
                                 <option value="" disabled selected>Select Goal</option>
-                                <option>Weight Loss</option>
-                                <option>Muscle Gain</option>
-                                <option>General Fitness</option>
-                                <option>Athletic Performance</option>
+                                <option value="weight-loss">Weight Loss</option>
+                                <option value="muscle-gain">Muscle Gain</option>
+                                <option value="fitness">General Fitness</option>
+                                <option value="other">Athletic Performance</option>
                             </select>
                         </div>
                         <button type="submit" class="submit-btn">
                             <span class="btn-text">JOIN NOW →</span>
-                            <div class="loading-container">
-                                <div class="loading-dot"></div>
-                                <div class="loading-dot"></div>
-                                <div class="loading-dot"></div>
-                            </div>
                         </button>
                         <p class="form-disclaimer">By submitting, you agree to be contacted by our team. We respect your
                             privacy.</p>
@@ -2153,6 +2254,64 @@
         </div>
     </section>
 
+    <!-- ══ FAQ ══ -->
+    <section class="faq-section reveal" id="faq">
+        <div style="text-align:center; margin-bottom: 40px;">
+            <div class="section-tag" style="justify-content:center;">Got Questions?</div>
+            <h2 class="section-title">FREQUENTLY ASKED <em>QUESTIONS</em></h2>
+        </div>
+        <div class="faq-list">
+            <div class="faq-item">
+                <button class="faq-question">What is MD Fitness, and how does it differ from other gyms?<span
+                        class="faq-icon">+</span></button>
+                <div class="faq-answer">
+                    <p>MD Fitness is an innovative fitness solution provider that transforms gyms into modern,
+                        customer-centric fitness hubs. We focus on expert guidance, personalized workout plans, and
+                        exceptional customer service, offering high-quality fitness experiences.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">How do I sign up for a membership?<span class="faq-icon">+</span></button>
+                <div class="faq-answer">
+                    <p>To sign up for a membership, fill out the form on our website or visit our gym. You can choose
+                        from various membership options and customize your plan according to your fitness goals.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">What kind of facilities and equipment can I expect?<span
+                        class="faq-icon">+</span></button>
+                <div class="faq-answer">
+                    <p>Our gym is equipped with state-of-the-art facilities including cardio machines, strength training
+                        equipment, and functional training zones, all maintained in a clean and hygienic environment.
+                    </p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">Do you offer personal training?<span class="faq-icon">+</span></button>
+                <div class="faq-answer">
+                    <p>Yes, certified trainers are available to work with you one-on-one to create customized workout
+                        plans and provide guidance, motivation, and support.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">Are there any age or fitness level restrictions?<span
+                        class="faq-icon">+</span></button>
+                <div class="faq-answer">
+                    <p>We welcome individuals of all ages and fitness levels. Our staff and trainers will help you find
+                        the right workout plan to ensure a safe and effective journey.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">Can I try the gym before committing to a membership?<span
+                        class="faq-icon">+</span></button>
+                <div class="faq-answer">
+                    <p>Yes, we offer a free trial session for you to experience our facilities firsthand. You can book a
+                        trial session by filling out the form on this website.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- ══ LOCATIONS ══ -->
     <section class="location-section" id="locations">
         <div class="location-layout">
@@ -2274,41 +2433,97 @@
         const revealObserver = new IntersectionObserver(entries => { entries.forEach((e, i) => { if (e.isIntersecting) { e.target.style.transitionDelay = (i * .05) + "s"; e.target.classList.add("visible"); revealObserver.unobserve(e.target); } }); }, { threshold: .12 });
         document.querySelectorAll(".reveal").forEach(el => revealObserver.observe(el));
 
-        // Lead Form Submit
-        document.getElementById("leadForm").addEventListener("submit", function (e) {
+        // Supabase Direct Connection (no backend needed)
+        const SUPABASE_URL = "https://yhwizfrtcebczhvhgcke.supabase.co";
+        const SUPABASE_ANON_KEY = "sb_publishable_dtRaZyUI-_gOVuDPWXYjWQ_uZDZuPHd";
+
+        // Lead Form Submit — saves directly to Supabase
+        document.getElementById("leadForm").addEventListener("submit", async function (e) {
             e.preventDefault();
             const btn = this.querySelector(".submit-btn");
-            const originalText = btn.querySelector(".btn-text");
+            const btnText = btn.querySelector(".btn-text");
 
-            btn.classList.add("loading");
             btn.disabled = true;
+            btnText.textContent = "Submitting...";
 
-            const name = document.getElementById("fname").value;
-            const phone = document.getElementById("fphone").value;
-            const email = document.getElementById("femail").value;
+            const name = document.getElementById("fname").value.trim();
+            let phone = document.getElementById("fphone").value.replace(/\s+/g, '');
+            if (phone.startsWith('+91')) phone = phone.substring(3);
+            if (phone.startsWith('0')) phone = phone.substring(1);
+
+            const email = document.getElementById("femail").value.trim();
             const goal = document.getElementById("fgoal").value;
-            const location = document.getElementById("flocation").value;
 
-            const API_URL = window.location.hostname === "localhost" ? "http://localhost:5000/api" : "/api";
+            // Validate phone number (Indian 10-digit starting with 6-9)
+            if (!/^[6-9]\d{9}$/.test(phone)) {
+                showToast("❌ Please enter a valid 10-digit phone number.");
+                btnText.textContent = "JOIN NOW →";
+                btn.disabled = false;
+                return;
+            }
 
-            fetch(API_URL + "/submit-lead", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ name, phone, email, goal, location })
-            })
-                .then(r => r.json())
-                .then(() => {
-                    showToast("🎉 We'll contact you within 24 hours!");
-                    this.reset();
-                })
-                .catch(() => {
-                    showToast("🎉 Thanks " + name + "! We'll call you soon!");
-                    this.reset();
-                })
-                .finally(() => {
-                    btn.classList.remove("loading");
-                    btn.disabled = false;
+            if (!goal) {
+                showToast("❌ Please select your fitness goal.");
+                btnText.textContent = "JOIN NOW →";
+                btn.disabled = false;
+                return;
+            }
+
+            try {
+                const supabaseRestUrl = SUPABASE_URL + "/rest/v1/leads";
+                const headers = {
+                    "Content-Type": "application/json",
+                    "apikey": SUPABASE_ANON_KEY,
+                    "Authorization": "Bearer " + SUPABASE_ANON_KEY,
+                    "Prefer": "return=representation"
+                };
+
+                // Check for duplicate phone number
+                const checkRes = await fetch(
+                    supabaseRestUrl + "?phone=eq." + encodeURIComponent(phone) + "&select=id,created_at&limit=1",
+                    { headers: { "apikey": SUPABASE_ANON_KEY, "Authorization": "Bearer " + SUPABASE_ANON_KEY } }
+                );
+
+                if (checkRes.ok) {
+                    const existing = await checkRes.json();
+                    if (existing.length > 0) {
+                        showToast("✅ Already registered! We will contact you soon.");
+                        this.reset();
+                        btnText.textContent = "JOIN NOW →";
+                        btn.disabled = false;
+                        return;
+                    }
+                }
+
+                // Insert lead into Supabase
+                const insertRes = await fetch(supabaseRestUrl, {
+                    method: "POST",
+                    headers: headers,
+                    body: JSON.stringify({
+                        name: name,
+                        phone: phone,
+                        email: email,
+                        interest: "Website Form",
+                        goal: goal,
+                        status: "New"
+                    })
                 });
+
+                if (!insertRes.ok) {
+                    const errBody = await insertRes.json().catch(() => ({}));
+                    console.error("Supabase insert error:", insertRes.status, errBody);
+                    throw new Error(errBody.message || "Failed to save");
+                }
+
+                showToast("🎉 We'll contact you within 24 hours!");
+                this.reset();
+            } catch (err) {
+                console.error("Submission error:", err);
+                showToast("❌ Connection error. Please try again or WhatsApp us!");
+            } finally {
+                btnText.textContent = "JOIN NOW →";
+                btn.disabled = false;
+            }
         });
         function showToast(msg) { const t = document.getElementById("toast"); t.textContent = msg; t.classList.add("show"); setTimeout(() => t.classList.remove("show"), 4000); }
 
@@ -2321,6 +2536,25 @@
             document.body.style.overflow = links.classList.contains("active") ? "hidden" : "";
         }
 
+        // FAQ Accordion
+        document.querySelectorAll('.faq-question').forEach(button => {
+            button.addEventListener('click', () => {
+                const faqItem = button.parentElement;
+                const isActive = faqItem.classList.contains('active');
+
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    item.classList.remove('active');
+                    item.querySelector('.faq-answer').style.maxHeight = null;
+                });
+
+                if (!isActive) {
+                    faqItem.classList.add('active');
+                    const answer = faqItem.querySelector('.faq-answer');
+                    answer.style.maxHeight = answer.scrollHeight + "px";
+                }
+            });
+        });
+
         // Close menu on link click
         document.querySelectorAll(".nav-links a").forEach(link => {
             link.addEventListener("click", () => {
@@ -2330,6 +2564,32 @@
                 hamburger.classList.remove("active");
                 document.body.style.overflow = "";
             });
+        });
+
+        // Theme Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = themeToggle.querySelector('i');
+
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        if (savedTheme === 'light') {
+            document.documentElement.setAttribute('data-theme', 'light');
+            themeIcon.classList.remove('fa-sun');
+            themeIcon.classList.add('fa-moon');
+        }
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            if (currentTheme === 'light') {
+                document.documentElement.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'dark');
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'light');
+                localStorage.setItem('theme', 'light');
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+            }
         });
     </script>
 </body>
