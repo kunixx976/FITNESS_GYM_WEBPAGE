@@ -44,10 +44,16 @@ const validateLead = [
 ];
 
 // Supabase Client
-const supabase = createClient(
-  process.env.SUPABASE_URL,
-  process.env.SUPABASE_ANON_KEY
-);
+const supabaseUrl = process.env.SUPABASE_URL;
+const supabaseAnonKey = process.env.SUPABASE_ANON_KEY;
+let supabase;
+
+if (supabaseUrl && supabaseAnonKey) {
+  supabase = createClient(supabaseUrl, supabaseAnonKey);
+} else {
+  console.warn('⚠️ WARNING: SUPABASE_URL or SUPABASE_ANON_KEY is missing. Initializing placeholder client to prevent build-time crash.');
+  supabase = createClient('https://placeholder-url.supabase.co', 'placeholder-key');
+}
 
 // Email Configuration
 const emailTransporter = nodemailer.createTransport({
