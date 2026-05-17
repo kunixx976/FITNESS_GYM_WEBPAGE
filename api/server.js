@@ -8,6 +8,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const rateLimit = require('express-rate-limit');
 const { body, validationResult } = require('express-validator');
+const serverless = require('serverless-http');
 
 // Load environment variables
 dotenv.config();
@@ -44,16 +45,10 @@ const validateLead = [
 ];
 
 // Supabase Client
-const supabaseUrl = process.env.SUPABASE_URL;
-const supabaseAnonKey = process.env.SUPABASE_ANON_KEY;
-let supabase;
-
-if (supabaseUrl && supabaseAnonKey) {
-  supabase = createClient(supabaseUrl, supabaseAnonKey);
-} else {
-  console.warn('⚠️ WARNING: SUPABASE_URL or SUPABASE_ANON_KEY is missing. Initializing placeholder client to prevent build-time crash.');
-  supabase = createClient('https://placeholder-url.supabase.co', 'placeholder-key');
-}
+const supabase = createClient(
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_ANON_KEY
+);
 
 // Email Configuration
 const emailTransporter = nodemailer.createTransport({
@@ -474,8 +469,8 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'Server is running', timestamp: new Date() });
 });
 
-// Export for Vercel
-module.exports = app;
+// Export for Vercel (serverless handler)
+module.exports = serverless(app);
 
 // Start server (Local Only)
 if (process.env.NODE_ENV !== 'production') {
