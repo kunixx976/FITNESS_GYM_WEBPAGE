@@ -6,6 +6,12 @@ CREATE TABLE leads (
   email VARCHAR(255) NOT NULL,
   interest VARCHAR(100),
   goal TEXT,
+  current_gym VARCHAR(50),
+  budget VARCHAR(50),
+  available_time VARCHAR(50),
+  heard_from VARCHAR(50),
+  urgency VARCHAR(50),
+  score INT DEFAULT 0,
   status VARCHAR(50) DEFAULT 'New', -- New, Called, Joined, Not Interested
   notes TEXT,
   created_at TIMESTAMP DEFAULT NOW(),

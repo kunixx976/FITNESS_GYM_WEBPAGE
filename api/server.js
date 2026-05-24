@@ -117,7 +117,7 @@ app.post('/api/submit-lead', validateLead, async (req, res) => {
     return res.status(400).json({ errors: errors.array() });
   }
 
-  const { name, phone, email, interest, goal } = req.body;
+  const { name, phone, email, interest, goal, current_gym, budget, available_time, heard_from, urgency, score } = req.body;
 
   try {
     // 0. Check for existing lead with this phone number
@@ -145,6 +145,12 @@ app.post('/api/submit-lead', validateLead, async (req, res) => {
           email,
           interest: interest || 'Not specified',
           goal,
+          current_gym,
+          budget,
+          available_time,
+          heard_from,
+          urgency,
+          score,
           status: 'New',
           created_at: new Date(),
         },

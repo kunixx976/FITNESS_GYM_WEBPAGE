@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MD Fitness - Admin Dashboard</title>
+    <style>
+        :root {
+            --bg: #f4f7f6;
+            --text: #333;
+            --card-bg: #fff;
+            --primary: #dc2743;
+            --secondary: #2c3e50;
+            --border: #e1e8ed;
+            --hot: #ff4757;
+            --warm: #ffa502;
+            --cold: #2ed573;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: var(--secondary);
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .lead-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border-left: 5px solid var(--border);
+            transition: transform 0.2s;
+        }
+        .lead-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+        }
+        .lead-card.hot { border-left-color: var(--hot); }
+        .lead-card.warm { border-left-color: var(--warm); }
+        .lead-card.cold { border-left-color: var(--cold); }
+        
+        .lead-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 15px;
+            margin-bottom: 15px;
+        }
+        .lead-name {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: var(--secondary);
+            margin: 0;
+        }
+        .lead-score {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        .score-hot { color: var(--hot); }
+        .score-warm { color: var(--warm); }
+        .score-cold { color: var(--cold); }
+        
+        .lead-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        .detail-item {
+            font-size: 1rem;
+        }
+        .detail-label {
+            font-weight: 600;
+            color: #666;
+            display: inline-block;
+            width: 120px;
+        }
+        .annotation {
+            font-size: 0.85rem;
+            color: var(--primary);
+            font-style: italic;
+            margin-left: 10px;
+        }
+        
+        /* Simple Login Overlay */
+        #loginOverlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .login-box {
+            background: #fff;
+            padding: 40px;
+            border-radius: 10px;
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+        }
+        .login-box input {
+            width: 90%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .login-box button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            width: 100%;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+
+    <div id="loginOverlay">
+        <div class="login-box">
+            <h2>Admin Login</h2>
+            <input type="email" id="email" placeholder="admin@mdfitness.in" value="admin@mdfitness.in">
+            <input type="password" id="password" placeholder="Password (e.g. Admin@123)">
+            <button onclick="login()">Log In</button>
+            <p id="loginError" style="color: red; display: none; margin-top: 10px;">Invalid credentials</p>
+        </div>
+    </div>
+
+    <div class="container hidden" id="dashboard">
+        <h1>Leads Dashboard</h1>
+        <div id="leadsContainer">
+            <p style="text-align: center;">Loading leads...</p>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
+            ? 'http://localhost:5000/api' 
+            : '/api';
+            
+        let authToken = localStorage.getItem('adminToken');
+
+        // Check if already logged in (optional, simplified for demo)
+        if (authToken) {
+            document.getElementById('loginOverlay').classList.add('hidden');
+            document.getElementById('dashboard').classList.remove('hidden');
+            fetchLeads();
+        }
+
+        async function login() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            try {
+                const res = await fetch(`${API_BASE}/admin/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+                
+                if (res.ok) {
+                    const data = await res.json();
+                    authToken = data.token;
+                    localStorage.setItem('adminToken', authToken);
+                    document.getElementById('loginOverlay').classList.add('hidden');
+                    document.getElementById('dashboard').classList.remove('hidden');
+                    fetchLeads();
+                } else {
+                    document.getElementById('loginError').style.display = 'block';
+                }
+            } catch (err) {
+                // If backend is not running, let's mock it for the sake of the demonstration
+                console.warn("Backend might not be running. Showing mock data for demonstration.");
+                document.getElementById('loginOverlay').classList.add('hidden');
+                document.getElementById('dashboard').classList.remove('hidden');
+                renderLeads([
+                    {
+                        name: "Rahul Sharma",
+                        phone: "9876543210",
+                        goal: "weight-loss",
+                        budget: "1000-1500",
+                        current_gym: "no",
+                        urgency: "this-week",
+                        score: 85
+                    },
+                    {
+                        name: "Priya Singh",
+                        phone: "8765432109",
+                        goal: "muscle-gain",
+                        budget: "under-1000",
+                        current_gym: "yes",
+                        urgency: "next-month",
+                        score: 30
+                    }
+                ]);
+            }
+        }
+
+        async function fetchLeads() {
+            try {
+                const res = await fetch(`${API_BASE}/admin/leads?limit=50`, {
+                    headers: { 'Authorization': `Bearer ${authToken}` }
+                });
+                
+                if (res.ok) {
+                    const data = await res.json();
+                    renderLeads(data.leads);
+                } else {
+                    // Token expired or invalid
+                    localStorage.removeItem('adminToken');
+                    location.reload();
+                }
+            } catch (err) {
+                console.error("Error fetching leads", err);
+                document.getElementById('leadsContainer').innerHTML = '<p style="color:red; text-align:center;">Failed to load leads. Make sure backend is running.</p>';
+            }
+        }
+
+        function formatGoal(g) {
+            if (!g) return "N/A";
+            const map = {
+                'weight-loss': 'Weight loss',
+                'muscle-gain': 'Muscle gain',
+                'fitness': 'General Fitness',
+                'other': 'Athletic Performance'
+            };
+            return map[g] || g;
+        }
+
+        function formatBudget(b) {
+            if (!b) return "N/A";
+            if (b === 'under-1000') return 'Under ₹1,000/month';
+            if (b === '1000-1500') return '₹1,000–1,500/month';
+            if (b === '1500-plus') return '₹1,500+/month';
+            return b;
+        }
+
+        function renderLeads(leads) {
+            const container = document.getElementById('leadsContainer');
+            if (!leads || leads.length === 0) {
+                container.innerHTML = '<p style="text-align:center;">No leads found.</p>';
+                return;
+            }
+
+            container.innerHTML = '';
+            
+            leads.forEach(lead => {
+                const score = lead.score || 0;
+                let scoreText = '';
+                let scoreClass = '';
+                let cardClass = '';
+                
+                if (score >= 70) {
+                    scoreText = '🔥 HOT';
+                    scoreClass = 'score-hot';
+                    cardClass = 'hot';
+                } else if (score >= 40) {
+                    scoreText = '⭐ WARM';
+                    scoreClass = 'score-warm';
+                    cardClass = 'warm';
+                } else {
+                    scoreText = '❄️ COLD';
+                    scoreClass = 'score-cold';
+                    cardClass = 'cold';
+                }
+
+                // Logic for annotations
+                let budgetAnnotation = '';
+                if (lead.budget === '1000-1500' || lead.budget === '1500-plus') {
+                    budgetAnnotation = '← can afford premium';
+                }
+
+                let gymAnnotation = '';
+                if (lead.current_gym === 'no') {
+                    gymAnnotation = '← ready to join';
+                } else if (lead.current_gym === 'yes') {
+                    gymAnnotation = '← looking to switch';
+                }
+
+                let urgencyAnnotation = '';
+                if (lead.urgency === 'this-week') {
+                    urgencyAnnotation = '← call TODAY';
+                }
+
+                const card = document.createElement('div');
+                card.className = `lead-card ${cardClass}`;
+                
+                card.innerHTML = `
+                    <div class="lead-header">
+                        <h2 class="lead-name">${lead.name} <span style="color:#888; font-size:1rem; font-weight:normal;">(${lead.phone})</span></h2>
+                        <div class="lead-score ${scoreClass}">Score: ${scoreText} (${score})</div>
+                    </div>
+                    <div class="lead-details">
+                        <div class="detail-item">
+                            <span class="detail-label">Goal:</span> ${formatGoal(lead.goal)}
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Budget:</span> ${formatBudget(lead.budget)} <span class="annotation">${budgetAnnotation}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Current Gym:</span> ${lead.current_gym === 'yes' ? 'Yes' : (lead.current_gym === 'no' ? 'No current gym' : 'N/A')} <span class="annotation">${gymAnnotation}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Urgency:</span> ${lead.urgency ? lead.urgency.replace('-', ' ') : 'N/A'} <span class="annotation">${urgencyAnnotation}</span>
+                        </div>
+                    </div>
+                `;
+                
+                container.appendChild(card);
+            });
+        }
+    </script>
+</body>
+</html>

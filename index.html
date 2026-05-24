@@ -791,7 +791,11 @@
             margin-top: 4px;
         }
 
-        /* FEATURES */
+        /* ═══════════════════════════════════
+           FEATURES — group/card hover system
+           Each card is self-contained (Tailwind
+           named-group pattern, pure CSS)
+        ═══════════════════════════════════ */
         .features-section {
             background: var(--black);
         }
@@ -810,44 +814,66 @@
             gap: 2px;
         }
 
+        /* ── BASE CARD ── */
         .feature-card {
             background: var(--black-3);
             padding: 36px 30px;
-            border: 1px solid rgba(255, 255, 255, .04);
-            transition: background .3s, border-color .3s, transform .3s;
+            border: 1px solid rgba(255,255,255,.04);
             position: relative;
             overflow: hidden;
+            cursor: default;
+            /* isolate each card so only its OWN children respond */
+            isolation: isolate;
         }
 
-        .feature-card::before {
-            content: "";
+        /* ── GRADIENT GLOW OVERLAY (opacity transition) ── */
+        .feature-card .fc-glow {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: opacity .45s ease;
+            z-index: 0;
+            border-radius: inherit;
+        }
+
+        .feature-card:hover .fc-glow {
+            opacity: 1;
+        }
+
+        /* ── ANIMATED UNDERLINE (grows left → right) ── */
+        .feature-card .fc-underline {
             position: absolute;
             bottom: 0;
             left: 0;
             width: 100%;
             height: 3px;
-            background: var(--red);
             transform: scaleX(0);
-            transform-origin: left;
-            transition: transform .35s;
+            transform-origin: left center;
+            transition: transform .5s cubic-bezier(0.4,0,0.2,1);
+            z-index: 2;
         }
 
-        .feature-card:hover {
-            background: var(--black-4);
-            transform: translateY(-4px);
-            border-color: rgba(255, 45, 45, .15);
-        }
-
-        .feature-card:hover::before {
+        .feature-card:hover .fc-underline {
             transform: scaleX(1);
         }
 
+        /* ── ICON ── */
         .feature-icon {
             font-size: 36px;
             margin-bottom: 20px;
             display: block;
+            position: relative;
+            z-index: 1;
+            transition: transform .4s cubic-bezier(0.34,1.56,0.64,1);
+            transform-origin: center;
+            will-change: transform;
         }
 
+        .feature-card:hover .feature-icon {
+            transform: scale(1.22) rotate(-8deg);
+        }
+
+        /* ── TITLE ── */
         .feature-card h3 {
             font-family: "Barlow Condensed", sans-serif;
             font-size: 20px;
@@ -855,12 +881,87 @@
             text-transform: uppercase;
             letter-spacing: 1px;
             margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+            transition: transform .35s cubic-bezier(0.4,0,0.2,1);
+            will-change: transform;
         }
 
+        .feature-card:hover h3 {
+            transform: translateY(-5px);
+        }
+
+        /* ── BODY TEXT ── */
         .feature-card p {
             font-size: 14px;
             color: var(--gray-light);
             line-height: 1.6;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ── BORDER glow on hover ── */
+        .feature-card {
+            transition: border-color .35s, transform .35s;
+        }
+        .feature-card:hover {
+            border-color: rgba(255,255,255,.12);
+            transform: translateY(-5px);
+        }
+
+        /* ══ PER-CARD GRADIENT COLORS ══ */
+        /* Card 1 — red/orange (AI) */
+        .feature-card[data-fc="1"] .fc-glow {
+            background: radial-gradient(ellipse at top left, rgba(255,45,45,.22) 0%, rgba(255,107,0,.10) 55%, transparent 80%);
+        }
+        .feature-card[data-fc="1"] .fc-underline {
+            background: linear-gradient(90deg, #ff2d2d, #ff6b00);
+            transition-duration: .5s;
+        }
+
+        /* Card 2 — emerald/teal (Diet) */
+        .feature-card[data-fc="2"] .fc-glow {
+            background: radial-gradient(ellipse at top left, rgba(16,185,129,.20) 0%, rgba(5,150,105,.10) 55%, transparent 80%);
+        }
+        .feature-card[data-fc="2"] .fc-underline {
+            background: linear-gradient(90deg, #10b981, #06b6d4);
+            transition-duration: .55s;
+        }
+
+        /* Card 3 — electric blue (Body Analysis) */
+        .feature-card[data-fc="3"] .fc-glow {
+            background: radial-gradient(ellipse at top left, rgba(59,130,246,.22) 0%, rgba(99,102,241,.12) 55%, transparent 80%);
+        }
+        .feature-card[data-fc="3"] .fc-underline {
+            background: linear-gradient(90deg, #3b82f6, #6366f1);
+            transition-duration: .48s;
+        }
+
+        /* Card 4 — gold/amber (Equipment) */
+        .feature-card[data-fc="4"] .fc-glow {
+            background: radial-gradient(ellipse at top left, rgba(245,158,11,.20) 0%, rgba(251,191,36,.10) 55%, transparent 80%);
+        }
+        .feature-card[data-fc="4"] .fc-underline {
+            background: linear-gradient(90deg, #f59e0b, #fbbf24);
+            transition-duration: .52s;
+        }
+
+        /* Card 5 — violet/pink (Group Classes) */
+        .feature-card[data-fc="5"] .fc-glow {
+            background: radial-gradient(ellipse at top left, rgba(167,139,250,.22) 0%, rgba(236,72,153,.12) 55%, transparent 80%);
+        }
+        .feature-card[data-fc="5"] .fc-underline {
+            background: linear-gradient(90deg, #a78bfa, #ec4899);
+            transition-duration: .58s;
+        }
+
+        /* Card 6 — cyan/sky (Expert Coaches) */
+        .feature-card[data-fc="6"] .fc-glow {
+            background: radial-gradient(ellipse at top left, rgba(6,182,212,.22) 0%, rgba(14,165,233,.12) 55%, transparent 80%);
+        }
+        .feature-card[data-fc="6"] .fc-underline {
+            background: linear-gradient(90deg, #06b6d4, #0ea5e9);
+            transition-duration: .46s;
         }
 
         /* PLANS */
@@ -1382,6 +1483,77 @@
             }
         }
 
+        /* INSTAGRAM CTA */
+        .insta-cta {
+            text-align: center;
+            padding: 80px 5%;
+            background: linear-gradient(135deg, rgba(220, 39, 67, 0.1), rgba(240, 148, 51, 0.1));
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        [data-theme="light"] .insta-cta {
+            background: linear-gradient(135deg, rgba(220, 39, 67, 0.05), rgba(240, 148, 51, 0.05));
+            border-color: rgba(0, 0, 0, 0.05);
+        }
+
+        .insta-cta h3 {
+            font-size: 2.5rem;
+            color: var(--white);
+            margin-bottom: 10px;
+            font-weight: 900;
+        }
+
+        .insta-cta p {
+            color: var(--red);
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .insta-cta a {
+            display: inline-block;
+            margin: 10px;
+            padding: 16px 36px;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .insta-cta a:first-of-type {
+            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(220, 39, 67, 0.3);
+        }
+
+        .insta-cta a:first-of-type:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(220, 39, 67, 0.5);
+        }
+
+        .insta-cta a:last-of-type {
+            background: transparent;
+            color: var(--white);
+            border: 2px solid var(--white);
+        }
+
+        [data-theme="light"] .insta-cta a:last-of-type {
+            border-color: var(--black-1);
+        }
+
+        .insta-cta a:last-of-type:hover {
+            background: var(--white);
+            color: var(--black-1);
+        }
+
+        [data-theme="light"] .insta-cta a:last-of-type:hover {
+            background: var(--black-1);
+            color: var(--white);
+        }
+
         /* FOOTER */
         footer {
             background: var(--black-2);
@@ -1755,17 +1927,20 @@
         }
 
         .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
+            column-count: 4;
+            column-gap: 20px;
             margin-top: 40px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .gallery-item {
             position: relative;
             border-radius: 12px;
             overflow: hidden;
-            aspect-ratio: 4/3;
+            margin-bottom: 20px;
+            break-inside: avoid;
             cursor: pointer;
             border: 1px solid var(--border-color);
             transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), border-color 0.3s;
@@ -1773,8 +1948,8 @@
 
         .gallery-item img {
             width: 100%;
-            height: 100%;
-            object-fit: cover;
+            height: auto;
+            display: block;
             transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
 
@@ -1970,20 +2145,23 @@
                 height: 44px;
                 font-size: 18px;
             }
+
             .lightbox-next {
                 right: 15px;
                 width: 44px;
                 height: 44px;
                 font-size: 18px;
             }
+
             .lightbox-close {
                 top: 15px;
                 right: 20px;
                 font-size: 32px;
             }
+
             .gallery-grid {
-                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-                gap: 15px;
+                column-count: 2;
+                column-gap: 15px;
             }
         }
 
@@ -2108,6 +2286,10 @@
         @media (max-width: 600px) {
             section {
                 padding: 80px 6%;
+            }
+
+            .gallery-grid {
+                column-count: 1;
             }
 
             .hero-h1 {
@@ -2308,7 +2490,7 @@
                             placeholder="rahul@email.com" required /></div>
                     <div class="form-row">
                         <div class="field-group"><label>Your Goal</label>
-                            <select id="fgoal">
+                            <select id="fgoal" required>
                                 <option value="" disabled selected>Select Goal</option>
                                 <option value="weight-loss">Weight Loss</option>
                                 <option value="muscle-gain">Muscle Gain</option>
@@ -2316,11 +2498,56 @@
                                 <option value="other">Athletic Performance</option>
                             </select>
                         </div>
-                        <button type="submit" class="submit-btn">
-                            <span class="btn-text">JOIN NOW →</span>
-                        </button>
-                        <p class="form-disclaimer">By submitting, you agree to be contacted by our team. We respect your
-                            privacy.</p>
+                        <div class="field-group"><label>Currently in a Gym?</label>
+                            <select id="fcurrentGym" required>
+                                <option value="" disabled selected>Select Option</option>
+                                <option value="yes">Yes, looking to switch</option>
+                                <option value="no">No, I'm new or returning</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="field-group"><label>Monthly Budget</label>
+                            <select id="fbudget" required>
+                                <option value="" disabled selected>Select Budget</option>
+                                <option value="under-1000">Under ₹1,000</option>
+                                <option value="1000-1500">₹1,000 - ₹1,500</option>
+                                <option value="1500-plus">₹1,500+</option>
+                            </select>
+                        </div>
+                        <div class="field-group"><label>Preferred Batch</label>
+                            <select id="favailableTime" required>
+                                <option value="" disabled selected>Select Time</option>
+                                <option value="morning">Morning (5AM - 10AM)</option>
+                                <option value="evening">Evening (5PM - 10PM)</option>
+                                <option value="any">Any Time</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="field-group"><label>How did you hear about us?</label>
+                            <select id="fheardFrom" required>
+                                <option value="" disabled selected>Select Source</option>
+                                <option value="google">Google Search</option>
+                                <option value="instagram">Instagram</option>
+                                <option value="friend">Friend/Family</option>
+                                <option value="walk-in">Walk-in</option>
+                            </select>
+                        </div>
+                        <div class="field-group"><label>When do you want to start?</label>
+                            <select id="furgency" required>
+                                <option value="" disabled selected>Select Timeline</option>
+                                <option value="this-week">This Week</option>
+                                <option value="next-week">Next Week</option>
+                                <option value="next-month">Next Month</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="submit-btn" style="margin-top: 15px;">
+                        <span class="btn-text">JOIN NOW →</span>
+                    </button>
+                    <p class="form-disclaimer">By submitting, you agree to be contacted by our team. We respect your
+                        privacy.</p>
                 </form>
             </div>
         </div>
@@ -2337,33 +2564,61 @@
                 so nothing holds you back.</p>
         </div>
         <div class="features-grid">
-            <div class="feature-card reveal"><span class="feature-icon">🤖</span>
+
+            <!-- Card 1: AI Workout Planner — red/orange -->
+            <div class="feature-card reveal" data-fc="1">
+                <div class="fc-glow"></div>
+                <div class="fc-underline"></div>
+                <span class="feature-icon">🤖</span>
                 <h3>AI Workout Planner</h3>
                 <p>Your training plan adapts to your progress, recovery, and goals — automatically, every week.</p>
             </div>
-            <div class="feature-card reveal"><span class="feature-icon">🥗</span>
+
+            <!-- Card 2: Personalised Diet — emerald/teal -->
+            <div class="feature-card reveal" data-fc="2">
+                <div class="fc-glow"></div>
+                <div class="fc-underline"></div>
+                <span class="feature-icon">🥗</span>
                 <h3>Personalised Diet Plans</h3>
-                <p>No crash diets. Balanced nutrition built around foods you love and macros your body actually needs.
-                </p>
+                <p>No crash diets. Balanced nutrition built around foods you love and macros your body actually needs.</p>
             </div>
-            <div class="feature-card reveal"><span class="feature-icon">📊</span>
+
+            <!-- Card 3: Body Analysis — electric blue -->
+            <div class="feature-card reveal" data-fc="3">
+                <div class="fc-glow"></div>
+                <div class="fc-underline"></div>
+                <span class="feature-icon">📊</span>
                 <h3>Monthly Body Analysis</h3>
                 <p>Track real change — muscle, fat, hydration — with BCA scans and expert review every month.</p>
             </div>
-            <div class="feature-card reveal"><span class="feature-icon">🏋️</span>
+
+            <!-- Card 4: Premium Equipment — gold/amber -->
+            <div class="feature-card reveal" data-fc="4">
+                <div class="fc-glow"></div>
+                <div class="fc-underline"></div>
+                <span class="feature-icon">🏋️</span>
                 <h3>Premium Equipment</h3>
-                <p>Commercial-grade machines, free weights, and cardio stations — maintained to the highest standard.
-                </p>
+                <p>Commercial-grade machines, free weights, and cardio stations — maintained to the highest standard.</p>
             </div>
-            <div class="feature-card reveal"><span class="feature-icon">👥</span>
+
+            <!-- Card 5: Group Classes — violet/pink -->
+            <div class="feature-card reveal" data-fc="5">
+                <div class="fc-glow"></div>
+                <div class="fc-underline"></div>
+                <span class="feature-icon">👥</span>
                 <h3>Group Classes</h3>
                 <p>Unlimited access to HIIT, yoga, Zumba, spinning, and more — led by certified instructors.</p>
             </div>
-            <div class="feature-card reveal"><span class="feature-icon">🏆</span>
+
+            <!-- Card 6: Expert Coaches — cyan/sky -->
+            <div class="feature-card reveal" data-fc="6">
+                <div class="fc-glow"></div>
+                <div class="fc-underline"></div>
+                <span class="feature-icon">🏆</span>
                 <h3>Expert Coaches</h3>
-                <p>Nationally certified trainers who know your name, your goals, and exactly how to push you further.
-                </p>
+                <p>Nationally certified trainers who know your name, your goals, and exactly how to push you further.</p>
             </div>
+
         </div>
     </section>
 
@@ -2372,47 +2627,80 @@
         <div style="text-align:center;" class="reveal">
             <div class="section-tag" style="justify-content:center;">Membership</div>
             <h2 class="section-title">CHOOSE YOUR <em>PLAN</em></h2>
-            <p class="section-sub" style="margin:0 auto;">Flexible memberships with no hidden fees. Pause or cancel
-                anytime.</p>
         </div>
-        <div class="plans-grid">
+        <div class="plans-grid plans-grid--4col">
+
+            <!-- 1 Month -->
             <div class="plan-card reveal">
-                <div class="plan-name">Starter</div>
-                <div class="plan-price"><sup>₹</sup>1499<span>/mo</span></div>
-                <p class="plan-desc">Perfect for beginners building their first fitness habit.</p>
-                <ul class="plan-features">
-                    <li>Gym floor access (6am–10pm)</li>
+                <div class="plan-duration-badge">1 Month</div>
+                <div class="plan-name">#Get 1 Month Membership</div>
+                <div class="plan-price-wrap">
+                    <div class="plan-price plan-price--single"><sup>₹</sup>1400<span>/-</span></div>
+                </div>
+                <p class="plan-desc">Start your fitness journey with a one-month commitment — no long-term pressure.</p>
+                <!-- <ul class="plan-features">
+                    <li>Unlimited gym floor access</li>
                     <li>Basic locker access</li>
-                    <li>1 trainer session/month</li>
-                    <li class="no">Group classes</li>
-                    <li class="no">Monthly BCA test</li>
-                    <li class="no">AI diet plan</li>
-                </ul>
+                    <li>Trainer guidance</li>
+                </ul> -->
                 <a href="#join" class="plan-btn">Get Started</a>
             </div>
-            <div class="plan-card featured reveal">
-                <div class="plan-badge">Most Popular</div>
-                <div class="plan-name">Pro</div>
-                <div class="plan-price"><sup>₹</sup>2799<span>/mo</span></div>
-                <p class="plan-desc">Everything you need to transform your body in 90 days.</p>
-                <ul class="plan-features">
-                    <li>Unlimited gym access (5am–10pm)</li>
-                    <li>Unlimited group classes</li>
-                    <li>4 trainer sessions/month</li>
-                    <li>AI diet plan</li>
-                </ul>
-                <a href="#join" class="plan-btn">Get Pro</a>
-            </div>
+
+            <!-- 3 Months -->
             <div class="plan-card reveal">
-                <div class="plan-name">Elite</div>
-                <div class="plan-price"><sup>₹</sup>4499<span>/mo</span></div>
-                <p class="plan-desc">The complete high-performance package for serious athletes.</p>
+                <div class="plan-duration-badge">3 Months</div>
+                <div class="plan-name">#Get 3 Month Membership</div>
+                <div class="plan-price-wrap">
+                    <div class="plan-price-original"><sup>₹</sup>4200<span>/-</span></div>
+                    <div class="plan-price plan-price--discounted"><sup>₹</sup>3899<span>/-</span></div>
+                </div>
+                <!-- <p class="plan-desc">Build consistency and see real results over 3 months of focused training.</p>
                 <ul class="plan-features">
-                    <li>Unlimited group classes</li>
-                    <li>Unlimited trainer sessions</li>
-                </ul>
-                <a href="#join" class="plan-btn">Go Elite</a>
+                    <li>Unlimited gym floor access</li>
+                    <li>Locker access included</li>
+                    <li>Regular trainer sessions</li>
+                </ul> -->
+                <a href="#join" class="plan-btn">Get Started</a>
             </div>
+
+            <!-- 6 Months -->
+            <div class="plan-card featured reveal">
+                <div class="plan-badge">Best Value</div>
+                <div class="plan-duration-badge">6 Months</div>
+                <div class="plan-name">#Get 6 Month Membership</div>
+                <div class="plan-price-wrap">
+                    <div class="plan-price-original"><sup>₹</sup>8400<span>/-</span></div>
+                    <div class="plan-price plan-price--discounted"><sup>₹</sup>6999<span>/-</span></div>
+                </div>
+                <!-- <p class="plan-desc">Transform your body in 6 months with serious savings on every session.</p>
+                <ul class="plan-features">
+                    <li>Unlimited gym floor access</li>
+                    <li>Group classes included</li>
+                    <li>Dedicated trainer sessions</li>
+                    <li>Monthly progress check-in</li>
+                </ul> -->
+                <a href="#join" class="plan-btn">Get Started</a>
+            </div>
+
+            <!-- 12 Months -->
+            <div class="plan-card reveal">
+                <div class="plan-duration-badge">12 Months</div>
+                <div class="plan-name">#Get 12 Month Membership</div>
+                <div class="plan-price-wrap">
+                    <div class="plan-price-original"><sup>₹</sup>16800<span>/-</span></div>
+                    <div class="plan-price plan-price--discounted"><sup>₹</sup>11900<span>/-</span></div>
+                </div>
+                <!-- <p class="plan-desc">Our best yearly deal — maximum savings for maximum commitment to your health.</p>
+                <ul class="plan-features">
+                    <li>Unlimited gym floor access</li>
+                    <li>All group classes included</li>
+                    <li>Priority trainer sessions</li>
+                    <li>Monthly BCA body analysis</li>
+                    <li>Diet & nutrition guidance</li>
+                </ul> -->
+                <a href="#join" class="plan-btn">Get Started</a>
+            </div>
+
         </div>
     </section>
 
@@ -2585,100 +2873,115 @@
     <section class="gallery-section reveal" id="gallery">
         <div class="section-tag">Explore Our Space</div>
         <h2 class="section-title">OUR <em>GALLERY</em></h2>
-        
+
         <div class="gallery-grid">
             <div class="gallery-item" data-index="0">
-                <img src="https://d3k88l35vy59af.cloudfront.net/A160/11126/1778931261491.jpeg" alt="MM Fitness Gym Premium Setup" loading="lazy" />
+                <img src="https://d3k88l35vy59af.cloudfront.net/A160/11126/1778931261491.jpeg"
+                    alt="MM Fitness Gym Premium Setup" loading="lazy" />
                 <div class="gallery-overlay">
                     <span class="gallery-icon">🔍</span>
                 </div>
             </div>
             <div class="gallery-item" data-index="1">
-                <img src="https://d3k88l35vy59af.cloudfront.net/A160/11126/1778931930698.jpeg" alt="MM Fitness Gym Dumbbell Zone" loading="lazy" />
+                <img src="https://d3k88l35vy59af.cloudfront.net/A160/11126/1778931930698.jpeg"
+                    alt="MM Fitness Gym Dumbbell Zone" loading="lazy" />
                 <div class="gallery-overlay">
                     <span class="gallery-icon">🔍</span>
                 </div>
             </div>
             <div class="gallery-item" data-index="2">
-                <img src="https://d3k88l35vy59af.cloudfront.net/A160/11126/1778931930699.jpeg" alt="MM Fitness Gym Strength Training Machine" loading="lazy" />
+                <img src="https://d3k88l35vy59af.cloudfront.net/A160/11126/1778931930699.jpeg"
+                    alt="MM Fitness Gym Strength Training Machine" loading="lazy" />
                 <div class="gallery-overlay">
                     <span class="gallery-icon">🔍</span>
                 </div>
             </div>
             <div class="gallery-item" data-index="3">
-                <img src="https://d3k88l35vy59af.cloudfront.net/A160/11126/1778931930700.jpeg" alt="MM Fitness Gym Plate-Loaded Equipment" loading="lazy" />
+                <img src="https://d3k88l35vy59af.cloudfront.net/A160/11126/1778931930700.jpeg"
+                    alt="MM Fitness Gym Plate-Loaded Equipment" loading="lazy" />
                 <div class="gallery-overlay">
                     <span class="gallery-icon">🔍</span>
                 </div>
             </div>
             <div class="gallery-item" data-index="4">
-                <img src="https://d3k88l35vy59af.cloudfront.net/A160/11126/1778931930701.jpeg" alt="MM Fitness Gym Cable Crossover Machine" loading="lazy" />
+                <img src="https://d3k88l35vy59af.cloudfront.net/A160/11126/1778931930701.jpeg"
+                    alt="MM Fitness Gym Cable Crossover Machine" loading="lazy" />
                 <div class="gallery-overlay">
                     <span class="gallery-icon">🔍</span>
                 </div>
             </div>
             <div class="gallery-item" data-index="5">
-                <img src="https://d3k88l35vy59af.cloudfront.net/A160/11126/1778931930702.jpeg" alt="MM Fitness Gym Barbell & Squat Area" loading="lazy" />
+                <img src="https://d3k88l35vy59af.cloudfront.net/A160/11126/1778931930702.jpeg"
+                    alt="MM Fitness Gym Barbell & Squat Area" loading="lazy" />
                 <div class="gallery-overlay">
                     <span class="gallery-icon">🔍</span>
                 </div>
             </div>
             <div class="gallery-item hidden-item" data-index="6">
-                <img src="https://d3k88l35vy59af.cloudfront.net/A160/11126/1778932606505.jpeg" alt="MM Fitness Gym Machine Rows" loading="lazy" />
+                <img src="https://d3k88l35vy59af.cloudfront.net/A160/11126/1778932606505.jpeg"
+                    alt="MM Fitness Gym Machine Rows" loading="lazy" />
                 <div class="gallery-overlay">
                     <span class="gallery-icon">🔍</span>
                 </div>
             </div>
             <div class="gallery-item hidden-item" data-index="7">
-                <img src="https://d3k88l35vy59af.cloudfront.net/A160/11126/1778932606506.jpeg" alt="MM Fitness Gym Premium Cardio Section" loading="lazy" />
+                <img src="https://d3k88l35vy59af.cloudfront.net/A160/11126/1778932606506.jpeg"
+                    alt="MM Fitness Gym Premium Cardio Section" loading="lazy" />
                 <div class="gallery-overlay">
                     <span class="gallery-icon">🔍</span>
                 </div>
             </div>
             <div class="gallery-item hidden-item" data-index="8">
-                <img src="https://d3k88l35vy59af.cloudfront.net/A160/11126/1778932606507.jpeg" alt="MM Fitness Gym Free Weights Station" loading="lazy" />
+                <img src="https://d3k88l35vy59af.cloudfront.net/A160/11126/1778932606507.jpeg"
+                    alt="MM Fitness Gym Free Weights Station" loading="lazy" />
                 <div class="gallery-overlay">
                     <span class="gallery-icon">🔍</span>
                 </div>
             </div>
             <div class="gallery-item hidden-item" data-index="9">
-                <img src="https://d3k88l35vy59af.cloudfront.net/A160/11126/1778933072607.jpeg" alt="MM Fitness Gym Gym Floor Views" loading="lazy" />
+                <img src="https://d3k88l35vy59af.cloudfront.net/A160/11126/1778933072607.jpeg"
+                    alt="MM Fitness Gym Gym Floor Views" loading="lazy" />
                 <div class="gallery-overlay">
                     <span class="gallery-icon">🔍</span>
                 </div>
             </div>
             <div class="gallery-item hidden-item" data-index="10">
-                <img src="https://d3k88l35vy59af.cloudfront.net/A160/11126/1778933072608.jpeg" alt="MM Fitness Gym Workout Equipment" loading="lazy" />
+                <img src="https://d3k88l35vy59af.cloudfront.net/A160/11126/1778933072608.jpeg"
+                    alt="MM Fitness Gym Workout Equipment" loading="lazy" />
                 <div class="gallery-overlay">
                     <span class="gallery-icon">🔍</span>
                 </div>
             </div>
             <div class="gallery-item hidden-item" data-index="11">
-                <img src="https://d3k88l35vy59af.cloudfront.net/A160/11126/1778933072609.jpeg" alt="MM Fitness Gym Strength Machines Layout" loading="lazy" />
+                <img src="https://d3k88l35vy59af.cloudfront.net/A160/11126/1778933072609.jpeg"
+                    alt="MM Fitness Gym Strength Machines Layout" loading="lazy" />
                 <div class="gallery-overlay">
                     <span class="gallery-icon">🔍</span>
                 </div>
             </div>
             <div class="gallery-item hidden-item" data-index="12">
-                <img src="https://d3k88l35vy59af.cloudfront.net/A160/11126/1778933072610.jpeg" alt="MM Fitness Gym Premium Equipment Line" loading="lazy" />
+                <img src="https://d3k88l35vy59af.cloudfront.net/A160/11126/1778933072610.jpeg"
+                    alt="MM Fitness Gym Premium Equipment Line" loading="lazy" />
                 <div class="gallery-overlay">
                     <span class="gallery-icon">🔍</span>
                 </div>
             </div>
             <div class="gallery-item hidden-item" data-index="13">
-                <img src="https://d3k88l35vy59af.cloudfront.net/A160/11126/1778933072611.jpeg" alt="MM Fitness Gym Bicep and Tricep Equipment" loading="lazy" />
+                <img src="https://d3k88l35vy59af.cloudfront.net/A160/11126/1778933072611.jpeg"
+                    alt="MM Fitness Gym Bicep and Tricep Equipment" loading="lazy" />
                 <div class="gallery-overlay">
                     <span class="gallery-icon">🔍</span>
                 </div>
             </div>
             <div class="gallery-item hidden-item" data-index="14">
-                <img src="https://d3k88l35vy59af.cloudfront.net/A160/11126/1778933072612.jpeg" alt="MM Fitness Gym Clean Locker & Washrooms" loading="lazy" />
+                <img src="https://d3k88l35vy59af.cloudfront.net/A160/11126/1778933072612.jpeg"
+                    alt="MM Fitness Gym Clean Locker & Washrooms" loading="lazy" />
                 <div class="gallery-overlay">
                     <span class="gallery-icon">🔍</span>
                 </div>
             </div>
         </div>
-        
+
         <!-- View More / Toggle Button -->
         <div class="gallery-more-btn-wrap">
             <button id="viewAllGalleryBtn" class="gallery-btn">View All Photos</button>
@@ -2740,8 +3043,10 @@
                 </div>
 
                 <div class="visit-action-btns">
-                    <a href="tel:+916396436526" class="visit-btn-call"><i class="fa-solid fa-phone"></i> Call Now: +91 63964 36526</a>
-                    <a href="https://maps.google.com" target="_blank" class="visit-btn-dir"><i class="fa-solid fa-location-dot"></i> Get Directions</a>
+                    <a href="tel:+916396436526" class="visit-btn-call"><i class="fa-solid fa-phone"></i> Call Now: +91
+                        63964 36526</a>
+                    <a href="https://maps.google.com" target="_blank" class="visit-btn-dir"><i
+                            class="fa-solid fa-location-dot"></i> Get Directions</a>
                 </div>
             </div>
             <div class="map-placeholder reveal">
@@ -2752,6 +3057,19 @@
             </div>
         </div>
     </section>
+
+    <!-- Instagram CTA Section -->
+    <div class="insta-cta reveal">
+        <h3>Follow us for daily workout tips</h3>
+        <p>@mdfitnessmeerut</p>
+        <!-- Embed their latest 6 Instagram posts -->
+        <a href="https://instagram.com/mdfitnessmeerut">
+            Follow on Instagram
+        </a>
+        <a href="#locations">
+            Book Free Trial →
+        </a>
+    </div>
 
     <!-- ══ FOOTER ══ -->
     <footer>
@@ -2837,6 +3155,11 @@
 
             const email = document.getElementById("femail").value.trim();
             const goal = document.getElementById("fgoal").value;
+            const currentGym = document.getElementById("fcurrentGym").value;
+            const budget = document.getElementById("fbudget").value;
+            const availableTime = document.getElementById("favailableTime").value;
+            const heardFrom = document.getElementById("fheardFrom").value;
+            const urgency = document.getElementById("furgency").value;
 
             // Validate phone number (Indian 10-digit starting with 6-9)
             if (!/^[6-9]\d{9}$/.test(phone)) {
@@ -2846,12 +3169,26 @@
                 return;
             }
 
-            if (!goal) {
-                showToast("❌ Please select your fitness goal.");
+            if (!goal || !currentGym || !budget || !availableTime || !heardFrom || !urgency) {
+                showToast("❌ Please fill out all fields.");
                 btnText.textContent = "JOIN NOW →";
                 btn.disabled = false;
                 return;
             }
+
+            // Calculate lead score dynamically
+            let score = 0;
+            if (urgency === "this-week") score += 40;
+            else if (urgency === "next-week") score += 20;
+
+            if (budget === "1500-plus") score += 30;
+            else if (budget === "1000-1500") score += 20;
+            else score += 10;
+
+            if (currentGym === "yes") score += 10; // Swapping gyms
+            else score += 15; // New leads are also high value
+
+            if (goal) score += 10;
 
             try {
                 const supabaseRestUrl = SUPABASE_URL + "/rest/v1/leads";
@@ -2889,6 +3226,12 @@
                         email: email,
                         interest: "Website Form",
                         goal: goal,
+                        current_gym: currentGym,
+                        budget: budget,
+                        available_time: availableTime,
+                        heard_from: heardFrom,
+                        urgency: urgency,
+                        score: score,
                         status: "New"
                     })
                 });
@@ -3000,7 +3343,7 @@
                         }, 300); // Wait for fade-out to finish
                     });
                     viewAllBtn.textContent = 'View All Photos';
-                    
+
                     // Smoothly scroll back to the gallery header after closing
                     document.getElementById('gallery').scrollIntoView({ behavior: 'smooth' });
                 }
@@ -3015,21 +3358,21 @@
         const prevBtn = document.querySelector('.lightbox-prev');
         const nextBtn = document.querySelector('.lightbox-next');
         const galleryItems = document.querySelectorAll('.gallery-item');
-        
+
         let currentImgIndex = 0;
-        
+
         function showLightboxImage(index) {
             if (index < 0) index = galleryItems.length - 1;
             if (index >= galleryItems.length) index = 0;
-            
+
             currentImgIndex = index;
             const selectedItem = galleryItems[currentImgIndex];
             const originalImg = selectedItem.querySelector('img');
-            
+
             lightboxImg.src = originalImg.src;
             lightboxCaption.textContent = originalImg.alt;
         }
-        
+
         galleryItems.forEach((item, index) => {
             item.addEventListener('click', () => {
                 lightbox.classList.add('show');
@@ -3037,14 +3380,14 @@
                 document.body.style.overflow = 'hidden'; // Lock scrolling
             });
         });
-        
+
         if (closeBtn) {
             closeBtn.addEventListener('click', () => {
                 lightbox.classList.remove('show');
                 document.body.style.overflow = ''; // Restore scrolling
             });
         }
-        
+
         if (lightbox) {
             lightbox.addEventListener('click', (e) => {
                 if (e.target === lightbox) {
@@ -3053,25 +3396,25 @@
                 }
             });
         }
-        
+
         if (prevBtn) {
             prevBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
                 showLightboxImage(currentImgIndex - 1);
             });
         }
-        
+
         if (nextBtn) {
             nextBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
                 showLightboxImage(currentImgIndex + 1);
             });
         }
-        
+
         // Keyboard Navigation (Escape, Left, Right)
         document.addEventListener('keydown', (e) => {
             if (!lightbox || !lightbox.classList.contains('show')) return;
-            
+
             if (e.key === 'Escape') {
                 lightbox.classList.remove('show');
                 document.body.style.overflow = '';
