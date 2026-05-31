@@ -2167,6 +2167,446 @@
             }
         }
 
+        /* ─── GOOGLE REVIEWS TRUST STRIP ─── */
+        .reviews-strip {
+            background: linear-gradient(90deg, #0d0d0d 0%, #1a0505 50%, #0d0d0d 100%);
+            border-top: 1px solid rgba(255, 45, 45, 0.25);
+            border-bottom: 1px solid rgba(255, 45, 45, 0.25);
+            padding: 60px 5%;
+            text-align: center;
+        }
+
+        .reviews-strip-inner {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .google-rating-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 18px;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,45,45,0.3);
+            border-radius: 60px;
+            padding: 16px 36px;
+            margin-bottom: 32px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 40px rgba(255,45,45,0.1);
+        }
+
+        .google-g-logo {
+            width: 38px;
+            height: 38px;
+            background: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            font-weight: 900;
+            color: #4285F4;
+            flex-shrink: 0;
+            font-family: 'Barlow', sans-serif;
+        }
+
+        .google-rating-text .rating-number {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 42px;
+            color: var(--white);
+            line-height: 1;
+        }
+
+        .google-rating-text .rating-stars {
+            color: #f59e0b;
+            font-size: 18px;
+            letter-spacing: 2px;
+            margin: 2px 0;
+        }
+
+        .google-rating-text .rating-count {
+            font-size: 12px;
+            color: var(--gray-light);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        .reviews-strip h2 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(32px, 5vw, 56px);
+            color: var(--white);
+            margin-bottom: 12px;
+        }
+
+        .reviews-strip h2 em {
+            color: var(--red);
+            font-style: normal;
+        }
+
+        .reviews-strip p {
+            color: var(--gray-light);
+            font-size: 16px;
+            margin-bottom: 30px;
+        }
+
+        .reviews-cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--red);
+            color: #fff;
+            padding: 14px 32px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 14px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 8px 24px rgba(255,45,45,0.3);
+        }
+
+        .reviews-cta-btn:hover {
+            background: var(--orange);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(255,107,0,0.4);
+        }
+
+        /* ─── AMENITIES SECTION ─── */
+        .amenities-section {
+            background: var(--black-2);
+        }
+
+        .amenities-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-top: 56px;
+        }
+
+        .amenity-card {
+            background: var(--black-3);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 32px 24px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .amenity-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at top center, rgba(255,45,45,0.12) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .amenity-card:hover::before {
+            opacity: 1;
+        }
+
+        .amenity-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(255,45,45,0.4);
+            box-shadow: 0 20px 40px rgba(255,45,45,0.1);
+        }
+
+        .amenity-icon-wrap {
+            width: 68px;
+            height: 68px;
+            background: rgba(255,45,45,0.1);
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin: 0 auto 18px;
+            transition: background 0.3s, transform 0.3s;
+            border: 1px solid rgba(255,45,45,0.2);
+        }
+
+        .amenity-card:hover .amenity-icon-wrap {
+            background: var(--red);
+            transform: scale(1.1) rotate(-5deg);
+        }
+
+        .amenity-title {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 17px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--white);
+            margin-bottom: 8px;
+        }
+
+        .amenity-desc {
+            font-size: 13px;
+            color: var(--gray-light);
+            line-height: 1.5;
+        }
+
+        /* ─── TRAINERS SECTION ─── */
+        .trainers-section {
+            background: var(--black);
+        }
+
+        .trainers-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-top: 56px;
+        }
+
+        .trainer-card {
+            background: var(--black-3);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+            transition: transform 0.35s, border-color 0.35s, box-shadow 0.35s;
+        }
+
+        .trainer-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(255,45,45,0.5);
+            box-shadow: 0 24px 50px rgba(255,45,45,0.12);
+        }
+
+        .trainer-photo-wrap {
+            position: relative;
+            overflow: hidden;
+            height: 280px;
+            background: linear-gradient(135deg, #1a0a0a, #0d0d0d);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .trainer-avatar-placeholder {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--red), var(--orange));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 64px;
+            color: #fff;
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 0 40px rgba(255,45,45,0.4);
+        }
+
+        .trainer-photo-wrap::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 60%;
+            background: linear-gradient(to top, var(--black-3), transparent);
+            z-index: 2;
+        }
+
+        .trainer-photo-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(255,45,45,0.05);
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 3;
+        }
+
+        .trainer-card:hover .trainer-photo-overlay {
+            opacity: 1;
+        }
+
+        .trainer-info {
+            padding: 22px 24px 28px;
+        }
+
+        .trainer-name {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--white);
+            margin-bottom: 4px;
+        }
+
+        .trainer-role {
+            font-size: 13px;
+            color: var(--red);
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .trainer-bio {
+            font-size: 14px;
+            color: var(--gray-light);
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .trainer-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .trainer-tag {
+            background: rgba(255,45,45,0.1);
+            border: 1px solid rgba(255,45,45,0.25);
+            color: var(--red);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: 4px 12px;
+            border-radius: 20px;
+        }
+
+        /* ─── COUNTDOWN OFFER SECTION ─── */
+        .countdown-section {
+            background: linear-gradient(135deg, #0d0000 0%, #1a0505 40%, #0d0000 100%);
+            padding: 90px 5%;
+            text-align: center;
+            border-top: 1px solid rgba(255,45,45,0.3);
+            border-bottom: 1px solid rgba(255,45,45,0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .countdown-section::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(255,45,45,0.08) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .countdown-inner {
+            position: relative;
+            z-index: 2;
+            max-width: 780px;
+            margin: 0 auto;
+        }
+
+        .countdown-badge {
+            display: inline-block;
+            background: var(--red);
+            color: #fff;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            padding: 8px 24px;
+            border-radius: 40px;
+            margin-bottom: 24px;
+            animation: pulse-red 2s infinite;
+        }
+
+        .countdown-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(48px, 8vw, 96px);
+            line-height: 0.9;
+            color: var(--white);
+            margin-bottom: 16px;
+        }
+
+        .countdown-title em {
+            color: var(--red);
+            font-style: normal;
+        }
+
+        .countdown-subtitle {
+            font-size: clamp(16px, 2.5vw, 22px);
+            color: var(--gray-light);
+            margin-bottom: 40px;
+            font-weight: 500;
+        }
+
+        .countdown-subtitle strong {
+            color: var(--white);
+        }
+
+        .countdown-timer {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .countdown-box {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,45,45,0.3);
+            border-radius: 12px;
+            padding: 20px 28px;
+            min-width: 110px;
+            backdrop-filter: blur(10px);
+        }
+
+        .countdown-num {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 56px;
+            color: var(--red);
+            line-height: 1;
+            display: block;
+        }
+
+        .countdown-label {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--gray-light);
+            margin-top: 4px;
+        }
+
+        .countdown-separator {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 48px;
+            color: rgba(255,45,45,0.5);
+            align-self: center;
+            margin-top: -14px;
+        }
+
+        .countdown-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--red);
+            color: #fff;
+            padding: 18px 42px;
+            border-radius: 6px;
+            font-weight: 800;
+            font-size: 16px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 12px 32px rgba(255,45,45,0.35);
+        }
+
+        .countdown-cta:hover {
+            background: var(--orange);
+            transform: translateY(-3px);
+            box-shadow: 0 18px 40px rgba(255,107,0,0.45);
+        }
+
+        .countdown-disclaimer {
+            font-size: 12px;
+            color: var(--gray);
+            margin-top: 16px;
+        }
+
         /* RESPONSIVE */
         /* RESPONSIVE */
         @media (max-width:1024px) {
@@ -2180,6 +2620,19 @@
         }
 
         @media (max-width:900px) {
+            .amenities-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .trainers-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .countdown-timer {
+                flex-wrap: wrap;
+                gap: 12px;
+            }
+
             .nav-links {
                 position: fixed;
                 top: 0;
@@ -2294,6 +2747,27 @@
                 column-count: 1;
             }
 
+            .amenities-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .trainers-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .countdown-timer {
+                gap: 10px;
+            }
+
+            .countdown-box {
+                min-width: 72px;
+                padding: 14px 14px;
+            }
+
+            .countdown-num {
+                font-size: 38px;
+            }
+
             .hero-h1 {
                 font-size: 48px;
                 line-height: 1;
@@ -2387,6 +2861,8 @@
         <ul class="nav-links">
             <li><a href="#features">Features</a></li>
             <li><a href="#plans">Plans</a></li>
+            <li><a href="#trainers">Trainers</a></li>
+            <li><a href="#amenities">Amenities</a></li>
             <li><a href="#gallery">Gallery</a></li>
             <li><a href="#locations">Locations</a></li>
             <li><button class="theme-toggle" id="themeToggle" aria-label="Toggle Theme"><i
@@ -2446,6 +2922,25 @@
                 Diet Plans</span><span class="dot">◆</span><span>Real-Time Progress Tracking</span><span
                 class="dot">◆</span><span>Group Class Access</span><span class="dot">◆</span><span>Monthly Body
                 Analysis</span><span class="dot">◆</span><span>Goal-Based Workouts</span><span class="dot">◆</span>
+        </div>
+    </div>
+
+    <!-- ══ GOOGLE REVIEWS TRUST STRIP ══ -->
+    <div class="reviews-strip reveal" id="reviews">
+        <div class="reviews-strip-inner">
+            <div class="google-rating-badge">
+                <div class="google-g-logo">G</div>
+                <div class="google-rating-text">
+                    <div class="rating-number">4.9</div>
+                    <div class="rating-stars">★★★★★</div>
+                    <div class="rating-count">Based on 200+ Google Reviews</div>
+                </div>
+            </div>
+            <h2>MEERUT'S <em>MOST TRUSTED</em> GYM</h2>
+            <p>Real members. Real results. Rated 5 stars by hundreds of happy fitness warriors.</p>
+            <a href="https://g.co/kgs/mdfitnessmeerut" target="_blank" class="reviews-cta-btn">
+                <i class="fab fa-google"></i> Read Our Reviews
+            </a>
         </div>
     </div>
 
@@ -2571,7 +3066,7 @@
             <div class="feature-card reveal" data-fc="1">
                 <div class="fc-glow"></div>
                 <div class="fc-underline"></div>
-                <span class="feature-icon">🤖</span>
+                <span class="feature-icon"><i class="fas fa-robot"></i></span>
                 <h3>AI Workout Planner</h3>
                 <p>Your training plan adapts to your progress, recovery, and goals — automatically, every week.</p>
             </div>
@@ -2580,7 +3075,7 @@
             <div class="feature-card reveal" data-fc="2">
                 <div class="fc-glow"></div>
                 <div class="fc-underline"></div>
-                <span class="feature-icon">🥗</span>
+                <span class="feature-icon"><i class="fas fa-leaf"></i></span>
                 <h3>Personalised Diet Plans</h3>
                 <p>No crash diets. Balanced nutrition built around foods you love and macros your body actually needs.
                 </p>
@@ -2590,7 +3085,7 @@
             <div class="feature-card reveal" data-fc="3">
                 <div class="fc-glow"></div>
                 <div class="fc-underline"></div>
-                <span class="feature-icon">📊</span>
+                <span class="feature-icon"><i class="fas fa-chart-line"></i></span>
                 <h3>Monthly Body Analysis</h3>
                 <p>Track real change — muscle, fat, hydration — with BCA scans and expert review every month.</p>
             </div>
@@ -2599,7 +3094,7 @@
             <div class="feature-card reveal" data-fc="4">
                 <div class="fc-glow"></div>
                 <div class="fc-underline"></div>
-                <span class="feature-icon">🏋️</span>
+                <span class="feature-icon"><i class="fas fa-dumbbell"></i></span>
                 <h3>Premium Equipment</h3>
                 <p>Commercial-grade machines, free weights, and cardio stations — maintained to the highest standard.
                 </p>
@@ -2609,7 +3104,7 @@
             <div class="feature-card reveal" data-fc="5">
                 <div class="fc-glow"></div>
                 <div class="fc-underline"></div>
-                <span class="feature-icon">👥</span>
+                <span class="feature-icon"><i class="fas fa-users"></i></span>
                 <h3>Group Classes</h3>
                 <p>Unlimited access to HIIT, yoga, Zumba, spinning, and more — led by certified instructors.</p>
             </div>
@@ -2618,12 +3113,44 @@
             <div class="feature-card reveal" data-fc="6">
                 <div class="fc-glow"></div>
                 <div class="fc-underline"></div>
-                <span class="feature-icon">🏆</span>
+                <span class="feature-icon"><i class="fas fa-trophy"></i></span>
                 <h3>Expert Coaches</h3>
                 <p>Nationally certified trainers who know your name, your goals, and exactly how to push you further.
                 </p>
             </div>
 
+        </div>
+    </section>
+
+    <!-- ══ SPECIAL OFFER COUNTDOWN ══ -->
+    <section class="countdown-section" id="special-offer">
+        <div class="countdown-inner">
+            <div class="countdown-badge reveal"><i class="fas fa-fire"></i> Limited Time Offer — Ending Soon!</div>
+            <h2 class="countdown-title reveal">GET <em>4 MONTHS</em><br>FREE TODAY</h2>
+            <p class="countdown-subtitle reveal">Pay for 8 months — Train for <strong>12 months</strong>. Only for the next 99 members!</p>
+            <div class="countdown-timer reveal">
+                <div class="countdown-box">
+                    <span class="countdown-num" id="cd-days">00</span>
+                    <div class="countdown-label">Days</div>
+                </div>
+                <div class="countdown-separator">:</div>
+                <div class="countdown-box">
+                    <span class="countdown-num" id="cd-hours">00</span>
+                    <div class="countdown-label">Hours</div>
+                </div>
+                <div class="countdown-separator">:</div>
+                <div class="countdown-box">
+                    <span class="countdown-num" id="cd-mins">00</span>
+                    <div class="countdown-label">Mins</div>
+                </div>
+                <div class="countdown-separator">:</div>
+                <div class="countdown-box">
+                    <span class="countdown-num" id="cd-secs">00</span>
+                    <div class="countdown-label">Secs</div>
+                </div>
+            </div>
+            <a href="#join" class="countdown-cta reveal"><span>▶</span> CLAIM THIS OFFER</a>
+            <p class="countdown-disclaimer">*Offer valid only on 12-month membership. Subject to availability.</p>
         </div>
     </section>
 
@@ -2709,6 +3236,57 @@
         </div>
     </section>
 
+    <!-- ══ AMENITIES ══ -->
+    <section class="amenities-section" id="amenities">
+        <div class="reveal" style="text-align:center;">
+            <div class="section-tag" style="justify-content:center;">World-Class Facilities</div>
+            <h2 class="section-title">GYM <em>AMENITIES</em></h2>
+            <p class="section-sub" style="max-width:500px; margin: 0 auto;">Everything you need to train harder, recover faster, and feel at home.</p>
+        </div>
+        <div class="amenities-grid">
+            <div class="amenity-card reveal">
+                <div class="amenity-icon-wrap"><i class="fas fa-snowflake"></i></div>
+                <div class="amenity-title">Air Conditioning</div>
+                <div class="amenity-desc">Full AC environment so you stay cool and focused during every session.</div>
+            </div>
+            <div class="amenity-card reveal">
+                <div class="amenity-icon-wrap"><i class="fas fa-square-parking"></i></div>
+                <div class="amenity-title">Free Parking</div>
+                <div class="amenity-desc">Ample free parking space for all our members, right outside the gym.</div>
+            </div>
+            <div class="amenity-card reveal">
+                <div class="amenity-icon-wrap"><i class="fas fa-lock"></i></div>
+                <div class="amenity-title">Secure Lockers</div>
+                <div class="amenity-desc">Safe and hygienic locker rooms to store your belongings during your workout.</div>
+            </div>
+            <div class="amenity-card reveal">
+                <div class="amenity-icon-wrap"><i class="fas fa-shower"></i></div>
+                <div class="amenity-title">Clean Washrooms</div>
+                <div class="amenity-desc">Spotless, daily-sanitized washrooms and changing areas for your comfort.</div>
+            </div>
+            <div class="amenity-card reveal">
+                <div class="amenity-icon-wrap"><i class="fas fa-wifi"></i></div>
+                <div class="amenity-title">High-Speed Wi-Fi</div>
+                <div class="amenity-desc">Free Wi-Fi throughout the gym — stream workouts or stay connected.</div>
+            </div>
+            <div class="amenity-card reveal">
+                <div class="amenity-icon-wrap"><i class="fas fa-droplet"></i></div>
+                <div class="amenity-title">Purified Water</div>
+                <div class="amenity-desc">RO purified drinking water available 24/7 to keep you hydrated.</div>
+            </div>
+            <div class="amenity-card reveal">
+                <div class="amenity-icon-wrap"><i class="fas fa-music"></i></div>
+                <div class="amenity-title">Energising Music</div>
+                <div class="amenity-desc">Curated high-energy playlists to keep your motivation levels at peak.</div>
+            </div>
+            <div class="amenity-card reveal">
+                <div class="amenity-icon-wrap"><i class="fas fa-video"></i></div>
+                <div class="amenity-title">CCTV Security</div>
+                <div class="amenity-desc">24/7 CCTV surveillance ensuring a safe and secure training environment.</div>
+            </div>
+        </div>
+    </section>
+
     <!-- ══ TRANSFORMATIONS ══ -->
     <section class="transformations-section reveal" id="transformations">
         <div class="section-tag">Real Results</div>
@@ -2764,6 +3342,65 @@
                 <div class="transformation-info">
                     <div class="member-name">Vikram K. — Gained 8kg Muscle</div>
                     <div class="member-duration">8 months at MD Fitness</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══ TRAINERS ══ -->
+    <section class="trainers-section" id="trainers">
+        <div class="reveal" style="text-align:center;">
+            <div class="section-tag" style="justify-content:center;">The Experts</div>
+            <h2 class="section-title">MEET OUR <em>TRAINERS</em></h2>
+            <p class="section-sub" style="max-width:500px; margin: 0 auto;">Nationally certified fitness professionals who know your name, your goals, and how to push you further.</p>
+        </div>
+        <div class="trainers-grid">
+            <div class="trainer-card reveal">
+                <div class="trainer-photo-wrap">
+                    <div class="trainer-avatar-placeholder">M</div>
+                    <div class="trainer-photo-overlay"></div>
+                </div>
+                <div class="trainer-info">
+                    <div class="trainer-name">Mohit Sharma</div>
+                    <div class="trainer-role">Head Trainer & Nutritionist</div>
+                    <div class="trainer-bio">10+ years of experience in strength training and body transformation. Specialises in customised diet and progressive overload programming.</div>
+                    <div class="trainer-tags">
+                        <span class="trainer-tag">Strength</span>
+                        <span class="trainer-tag">Nutrition</span>
+                        <span class="trainer-tag">Weight Loss</span>
+                    </div>
+                </div>
+            </div>
+            <div class="trainer-card reveal">
+                <div class="trainer-photo-wrap">
+                    <div class="trainer-avatar-placeholder">D</div>
+                    <div class="trainer-photo-overlay"></div>
+                </div>
+                <div class="trainer-info">
+                    <div class="trainer-name">Divya Singh</div>
+                    <div class="trainer-role">Yoga & Group Fitness Coach</div>
+                    <div class="trainer-bio">Certified yoga instructor and group fitness specialist. Leads Zumba, HIIT, and functional training sessions for all fitness levels.</div>
+                    <div class="trainer-tags">
+                        <span class="trainer-tag">Yoga</span>
+                        <span class="trainer-tag">Zumba</span>
+                        <span class="trainer-tag">HIIT</span>
+                    </div>
+                </div>
+            </div>
+            <div class="trainer-card reveal">
+                <div class="trainer-photo-wrap">
+                    <div class="trainer-avatar-placeholder">R</div>
+                    <div class="trainer-photo-overlay"></div>
+                </div>
+                <div class="trainer-info">
+                    <div class="trainer-name">Rahul Verma</div>
+                    <div class="trainer-role">Personal Trainer & Bodybuilding Coach</div>
+                    <div class="trainer-bio">Former state-level bodybuilder with 7+ years of coaching experience. Expert in muscle building, athlete performance, and injury prevention.</div>
+                    <div class="trainer-tags">
+                        <span class="trainer-tag">Bodybuilding</span>
+                        <span class="trainer-tag">Performance</span>
+                        <span class="trainer-tag">Rehab</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -3120,6 +3757,42 @@
     </footer>
 
     <script>
+
+        // Countdown Timer
+        (function() {
+            // Set end date to 15 days from now
+            const stored = localStorage.getItem('mdFitnessCountdownEnd');
+            let endDate;
+            if (stored) {
+                endDate = new Date(stored);
+            } else {
+                endDate = new Date();
+                endDate.setDate(endDate.getDate() + 15);
+                localStorage.setItem('mdFitnessCountdownEnd', endDate.toISOString());
+            }
+
+            function updateCountdown() {
+                const now = new Date();
+                const diff = endDate - now;
+                if (diff <= 0) {
+                    document.getElementById('cd-days').textContent = '00';
+                    document.getElementById('cd-hours').textContent = '00';
+                    document.getElementById('cd-mins').textContent = '00';
+                    document.getElementById('cd-secs').textContent = '00';
+                    return;
+                }
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const secs = Math.floor((diff % (1000 * 60)) / 1000);
+                document.getElementById('cd-days').textContent = String(days).padStart(2, '0');
+                document.getElementById('cd-hours').textContent = String(hours).padStart(2, '0');
+                document.getElementById('cd-mins').textContent = String(mins).padStart(2, '0');
+                document.getElementById('cd-secs').textContent = String(secs).padStart(2, '0');
+            }
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+        })();
 
         // Navbar scroll
         const navbar = document.getElementById("navbar");
