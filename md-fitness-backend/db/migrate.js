@@ -26,6 +26,9 @@ const migrations = [
   `CREATE INDEX IF NOT EXISTS idx_leads_created_at ON leads(created_at DESC)`,
   `CREATE INDEX IF NOT EXISTS idx_leads_email      ON leads(email)`,
 
+  // Ensure `available_time` column exists for compatibility with frontend payloads
+  `ALTER TABLE leads ADD COLUMN IF NOT EXISTS available_time VARCHAR(50)`,
+
   // ── Admins table ─────────────────────────────────────────
   `CREATE TABLE IF NOT EXISTS admins (
     id            SERIAL PRIMARY KEY,

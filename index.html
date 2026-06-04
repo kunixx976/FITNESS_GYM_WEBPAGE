@@ -3862,11 +3862,6 @@
                     status: "New"
                 };
 
-                // Only include available_time if the field is present (avoids schema mismatch errors)
-                if (typeof availableTime !== 'undefined' && availableTime !== null && availableTime !== '') {
-                    leadPayload.available_time = availableTime;
-                }
-
                 const insertRes = await fetch(supabaseRestUrl, {
                     method: "POST",
                     headers: headers,
