@@ -11,6 +11,7 @@ const migrations = [
     email        VARCHAR(255) NOT NULL,
     goal         VARCHAR(50),
     location     VARCHAR(100),
+    available_time VARCHAR(50),
     status       VARCHAR(30)  NOT NULL DEFAULT 'New'
                    CHECK (status IN ('New','Called','Joined','Not Interested')),
     notes        TEXT,
