@@ -3,6 +3,10 @@ import logger from '../config/logger.js'
 
 const { Pool } = pg
 
+if (!process.env.DATABASE_URL) {
+  throw new Error('DATABASE_URL is required. Copy .env.example to .env and set DATABASE_URL before running migrations.')
+}
+
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false,

@@ -5,20 +5,25 @@ import logger from '../config/logger.js'
 const migrations = [
   // ── Leads table ──────────────────────────────────────────
   `CREATE TABLE IF NOT EXISTS leads (
-    id           SERIAL PRIMARY KEY,
-    name         VARCHAR(100) NOT NULL,
-    phone        VARCHAR(15)  NOT NULL,
-    email        VARCHAR(255) NOT NULL,
-    goal         VARCHAR(50),
-    location     VARCHAR(100),
+    id             SERIAL PRIMARY KEY,
+    name           VARCHAR(100) NOT NULL,
+    phone          VARCHAR(15)  NOT NULL,
+    email          VARCHAR(255) NOT NULL,
+    interest       VARCHAR(100),
+    goal           VARCHAR(50),
+    current_gym    VARCHAR(50),
+    budget         VARCHAR(50),
     available_time VARCHAR(50),
-    status       VARCHAR(30)  NOT NULL DEFAULT 'New'
-                   CHECK (status IN ('New','Called','Joined','Not Interested')),
-    notes        TEXT,
-    ip_address   VARCHAR(45),
-    source       VARCHAR(50)  DEFAULT 'website',
-    created_at   TIMESTAMPTZ  NOT NULL DEFAULT NOW(),
-    updated_at   TIMESTAMPTZ  NOT NULL DEFAULT NOW()
+    heard_from     VARCHAR(50),
+    urgency        VARCHAR(50),
+    score          INT DEFAULT 0,
+    status         VARCHAR(30)  NOT NULL DEFAULT 'New'
+                     CHECK (status IN ('New','Called','Joined','Not Interested')),
+    notes          TEXT,
+    ip_address     VARCHAR(45),
+    source         VARCHAR(50)  DEFAULT 'website',
+    created_at     TIMESTAMPTZ  NOT NULL DEFAULT NOW(),
+    updated_at     TIMESTAMPTZ  NOT NULL DEFAULT NOW()
   )`,
 
   // ── Indexes for fast lookups ──────────────────────────────
@@ -27,8 +32,14 @@ const migrations = [
   `CREATE INDEX IF NOT EXISTS idx_leads_created_at ON leads(created_at DESC)`,
   `CREATE INDEX IF NOT EXISTS idx_leads_email      ON leads(email)`,
 
-  // Ensure `available_time` column exists for compatibility with frontend payloads
+  // Ensure optional frontend columns exist for compatibility with payloads
+  `ALTER TABLE leads ADD COLUMN IF NOT EXISTS interest VARCHAR(100)`,
+  `ALTER TABLE leads ADD COLUMN IF NOT EXISTS current_gym VARCHAR(50)`,
+  `ALTER TABLE leads ADD COLUMN IF NOT EXISTS budget VARCHAR(50)`,
   `ALTER TABLE leads ADD COLUMN IF NOT EXISTS available_time VARCHAR(50)`,
+  `ALTER TABLE leads ADD COLUMN IF NOT EXISTS heard_from VARCHAR(50)`,
+  `ALTER TABLE leads ADD COLUMN IF NOT EXISTS urgency VARCHAR(50)`,
+  `ALTER TABLE leads ADD COLUMN IF NOT EXISTS score INT DEFAULT 0`,
 
   // ── Admins table ─────────────────────────────────────────
   `CREATE TABLE IF NOT EXISTS admins (
