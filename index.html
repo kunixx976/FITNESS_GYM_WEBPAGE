@@ -279,7 +279,7 @@
         .hero-bg {
             position: absolute;
             inset: 0;
-            background: linear-gradient(135deg, var(--black-2) 0%, var(--black) 40%, var(--black-2) 100%);
+            background: linear-gradient(135deg, var(--black-2) 0%, var(--black) 40%, var(--black-3) 100%);
         }
 
         .hero-bg::after {
@@ -1840,7 +1840,7 @@
             font-family: "Bebas Neue", sans-serif;
             font-size: clamp(48px, 8vw, 100px);
             line-height: 0.9;
-            margin-bottom: 16px;
+            margin-bottom: 24px;
             color: var(--white);
         }
 
@@ -3046,7 +3046,6 @@
                 <p>Commercial-grade machines, free weights, and cardio stations — maintained to the highest standard.
                 </p>
             </div>
-node md-fitness-backend/db/migrate.jsnode md-fitness-backend/db/migrate.js
             <!-- Card 5: Group Classes — violet/pink -->
             <div class="feature-card reveal" data-fc="5">
                 <div class="fc-glow"></div>
@@ -3658,8 +3657,8 @@ node md-fitness-backend/db/migrate.jsnode md-fitness-backend/db/migrate.js
         <a href="https://www.instagram.com/mmfitness_mrt?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==">
             Follow on Instagram
         </a>
-        <a href="#locations">
-            Book Free Trial →
+        <a href="#join" class="insta-cta-btn">
+            Book Now!
         </a>
     </div>
 
@@ -3798,11 +3797,6 @@ node md-fitness-backend/db/migrate.jsnode md-fitness-backend/db/migrate.js
                 return;
             }
 
-            // Calculate lead score dynamically based on filled fields
-            let score = 30; // Base score
-            if (goal) score += 10;
-            if (availableTime) score += 10;
-
             try {
                 const supabaseRestUrl = SUPABASE_URL + "/rest/v1/leads";
                 const headers = {
@@ -3837,7 +3831,6 @@ node md-fitness-backend/db/migrate.jsnode md-fitness-backend/db/migrate.js
                     interest: "Website Form",
                     goal: goal,
                     available_time: availableTime,
-                    score: score,
                     status: "New"
                 };
 

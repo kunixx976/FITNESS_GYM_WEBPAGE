@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
+const path = require('path');
 const { createClient } = require('@supabase/supabase-js');
 const nodemailer = require('nodemailer');
 const axios = require('axios');
@@ -10,8 +11,12 @@ const rateLimit = require('express-rate-limit');
 const { body, validationResult } = require('express-validator');
 const serverless = require('serverless-http');
 
-// Load environment variables
-dotenv.config();
+// Load only the root .env file
+const envPath = path.resolve(__dirname, '..', '.env');
+const dotenvResult = dotenv.config({ path: envPath });
+if (dotenvResult.error) {
+  throw dotenvResult.error;
+}
 
 const app = express();
 
