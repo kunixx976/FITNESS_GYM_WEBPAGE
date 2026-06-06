@@ -1,12 +1,13 @@
 import { query } from '../db/pool.js'
 import { invalidateStats, invalidateLeads } from '../services/cacheService.js'
-import { queueWhatsAppMessage, TEMPLATES } from '../services/whatsappService.js'
+import { queueWhatsAppMessage, TEMPLATES, notifyOwnerNewLead } from '../services/whatsappService.js'
+import { appendLeadToSheet } from '../services/googleSheetsService.js'
 import logger from '../config/logger.js'
 
 // ── POST /api/leads — public form submission ──────────────
 export async function createLead(req, res, next) {
   try {
-    const { name, phone, email, goal, location } = req.validatedData
+    const { name, phone, email, goal, location, available_time } = req.validatedData
     const ip = req.ip
 
     // Check for duplicate phone in last 24 hours (prevent spam)
@@ -22,10 +23,10 @@ export async function createLead(req, res, next) {
 
     // Insert lead
     const result = await query(
-      `INSERT INTO leads (name, phone, email, goal, location, ip_address)
-       VALUES ($1, $2, $3, $4, $5, $6)
-       RETURNING id, name, phone, created_at`,
-      [name, phone, email, goal || null, location || null, ip]
+      `INSERT INTO leads (name, phone, email, goal, location, available_time, ip_address)
+       VALUES ($1, $2, $3, $4, $5, $6, $7)
+       RETURNING id, name, phone, created_at, available_time`,
+      [name, phone, email, goal || null, location || null, available_time || null, ip]
     )
     const lead = result.rows[0]
 
@@ -36,6 +37,28 @@ export async function createLead(req, res, next) {
     queueWhatsAppMessage(lead.id, phone, TEMPLATES.welcome(name)).catch(err =>
       logger.warn('WhatsApp queue error after lead creation', { error: err.message })
     )
+
+    // Notify owner of the new lead via WhatsApp (fire-and-forget)
+    notifyOwnerNewLead({
+      id: lead.id,
+      name,
+      phone,
+      email,
+      goal,
+      available_time,
+    }).catch(err =>
+      logger.warn('Owner notification error after lead creation', { error: err.message })
+    )
+
+    // Append lead to Google Sheet (fire-and-forget)
+    try {
+      const leadForSheet = { name, phone, email, goal, available_time }
+      appendLeadToSheet(leadForSheet).catch(err =>
+        logger.warn('Google Sheets append error after lead creation', { error: err.message })
+      )
+    } catch (err) {
+      logger.warn('Google Sheets setup error', { error: err.message })
+    }
 
     logger.info('New lead created', { id: lead.id, name, phone, location })
 

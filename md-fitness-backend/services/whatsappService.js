@@ -126,3 +126,15 @@ export const TEMPLATES = {
   joined: (name) =>
     `Congratulations ${name}! 🎉 You're now an MD Fitness Gym member. Your transformation journey starts NOW! 💪`,
 }
+
+export async function notifyOwnerNewLead(lead) {
+  const ownerPhone = String(process.env.OWNER_PHONE || '').replace(/\D/g, '')
+  if (!ownerPhone) {
+    logger.warn('OWNER_PHONE not configured — cannot notify owner of new lead')
+    return
+  }
+
+  const message = `🔥 *NEW LEAD — MM Fitness*\n\n👤 *Name:* ${lead.name}\n📱 *Phone:* ${lead.phone}\n📧 *Email:* ${lead.email}\n🎯 *Goal:* ${lead.goal || 'Not specified'}\n⏰ *Batch:* ${lead.available_time || 'Not specified'}\n📅 *Time:* ${new Date().toLocaleString('en-IN')}\n\nReply CALLED once you've contacted them.`
+
+  await queueWhatsAppMessage(lead.id, ownerPhone, message)
+}
