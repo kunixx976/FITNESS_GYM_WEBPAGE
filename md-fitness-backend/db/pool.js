@@ -3,23 +3,28 @@ import logger from '../config/logger.js'
 
 const { Pool } = pg
 
-if (!process.env.DATABASE_URL) {
-  throw new Error('DATABASE_URL is required. Copy .env.example to .env and set DATABASE_URL before running migrations.')
+let pool = null
+if (process.env.DATABASE_URL) {
+  pool = new Pool({
+    connectionString: process.env.DATABASE_URL,
+    ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false,
+    max: 20,                // max connections in pool
+    idleTimeoutMillis: 30000,
+    connectionTimeoutMillis: 5000,
+  })
+
+  pool.on('connect', () => logger.debug('New DB connection opened'))
+  pool.on('error', (err) => logger.error('DB pool error', { error: err.message }))
+} else {
+  logger.warn('DATABASE_URL is not configured — SQL database is disabled. Falling back to Supabase for lead creation.')
 }
-
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false,
-  max: 20,                // max connections in pool
-  idleTimeoutMillis: 30000,
-  connectionTimeoutMillis: 5000,
-})
-
-pool.on('connect', () => logger.debug('New DB connection opened'))
-pool.on('error', (err) => logger.error('DB pool error', { error: err.message }))
 
 // Helper: run a query with automatic logging
 export async function query(text, params) {
+  if (!pool) {
+    throw new Error('DATABASE_DISABLED')
+  }
+
   const start = Date.now()
   try {
     const res = await pool.query(text, params)
@@ -53,6 +58,11 @@ export async function getClient() {
 }
 
 export async function testConnection() {
+  if (!pool) {
+    logger.warn('Database disabled, skipping connection test')
+    return false
+  }
+
   try {
     const res = await query('SELECT NOW()')
     logger.info('Database connected', { time: res.rows[0].now })

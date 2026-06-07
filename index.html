@@ -3760,7 +3760,11 @@
         const revealObserver = new IntersectionObserver(entries => { entries.forEach((e, i) => { if (e.isIntersecting) { e.target.style.transitionDelay = (i * .05) + "s"; e.target.classList.add("visible"); revealObserver.unobserve(e.target); } }); }, { threshold: .12 });
         document.querySelectorAll(".reveal").forEach(el => revealObserver.observe(el));
 
-        // Lead Form Submit — send through backend API
+        // Lead Form Submit — try backend, fall back to Supabase so form works immediately
+        // Supabase settings (fallback) — safe to expose anon key
+        const SUPABASE_URL = "https://yhwizfrtcebczhvhgcke.supabase.co";
+        const SUPABASE_ANON_KEY = "sb_publishable_dtRaZyUI-_gOVuDPWXYjWQ_uZDZuPHd";
+
         document.getElementById("leadForm").addEventListener("submit", async function (e) {
             e.preventDefault();
             const btn = this.querySelector(".submit-btn");
@@ -3793,6 +3797,18 @@
                 return;
             }
 
+            // Payload used for both backend and Supabase fallback
+            const leadPayload = {
+                name: name,
+                phone: phone,
+                email: email,
+                interest: "Website Form",
+                goal: goal,
+                available_time: availableTime,
+                status: "New",
+            };
+
+            // Attempt backend first (preferred — triggers Google Sheets)
             try {
                 const response = await fetch('/api/leads', {
                     method: 'POST',
@@ -3809,15 +3825,61 @@
                 if (response.ok) {
                     showToast("🎉 We'll contact you within 24 hours!");
                     this.reset();
-                } else {
-                    const errBody = await response.json().catch(() => ({}));
-                    if (response.status === 409) {
+                    return;
+                }
+
+                // If backend returned 409 (duplicate), show message and stop
+                if (response.status === 409) {
+                    showToast("✅ Already registered! We will contact you soon.");
+                    this.reset();
+                    return;
+                }
+
+                // For other non-OK responses fall through to Supabase fallback
+                console.warn('Backend responded with', response.status);
+            } catch (err) {
+                console.warn('Backend unreachable, falling back to Supabase', err);
+            }
+
+            // Fallback: direct Supabase insert (keeps your site working if backend is down)
+            try {
+                const supabaseRestUrl = SUPABASE_URL + "/rest/v1/leads";
+                const headers = {
+                    "Content-Type": "application/json",
+                    "apikey": SUPABASE_ANON_KEY,
+                    "Authorization": "Bearer " + SUPABASE_ANON_KEY,
+                    "Prefer": "return=representation"
+                };
+
+                // Check duplicate on Supabase
+                const checkRes = await fetch(
+                    supabaseRestUrl + "?phone=eq." + encodeURIComponent(phone) + "&select=id,created_at&limit=1",
+                    { headers: { "apikey": SUPABASE_ANON_KEY, "Authorization": "Bearer " + SUPABASE_ANON_KEY } }
+                );
+
+                if (checkRes.ok) {
+                    const existing = await checkRes.json();
+                    if (existing.length > 0) {
                         showToast("✅ Already registered! We will contact you soon.");
-                    } else {
-                        console.error("Lead submission error:", response.status, errBody);
-                        throw new Error(errBody.error || errBody.message || 'Failed to save');
+                        this.reset();
+                        return;
                     }
                 }
+
+                const insertRes = await fetch(supabaseRestUrl, {
+                    method: "POST",
+                    headers: headers,
+                    body: JSON.stringify(leadPayload)
+                });
+
+                if (!insertRes.ok) {
+                    const errBody = await insertRes.json().catch(() => ({}));
+                    console.error("Supabase insert error:", insertRes.status, errBody);
+                    throw new Error(errBody.message || "Failed to save");
+                }
+
+                showToast("🎉 We'll contact you within 24 hours!");
+                this.reset();
             } catch (err) {
                 console.error("Submission error:", err);
                 const errMsg = err && err.message ? err.message : String(err);

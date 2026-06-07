@@ -4,31 +4,101 @@ import { queueWhatsAppMessage, TEMPLATES, notifyOwnerNewLead } from '../services
 import { appendLeadToSheet } from '../services/googleSheetsService.js'
 import logger from '../config/logger.js'
 
+const SUPABASE_URL = process.env.SUPABASE_URL
+const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY
+
+async function insertLeadToSupabase(lead) {
+  if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
+    throw new Error('Supabase is not configured')
+  }
+
+  const restUrl = `${SUPABASE_URL}/rest/v1/leads`
+  const headers = {
+    'Content-Type': 'application/json',
+    apikey: SUPABASE_ANON_KEY,
+    Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+    Prefer: 'return=representation',
+  }
+
+  const checkRes = await fetch(
+    `${restUrl}?phone=eq.${encodeURIComponent(lead.phone)}&select=id,created_at&limit=1`,
+    { headers }
+  )
+  if (!checkRes.ok) {
+    const errBody = await checkRes.text().catch(() => '')
+    throw new Error(`Supabase duplicate check failed: ${errBody}`)
+  }
+
+  const existing = await checkRes.json()
+  if (existing.length > 0) {
+    const error = new Error('We already received your enquiry. Our team will contact you soon!')
+    error.status = 409
+    throw error
+  }
+
+  const insertRes = await fetch(restUrl, {
+    method: 'POST',
+    headers,
+    body: JSON.stringify(lead),
+  })
+  if (!insertRes.ok) {
+    const errBody = await insertRes.text().catch(() => '')
+    throw new Error(`Supabase insert failed: ${errBody}`)
+  }
+
+  const rows = await insertRes.json()
+  return rows[0] || lead
+}
+
 // ── POST /api/leads — public form submission ──────────────
 export async function createLead(req, res, next) {
   try {
     const { name, phone, email, goal, location, available_time } = req.validatedData
     const ip = req.ip
 
-    // Check for duplicate phone in last 24 hours (prevent spam)
-    const existing = await query(
-      `SELECT id FROM leads WHERE phone = $1 AND created_at > NOW() - INTERVAL '24 hours'`,
-      [phone]
-    )
-    if (existing.rows.length > 0) {
-      return res.status(409).json({
-        error: 'We already received your enquiry. Our team will contact you soon!',
-      })
-    }
+    let lead
+    try {
+      // Check for duplicate phone in last 24 hours (prevent spam)
+      const existing = await query(
+        `SELECT id FROM leads WHERE phone = $1 AND created_at > NOW() - INTERVAL '24 hours'`,
+        [phone]
+      )
+      if (existing.rows.length > 0) {
+        return res.status(409).json({
+          error: 'We already received your enquiry. Our team will contact you soon!',
+        })
+      }
 
-    // Insert lead
-    const result = await query(
-      `INSERT INTO leads (name, phone, email, goal, location, available_time, ip_address)
-       VALUES ($1, $2, $3, $4, $5, $6, $7)
-       RETURNING id, name, phone, created_at, available_time`,
-      [name, phone, email, goal || null, location || null, available_time || null, ip]
-    )
-    const lead = result.rows[0]
+      // Insert lead into SQL database
+      const result = await query(
+        `INSERT INTO leads (name, phone, email, goal, location, available_time, ip_address)
+         VALUES ($1, $2, $3, $4, $5, $6, $7)
+         RETURNING id, name, phone, created_at, available_time`,
+        [name, phone, email, goal || null, location || null, available_time || null, ip]
+      )
+      lead = result.rows[0]
+    } catch (dbErr) {
+      if (
+        dbErr.message === 'DATABASE_DISABLED' ||
+        dbErr.message.includes('Database disabled') ||
+        dbErr.message.includes('Cannot connect to database') ||
+        dbErr.message.includes('ECONNREFUSED')
+      ) {
+        logger.warn('Database unavailable — falling back to Supabase for lead creation', { error: dbErr.message })
+        lead = await insertLeadToSupabase({
+          name,
+          phone,
+          email,
+          goal,
+          location,
+          available_time,
+          interest: 'Website Form',
+          status: 'New',
+        })
+      } else {
+        throw dbErr
+      }
+    }
 
     // Invalidate caches
     await Promise.all([invalidateStats(), invalidateLeads()])

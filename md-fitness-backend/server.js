@@ -123,9 +123,10 @@ async function start() {
 
   // 1. Database
   const dbOk = await testConnection()
-  if (!dbOk) {
-    logger.error('Cannot connect to database — exiting')
-    process.exit(1)
+  if (!process.env.DATABASE_URL) {
+    logger.warn('DATABASE_URL not set — starting in limited mode. Lead creation will use Supabase if configured.')
+  } else if (!dbOk) {
+    logger.warn('Cannot connect to database — starting in limited mode. Lead creation will use Supabase if configured.')
   }
 
   // 2. Redis + WhatsApp queue (non-fatal if unavailable)

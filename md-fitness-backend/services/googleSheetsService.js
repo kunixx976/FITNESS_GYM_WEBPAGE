@@ -35,6 +35,6 @@ export async function appendLeadToSheet(lead) {
     console.log('Lead added to Google Sheet')
   } catch (err) {
     // Never crash the main request if sheets fails
-    console.error('Google Sheets error:', err.message)
+    console.error('Google Sheets error:', err)
   }
 }
