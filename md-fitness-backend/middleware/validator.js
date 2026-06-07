@@ -19,7 +19,11 @@ export const leadSchema = z.object({
     .max(255),
 
   goal: z
-    .enum(['Weight Loss', 'Muscle Gain', 'General Fitness', 'Athletic Performance', 'Rehabilitation'])
+    .enum(['weight-loss', 'muscle-gain', 'fitness', 'other', 'Weight Loss', 'Muscle Gain', 'General Fitness', 'Athletic Performance', 'Rehabilitation'])
+    .optional(),
+
+  available_time: z
+    .enum(['morning', 'evening', 'any'])
     .optional(),
 
   location: z
