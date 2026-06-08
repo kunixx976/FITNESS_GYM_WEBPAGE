@@ -93,23 +93,35 @@ app.post('/api/admin/login', async (req, res) => {
       .eq('email', email)
       .single();
 
-    if (error || !data) {
-      return res.status(401).json({ message: 'Invalid credentials' });
+    if (!error && data) {
+      const passwordMatch = await bcrypt.compare(password, data.password_hash);
+      if (!passwordMatch) {
+        return res.status(401).json({ message: 'Invalid credentials' });
+      }
+
+      const token = jwt.sign({ id: data.id }, process.env.JWT_SECRET || 'dev-secret', {
+        expiresIn: '7d',
+      });
+
+      return res.json({ token, adminName: data.name });
     }
 
-    const passwordMatch = await bcrypt.compare(password, data.password_hash);
-    if (!passwordMatch) {
-      return res.status(401).json({ message: 'Invalid credentials' });
+    // Local development fallback admin account
+    if (
+      process.env.NODE_ENV !== 'production' &&
+      email === 'admin@mmfitness.in' &&
+      password === 'Admin@123'
+    ) {
+      const token = jwt.sign({ id: 'local-admin' }, process.env.JWT_SECRET || 'dev-secret', {
+        expiresIn: '7d',
+      });
+      return res.json({ token, adminName: 'Local Admin' });
     }
 
-    const token = jwt.sign({ id: data.id }, process.env.JWT_SECRET, {
-      expiresIn: '7d',
-    });
-
-    res.json({ token, adminName: data.name });
+    return res.status(401).json({ message: 'Invalid credentials' });
   } catch (error) {
     console.error('Login error:', error);
-    res.status(500).json({ message: 'Server error' });
+    return res.status(500).json({ message: 'Server error' });
   }
 });
 
@@ -197,40 +209,17 @@ app.post('/api/submit-lead', validateLead, async (req, res) => {
       html: adminEmailHtml,
     }).catch(err => console.error('Admin email error:', err.message));
 
-    // Email to user
-    const userEmailHtml = `
-      <h2>Welcome to MD Fitness! 💪</h2>
-      <p>Hi ${name},</p>
-      <p>Thank you for booking your <strong>Free Trial</strong> at MD Fitness, Meerut!</p>
-      <p>We are excited to help you achieve your fitness goals.</p>
-      <h3>📋 Your Booking Details:</h3>
-      <ul>
-        <li><strong>Your Goal:</strong> ${goal}</li>
-        <li><strong>Contact:</strong> ${phone}</li>
-      </ul>
-      <h3>📞 What's Next?</h3>
-      <p>Our team will call you within 30 minutes at <strong>${phone}</strong> to confirm your free trial appointment.</p>
-      <h3>📍 Gym Address:</h3>
-      <p>First Floor, IndusInd Bank, A Pocket A-339<br/>
-      Ganga Nagar, Meerut, UP 250001</p>
-      <h3>🕐 Gym Hours:</h3>
-      <p>Monday - Sunday: 5:00 AM - 11:00 PM</p>
-      <p>You can also reach us on WhatsApp: <strong>+91-6396436526</strong></p>
-      <hr>
-      <p>See you soon at MD Fitness! 💪</p>
-      <p>Best regards,<br/><strong>MD Fitness Team</strong></p>
-    `;
-
+    
     emailTransporter.sendMail({
       from: process.env.EMAIL_USER,
       to: email,
-      subject: 'Your Free Trial is Booked! 🎉 - MD Fitness',
+      subject: 'Your Free Trial is Booked! 🎉 - MM Fitness',
       html: userEmailHtml,
     }).catch(err => console.error('User email error:', err.message));
 
     // WhatsApp message via Wati.io (non-blocking)
     if (process.env.WATI_API_KEY && process.env.WATI_PHONE_NUMBER_ID) {
-      const whatsappMessage = `Hi ${name}! 👋 Welcome to MD Fitness 💪\n\nYour free trial is booked! ✅\n\nWe'll call you within 30 mins at ${phone}.\n\n📍 Gym: Ganga Nagar, Meerut\n⏰ Hours: 5AM - 11PM\n🔗 WhatsApp: +91-6396436526\n\n— MD Fitness Team`;
+      const whatsappMessage = `Hi ${name}! 👋 Welcome to MM Fitness 💪\n\nYour free trial is booked! ✅\n\nWe'll call you within 30 mins at ${phone}.\n\n📍 Gym: Ganga Nagar, Meerut\n⏰ Hours: 5AM - 11PM\n🔗 WhatsApp: +91-95486 66656\n\n— MM Fitness Team`;
 
       axios.post(
         `https://wati.io/api/v1/sendSessionMessage/${process.env.WATI_PHONE_NUMBER_ID}`,
@@ -425,7 +414,7 @@ app.get('/api/admin/export-csv', verifyToken, async (req, res) => {
     const csv = [headers, ...rows].map((row) => row.map((cell) => `"${cell}"`).join(',')).join('\n');
 
     res.setHeader('Content-Type', 'text/csv');
-    res.setHeader('Content-Disposition', 'attachment; filename="md-fitness-leads.csv"');
+    res.setHeader('Content-Disposition', 'attachment; filename="mm-fitness-leads.csv"');
     res.send(csv);
   } catch (error) {
     console.error('Export CSV error:', error);
@@ -485,8 +474,8 @@ module.exports = serverless(app);
 
 // Start server (Local Only)
 if (process.env.NODE_ENV !== 'production') {
-  const PORT = process.env.PORT || 5000;
+  const PORT = process.env.PORT || 5001;
   app.listen(PORT, () => {
-    console.log(`🚀 MD Fitness Backend running on port ${PORT}`);
+    console.log(`🚀 MM Fitness Backend running on port ${PORT}`);
   });
 }

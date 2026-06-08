@@ -3,352 +3,516 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MM Fitness - Admin Dashboard</title>
+    <title>MD Fitness - Admin Dashboard</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         :root {
-            --bg: #f4f7f6;
-            --text: #333;
-            --card-bg: #fff;
             --primary: #dc2743;
             --secondary: #2c3e50;
-            --border: #e1e8ed;
-            --hot: #ff4757;
-            --warm: #ffa502;
-            --cold: #2ed573;
+            --success: #27ae60;
+            --warning: #f39c12;
+            --danger: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --border: #bdc3c7;
         }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
-            margin: 0;
-            padding: 20px;
-        }
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-        h1 {
-            color: var(--secondary);
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        .lead-card {
-            background: var(--card-bg);
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            border-left: 5px solid var(--border);
-            transition: transform 0.2s;
-        }
-        .lead-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
-        }
-        .lead-card.hot { border-left-color: var(--hot); }
-        .lead-card.warm { border-left-color: var(--warm); }
-        .lead-card.cold { border-left-color: var(--cold); }
-        
-        .lead-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 15px;
-            margin-bottom: 15px;
+            padding: 20px;
         }
-        .lead-name {
-            font-size: 1.4rem;
-            font-weight: bold;
-            color: var(--secondary);
-            margin: 0;
-        }
-        .lead-score {
-            font-size: 1.2rem;
-            font-weight: bold;
-        }
-        .score-hot { color: var(--hot); }
-        .score-warm { color: var(--warm); }
-        .score-cold { color: var(--cold); }
-        
-        .lead-details {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-        }
-        .detail-item {
-            font-size: 1rem;
-        }
-        .detail-label {
-            font-weight: 600;
-            color: #666;
-            display: inline-block;
-            width: 120px;
-        }
-        .annotation {
-            font-size: 0.85rem;
-            color: var(--primary);
-            font-style: italic;
-            margin-left: 10px;
-        }
-        
-        /* Simple Login Overlay */
-        #loginOverlay {
+
+        .login-overlay {
             position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.8);
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
             display: flex;
             justify-content: center;
             align-items: center;
             z-index: 1000;
         }
+
+        .login-overlay.hidden {
+            display: none;
+        }
+
         .login-box {
-            background: #fff;
+            background: white;
+            border-radius: 12px;
             padding: 40px;
-            border-radius: 10px;
-            text-align: center;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
             width: 100%;
             max-width: 400px;
         }
-        .login-box input {
-            width: 90%;
-            padding: 12px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+
+        .login-box h2 {
+            text-align: center;
+            color: var(--dark);
+            margin-bottom: 30px;
+            font-size: 24px;
         }
+
+        .login-box .form-group {
+            margin-bottom: 20px;
+        }
+
+        .login-box label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--secondary);
+            font-weight: 600;
+        }
+
+        .login-box input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        .login-box input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(220, 39, 67, 0.1);
+        }
+
         .login-box button {
+            width: 100%;
+            padding: 12px;
             background: var(--primary);
             color: white;
             border: none;
-            padding: 12px 20px;
-            width: 100%;
-            border-radius: 5px;
+            border-radius: 6px;
             font-size: 16px;
+            font-weight: 600;
             cursor: pointer;
-            margin-top: 15px;
+            transition: background 0.3s;
+            margin-top: 10px;
         }
-        .hidden { display: none !important; }
+
+        .login-box button:hover {
+            background: #c91e36;
+        }
+
+        .login-box .error {
+            color: var(--danger);
+            text-align: center;
+            margin-top: 15px;
+            font-size: 14px;
+            display: none;
+        }
+
+        .dashboard {
+            width: 100%;
+            max-width: 1400px;
+        }
+
+        .dashboard.hidden {
+            display: none;
+        }
+
+        .header {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .header h1 {
+            color: var(--dark);
+            margin: 0;
+            font-size: 28px;
+        }
+
+        .header-controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #c91e36;
+        }
+
+        .btn-secondary {
+            background: var(--light);
+            color: var(--dark);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: #e0e0e0;
+        }
+
+        .leads-table {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: var(--secondary);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid var(--light);
+            font-size: 14px;
+        }
+
+        tr:hover {
+            background: #f8f9fa;
+        }
+
+        .lead-name {
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .lead-phone {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .badge-hot {
+            background: #ffe5e5;
+            color: #c91e36;
+        }
+
+        .badge-warm {
+            background: #fff3e0;
+            color: #e67e22;
+        }
+
+        .badge-cold {
+            background: #e8f5e9;
+            color: #27ae60;
+        }
+
+        .badge-new {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .badge-called {
+            background: #f3e5f5;
+            color: #7b1fa2;
+        }
+
+        .badge-joined {
+            background: #e8f5e9;
+            color: #388e3c;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: var(--secondary);
+            font-size: 16px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: var(--secondary);
+        }
+
+        .empty-state img {
+            width: 100px;
+            opacity: 0.5;
+            margin-bottom: 20px;
+        }
+
+        .error-message {
+            background: #ffe5e5;
+            color: #c91e36;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .success-message {
+            background: #e8f5e9;
+            color: #27ae60;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .status-select {
+            padding: 6px 12px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .refresh-time {
+            font-size: 12px;
+            color: #999;
+        }
     </style>
 </head>
 <body>
-
-    <div id="loginOverlay">
+    <!-- Login Overlay -->
+    <div class="login-overlay" id="loginOverlay">
         <div class="login-box">
             <h2>Admin Login</h2>
-            <input type="email" id="email" placeholder="admin@mmfitness.in" value="admin@mmfitness.in">
-            <input type="password" id="password" placeholder="Password (e.g. Admin@123)">
-            <button onclick="login()">Log In</button>
-            <p id="loginError" style="color: red; display: none; margin-top: 10px;">Invalid credentials</p>
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" placeholder="admin@mmfitness.in" value="admin@mmfitness.in" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="Password" value="Admin@123" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Log In</button>
+                <div class="error" id="loginError"></div>
+            </form>
         </div>
     </div>
 
-    <div class="container hidden" id="dashboard">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; gap:10px; flex-wrap:wrap;">
-            <h1 style="margin:0;">Leads Dashboard</h1>
-            <button id="toggleSourceBtn" onclick="toggleLeadSource()" style="background:var(--secondary); color:#fff; border:none; border-radius:8px; padding:10px 16px; cursor:pointer;">Show Supabase Leads</button>
+    <!-- Dashboard -->
+    <div class="dashboard hidden" id="dashboard">
+        <div class="header">
+            <div>
+                <h1>📊 Leads Dashboard</h1>
+                <p class="refresh-time" id="lastRefresh"></p>
+            </div>
+            <div class="header-controls">
+                <button class="btn btn-secondary" onclick="refreshLeads()">🔄 Refresh</button>
+                <button class="btn btn-secondary" onclick="logout()">Logout</button>
+            </div>
         </div>
-        <div id="leadsContainer">
-            <p style="text-align: center;">Loading leads...</p>
+
+        <div id="successMessage" class="success-message"></div>
+        <div id="errorMessage" class="error-message"></div>
+
+        <div class="leads-table">
+            <div id="leadsContent">
+                <div class="loading">Loading leads...</div>
+            </div>
         </div>
     </div>
 
     <script>
-        let API_BASE = '/api'
-        const API_PORTS = [5001, 5000]
-        const API_BASE_PROMISE = (async () => {
-            if (
-                window.location.hostname === 'localhost' ||
-                window.location.hostname === '127.0.0.1' ||
-                window.location.protocol === 'file:'
-            ) {
-                for (const port of API_PORTS) {
-                    const base = `http://127.0.0.1:${port}/api`
-                    try {
-                        const res = await fetch(base.replace('/api', '/health'), { method: 'GET' })
-                        if (res.ok) {
-                            return base
-                        }
-                    } catch (err) {
-                        // try next port
-                    }
-                }
-            }
-            return '/api'
-        })()
-            
-        let authToken = localStorage.getItem('adminToken');
-        let useSupabase = false
+        const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.protocol === 'file:'
+            ? 'http://127.0.0.1:5000/api'
+            : '/api';
 
-        // Check if already logged in (optional, simplified for demo)
+        let authToken = localStorage.getItem('adminToken');
+
+        // Check if already logged in
         if (authToken) {
-            document.getElementById('loginOverlay').classList.add('hidden');
-            document.getElementById('dashboard').classList.remove('hidden');
-            updateSourceButton();
-            fetchLeads();
+            showDashboard();
+            refreshLeads();
         }
 
-        async function login() {
+        async function handleLogin(event) {
+            event.preventDefault();
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
-            
+            const errorDiv = document.getElementById('loginError');
+
             try {
-                API_BASE = await API_BASE_PROMISE
                 const res = await fetch(`${API_BASE}/admin/login`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email, password })
                 });
-                
+
                 if (res.ok) {
                     const data = await res.json();
                     authToken = data.token;
                     localStorage.setItem('adminToken', authToken);
-                    document.getElementById('loginOverlay').classList.add('hidden');
-                    document.getElementById('dashboard').classList.remove('hidden');
-                    fetchLeads();
+                    showDashboard();
+                    refreshLeads();
                 } else {
-                    document.getElementById('loginError').style.display = 'block';
+                    errorDiv.textContent = 'Invalid email or password';
+                    errorDiv.style.display = 'block';
                 }
             } catch (err) {
-                console.warn("Backend might not be running or login failed.", err);
-                document.getElementById('loginError').textContent = 'Unable to contact backend. Please start the backend and try again.'
-                document.getElementById('loginError').style.display = 'block'
+                errorDiv.textContent = 'Failed to connect to backend: ' + err.message;
+                errorDiv.style.display = 'block';
             }
         }
 
-        function updateSourceButton() {
-            const button = document.getElementById('toggleSourceBtn');
-            button.textContent = useSupabase ? 'Showing Supabase Leads' : 'Show Supabase Leads';
-            button.style.background = useSupabase ? 'var(--hot)' : 'var(--secondary)';
+        function showDashboard() {
+            document.getElementById('loginOverlay').classList.add('hidden');
+            document.getElementById('dashboard').classList.remove('hidden');
         }
 
-        function toggleLeadSource() {
-            useSupabase = !useSupabase;
-            updateSourceButton();
-            fetchLeads();
+        function logout() {
+            localStorage.removeItem('adminToken');
+            location.reload();
         }
 
-        async function fetchLeads() {
+        async function refreshLeads() {
+            const content = document.getElementById('leadsContent');
+            content.innerHTML = '<div class="loading">Loading leads...</div>';
+
             try {
-                API_BASE = await API_BASE_PROMISE
-                const sourceQuery = useSupabase ? '?source=supabase&limit=50' : '?limit=50';
-                const res = await fetch(`${API_BASE}/admin/leads${sourceQuery}`, {
+                const res = await fetch(`${API_BASE}/admin/leads?limit=100&page=1`, {
                     headers: { 'Authorization': `Bearer ${authToken}` }
                 });
-                
-                if (res.ok) {
-                    const data = await res.json();
-                    renderLeads(data.leads);
-                } else {
-                    if (res.status === 401) {
-                        localStorage.removeItem('adminToken');
-                        location.reload();
-                        return;
-                    }
-                    const errorText = await res.text();
-                    console.error('Lead fetch failed', res.status, errorText);
-                    document.getElementById('leadsContainer').innerHTML = `<p style="color:red; text-align:center;">Unable to load leads: ${res.status}</p>`;
+
+                if (res.status === 401) {
+                    localStorage.removeItem('adminToken');
+                    location.reload();
+                    return;
                 }
+
+                if (!res.ok) {
+                    throw new Error(`HTTP ${res.status}`);
+                }
+
+                const data = await res.json();
+                const leads = data.leads || data || [];
+
+                document.getElementById('lastRefresh').textContent = `Last updated: ${new Date().toLocaleTimeString()}`;
+
+                if (!leads.length) {
+                    content.innerHTML = '<div class="empty-state"><p>No leads found</p></div>';
+                    return;
+                }
+
+                let html = `
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Phone</th>
+                                <th>Email</th>
+                                <th>Goal</th>
+                                <th>Budget</th>
+                                <th>Urgency</th>
+                                <th>Status</th>
+                                <th>Created</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                `;
+
+                leads.forEach(lead => {
+                    const goal = formatGoal(lead.goal);
+                    const budget = formatBudget(lead.budget);
+                    const urgency = lead.urgency ? lead.urgency.replace('-', ' ') : 'N/A';
+                    const status = lead.status || 'New';
+                    const created = new Date(lead.created_at).toLocaleDateString();
+
+                    html += `
+                        <tr>
+                            <td><span class="lead-name">${lead.name}</span></td>
+                            <td><a href="tel:${lead.phone}" class="lead-phone">${lead.phone}</a></td>
+                            <td>${lead.email || 'N/A'}</td>
+                            <td>${goal}</td>
+                            <td>${budget}</td>
+                            <td>${urgency}</td>
+                            <td><span class="badge ${getStatusBadgeClass(status)}">${status}</span></td>
+                            <td>${created}</td>
+                        </tr>
+                    `;
+                });
+
+                html += `
+                        </tbody>
+                    </table>
+                `;
+
+                content.innerHTML = html;
             } catch (err) {
-                console.error("Error fetching leads", err);
-                document.getElementById('leadsContainer').innerHTML = '<p style="color:red; text-align:center;">Failed to load leads. Make sure backend is running.</p>';
+                content.innerHTML = `<div class="empty-state"><p>Error loading leads: ${err.message}</p></div>`;
             }
         }
 
         function formatGoal(g) {
-            if (!g) return "N/A";
+            if (!g) return 'N/A';
             const map = {
-                'weight-loss': 'Weight loss',
-                'muscle-gain': 'Muscle gain',
+                'weight-loss': 'Weight Loss',
+                'muscle-gain': 'Muscle Gain',
                 'fitness': 'General Fitness',
-                'other': 'Athletic Performance'
+                'other': 'Other'
             };
             return map[g] || g;
         }
 
         function formatBudget(b) {
-            if (!b) return "N/A";
-            if (b === 'under-1000') return 'Under ₹1,000/month';
-            if (b === '1000-1500') return '₹1,000–1,500/month';
-            if (b === '1500-plus') return '₹1,500+/month';
+            if (!b) return 'N/A';
+            if (b === 'under-1000') return '< ₹1000';
+            if (b === '1000-1500') return '₹1000–1500';
+            if (b === '1500-plus') return '₹1500+';
             return b;
         }
 
-        function renderLeads(leads) {
-            const container = document.getElementById('leadsContainer');
-            if (!leads || leads.length === 0) {
-                container.innerHTML = '<p style="text-align:center;">No leads found.</p>';
-                return;
-            }
-
-            container.innerHTML = '';
-            
-            leads.forEach(lead => {
-                const score = lead.score || 0;
-                let scoreText = '';
-                let scoreClass = '';
-                let cardClass = '';
-                
-                if (score >= 70) {
-                    scoreText = '🔥 HOT';
-                    scoreClass = 'score-hot';
-                    cardClass = 'hot';
-                } else if (score >= 40) {
-                    scoreText = '⭐ WARM';
-                    scoreClass = 'score-warm';
-                    cardClass = 'warm';
-                } else {
-                    scoreText = '❄️ COLD';
-                    scoreClass = 'score-cold';
-                    cardClass = 'cold';
-                }
-
-                // Logic for annotations
-                let budgetAnnotation = '';
-                if (lead.budget === '1000-1500' || lead.budget === '1500-plus') {
-                    budgetAnnotation = '← can afford premium';
-                }
-
-                let gymAnnotation = '';
-                if (lead.current_gym === 'no') {
-                    gymAnnotation = '← ready to join';
-                } else if (lead.current_gym === 'yes') {
-                    gymAnnotation = '← looking to switch';
-                }
-
-                let urgencyAnnotation = '';
-                if (lead.urgency === 'this-week') {
-                    urgencyAnnotation = '← call TODAY';
-                }
-
-                const card = document.createElement('div');
-                card.className = `lead-card ${cardClass}`;
-                
-                card.innerHTML = `
-                    <div class="lead-header">
-                        <h2 class="lead-name">${lead.name} <span style="color:#888; font-size:1rem; font-weight:normal;">(${lead.phone})</span></h2>
-                        <div class="lead-score ${scoreClass}">Score: ${scoreText} (${score})</div>
-                    </div>
-                    <div class="lead-details">
-                        <div class="detail-item">
-                            <span class="detail-label">Goal:</span> ${formatGoal(lead.goal)}
-                        </div>
-                        <div class="detail-item">
-                            <span class="detail-label">Budget:</span> ${formatBudget(lead.budget)} <span class="annotation">${budgetAnnotation}</span>
-                        </div>
-                        <div class="detail-item">
-                            <span class="detail-label">Current Gym:</span> ${lead.current_gym === 'yes' ? 'Yes' : (lead.current_gym === 'no' ? 'No current gym' : 'N/A')} <span class="annotation">${gymAnnotation}</span>
-                        </div>
-                        <div class="detail-item">
-                            <span class="detail-label">Urgency:</span> ${lead.urgency ? lead.urgency.replace('-', ' ') : 'N/A'} <span class="annotation">${urgencyAnnotation}</span>
-                        </div>
-                    </div>
-                `;
-                
-                container.appendChild(card);
-            });
+        function getStatusBadgeClass(status) {
+            const statusMap = {
+                'New': 'badge-new',
+                'Called': 'badge-called',
+                'Joined': 'badge-joined',
+                'Not Interested': 'badge-cold'
+            };
+            return statusMap[status] || 'badge-new';
         }
+
+        // Auto-refresh every 30 seconds
+        setInterval(refreshLeads, 30000);
     </script>
 </body>
 </html>

@@ -37,6 +37,8 @@ const allowedOrigins = [
   process.env.FRONTEND_URL_2,
   'http://localhost:3000',
   'http://127.0.0.1:5500',   // Live Server for HTML dev
+  'http://localhost:5001',
+  'http://127.0.0.1:5001',
 ].filter(Boolean)
 
 app.use(cors({
