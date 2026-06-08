@@ -74,6 +74,27 @@ async function insertLeadToSupabase(lead) {
   return rows[0] || lead
 }
 
+async function fetchLeadsFromSupabase(limit = 50, page = 1) {
+  if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
+    throw new Error('Supabase is not configured')
+  }
+
+  const offset = (page - 1) * limit
+  const restUrl = `${SUPABASE_URL}/rest/v1/leads?select=*&order=created_at.desc&limit=${limit}&offset=${offset}`
+  const headers = {
+    apikey: SUPABASE_ANON_KEY,
+    Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+  }
+
+  const res = await fetch(restUrl, { headers })
+  if (!res.ok) {
+    const errBody = await res.text().catch(() => '')
+    throw new Error(`Supabase fetch failed: ${errBody}`)
+  }
+
+  return res.json()
+}
+
 // ── POST /api/leads — public form submission ──────────────
 export async function createLead(req, res, next) {
   try {
@@ -163,13 +184,32 @@ export async function createLead(req, res, next) {
 // ── GET /api/admin/leads — paginated leads list ───────────
 export async function getLeads(req, res, next) {
   try {
-    const page     = Math.max(1, parseInt(req.query.page)  || 1)
-    const limit    = Math.min(100, parseInt(req.query.limit) || 20)
-    const offset   = (page - 1) * limit
-    const status   = req.query.status
-    const search   = req.query.search?.trim()
-    const from     = req.query.from   // date: YYYY-MM-DD
-    const to       = req.query.to
+    const page   = Math.max(1, parseInt(req.query.page)  || 1)
+    const limit  = Math.min(100, parseInt(req.query.limit) || 20)
+    const source = req.query.source
+
+    if (source === 'supabase') {
+      const rows = await fetchLeadsFromSupabase(limit, page)
+      const total = rows.length
+
+      return res.json({
+        leads: rows,
+        pagination: {
+          page,
+          limit,
+          total,
+          pages: Math.ceil(total / limit),
+          hasNext: total === limit,
+          hasPrev: page > 1,
+        },
+      })
+    }
+
+    const status = req.query.status
+    const search = req.query.search?.trim()
+    const from   = req.query.from   // date: YYYY-MM-DD
+    const to     = req.query.to
+    const offset = (page - 1) * limit
 
     let conditions = []
     let params = []

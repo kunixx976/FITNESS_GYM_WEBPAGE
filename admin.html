@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MD Fitness - Admin Dashboard</title>
+    <title>MM Fitness - Admin Dashboard</title>
     <style>
         :root {
             --bg: #f4f7f6;
@@ -136,7 +136,7 @@
     <div id="loginOverlay">
         <div class="login-box">
             <h2>Admin Login</h2>
-            <input type="email" id="email" placeholder="admin@mdfitness.in" value="admin@mdfitness.in">
+            <input type="email" id="email" placeholder="admin@mmfitness.in" value="admin@mmfitness.in">
             <input type="password" id="password" placeholder="Password (e.g. Admin@123)">
             <button onclick="login()">Log In</button>
             <p id="loginError" style="color: red; display: none; margin-top: 10px;">Invalid credentials</p>
@@ -144,7 +144,10 @@
     </div>
 
     <div class="container hidden" id="dashboard">
-        <h1>Leads Dashboard</h1>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; gap:10px; flex-wrap:wrap;">
+            <h1 style="margin:0;">Leads Dashboard</h1>
+            <button id="toggleSourceBtn" onclick="toggleLeadSource()" style="background:var(--secondary); color:#fff; border:none; border-radius:8px; padding:10px 16px; cursor:pointer;">Show Supabase Leads</button>
+        </div>
         <div id="leadsContainer">
             <p style="text-align: center;">Loading leads...</p>
         </div>
@@ -152,15 +155,17 @@
 
     <script>
         const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
-            ? 'http://localhost:5000/api' 
+            ? 'http://localhost:5001/api' 
             : '/api';
             
         let authToken = localStorage.getItem('adminToken');
+        let useSupabase = false
 
         // Check if already logged in (optional, simplified for demo)
         if (authToken) {
             document.getElementById('loginOverlay').classList.add('hidden');
             document.getElementById('dashboard').classList.remove('hidden');
+            updateSourceButton();
             fetchLeads();
         }
 
@@ -213,9 +218,22 @@
             }
         }
 
+        function updateSourceButton() {
+            const button = document.getElementById('toggleSourceBtn');
+            button.textContent = useSupabase ? 'Showing Supabase Leads' : 'Show Supabase Leads';
+            button.style.background = useSupabase ? 'var(--hot)' : 'var(--secondary)';
+        }
+
+        function toggleLeadSource() {
+            useSupabase = !useSupabase;
+            updateSourceButton();
+            fetchLeads();
+        }
+
         async function fetchLeads() {
             try {
-                const res = await fetch(`${API_BASE}/admin/leads?limit=50`, {
+                const sourceQuery = useSupabase ? '?source=supabase&limit=50' : '?limit=50';
+                const res = await fetch(`${API_BASE}/admin/leads${sourceQuery}`, {
                     headers: { 'Authorization': `Bearer ${authToken}` }
                 });
                 
@@ -223,9 +241,14 @@
                     const data = await res.json();
                     renderLeads(data.leads);
                 } else {
-                    // Token expired or invalid
-                    localStorage.removeItem('adminToken');
-                    location.reload();
+                    if (res.status === 401) {
+                        localStorage.removeItem('adminToken');
+                        location.reload();
+                        return;
+                    }
+                    const errorText = await res.text();
+                    console.error('Lead fetch failed', res.status, errorText);
+                    document.getElementById('leadsContainer').innerHTML = `<p style="color:red; text-align:center;">Unable to load leads: ${res.status}</p>`;
                 }
             } catch (err) {
                 console.error("Error fetching leads", err);
