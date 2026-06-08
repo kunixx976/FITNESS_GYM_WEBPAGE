@@ -154,11 +154,28 @@
     </div>
 
     <script>
-        const API_BASE = window.location.hostname === 'localhost' 
-            || window.location.hostname === '127.0.0.1' 
-            || window.location.hostname === '' 
-            ? 'http://localhost:5000/api' 
-            : '/api';
+        let API_BASE = '/api'
+        const API_PORTS = [5001, 5000]
+        const API_BASE_PROMISE = (async () => {
+            if (
+                window.location.hostname === 'localhost' ||
+                window.location.hostname === '127.0.0.1' ||
+                window.location.protocol === 'file:'
+            ) {
+                for (const port of API_PORTS) {
+                    const base = `http://127.0.0.1:${port}/api`
+                    try {
+                        const res = await fetch(base.replace('/api', '/health'), { method: 'GET' })
+                        if (res.ok) {
+                            return base
+                        }
+                    } catch (err) {
+                        // try next port
+                    }
+                }
+            }
+            return '/api'
+        })()
             
         let authToken = localStorage.getItem('adminToken');
         let useSupabase = false
@@ -176,6 +193,7 @@
             const password = document.getElementById('password').value;
             
             try {
+                API_BASE = await API_BASE_PROMISE
                 const res = await fetch(`${API_BASE}/admin/login`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -193,30 +211,9 @@
                     document.getElementById('loginError').style.display = 'block';
                 }
             } catch (err) {
-                // If backend is not running, let's mock it for the sake of the demonstration
-                console.warn("Backend might not be running. Showing mock data for demonstration.");
-                document.getElementById('loginOverlay').classList.add('hidden');
-                document.getElementById('dashboard').classList.remove('hidden');
-                renderLeads([
-                    {
-                        name: "Rahul Sharma",
-                        phone: "9876543210",
-                        goal: "weight-loss",
-                        budget: "1000-1500",
-                        current_gym: "no",
-                        urgency: "this-week",
-                        score: 85
-                    },
-                    {
-                        name: "Priya Singh",
-                        phone: "8765432109",
-                        goal: "muscle-gain",
-                        budget: "under-1000",
-                        current_gym: "yes",
-                        urgency: "next-month",
-                        score: 30
-                    }
-                ]);
+                console.warn("Backend might not be running or login failed.", err);
+                document.getElementById('loginError').textContent = 'Unable to contact backend. Please start the backend and try again.'
+                document.getElementById('loginError').style.display = 'block'
             }
         }
 
@@ -234,6 +231,7 @@
 
         async function fetchLeads() {
             try {
+                API_BASE = await API_BASE_PROMISE
                 const sourceQuery = useSupabase ? '?source=supabase&limit=50' : '?limit=50';
                 const res = await fetch(`${API_BASE}/admin/leads${sourceQuery}`, {
                     headers: { 'Authorization': `Bearer ${authToken}` }
