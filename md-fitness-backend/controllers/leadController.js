@@ -7,6 +7,30 @@ import logger from '../config/logger.js'
 const SUPABASE_URL = process.env.SUPABASE_URL
 const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY
 
+function isDatabaseUnavailableError(err) {
+  if (!err) return false
+
+  const message = String(err.message || err).toLowerCase()
+  if (
+    message.includes('database disabled') ||
+    message.includes('cannot connect to database') ||
+    message.includes('econnrefused') ||
+    message.includes('connection refused')
+  ) {
+    return true
+  }
+
+  if (err.name === 'AggregateError' && Array.isArray(err.errors)) {
+    return err.errors.some(isDatabaseUnavailableError)
+  }
+
+  if (err.cause) {
+    return isDatabaseUnavailableError(err.cause)
+  }
+
+  return false
+}
+
 async function insertLeadToSupabase(lead) {
   if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
     throw new Error('Supabase is not configured')
@@ -78,19 +102,13 @@ export async function createLead(req, res, next) {
       )
       lead = result.rows[0]
     } catch (dbErr) {
-      if (
-        dbErr.message === 'DATABASE_DISABLED' ||
-        dbErr.message.includes('Database disabled') ||
-        dbErr.message.includes('Cannot connect to database') ||
-        dbErr.message.includes('ECONNREFUSED')
-      ) {
-        logger.warn('Database unavailable — falling back to Supabase for lead creation', { error: dbErr.message })
+      if (isDatabaseUnavailableError(dbErr) || dbErr.message === 'DATABASE_DISABLED') {
+        logger.warn('Database unavailable — falling back to Supabase for lead creation', { error: dbErr.message, name: dbErr.name })
         lead = await insertLeadToSupabase({
           name,
           phone,
           email,
           goal,
-          location,
           available_time,
           interest: 'Website Form',
           status: 'New',
