@@ -128,7 +128,7 @@ app.post('/api/admin/login', async (req, res) => {
 // ================== LEAD SUBMISSION ==================
 
 // Submit contact form - Save lead + send emails + WhatsApp
-app.post('/api/submit-lead', validateLead, async (req, res) => {
+app.post(['/api/submit-lead', '/api/leads'], validateLead, async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
