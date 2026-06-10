@@ -26,9 +26,6 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
             padding: 20px;
         }
 
@@ -62,7 +59,6 @@
             text-align: center;
             color: var(--dark);
             margin-bottom: 30px;
-            font-size: 24px;
         }
 
         .login-box .form-group {
@@ -82,7 +78,6 @@
             border: 1px solid var(--border);
             border-radius: 6px;
             font-size: 14px;
-            transition: border-color 0.3s;
         }
 
         .login-box input:focus {
@@ -98,93 +93,128 @@
             color: white;
             border: none;
             border-radius: 6px;
-            font-size: 16px;
             font-weight: 600;
             cursor: pointer;
             transition: background 0.3s;
-            margin-top: 10px;
         }
 
         .login-box button:hover {
-            background: #c91e36;
+            background: #b01a3a;
         }
 
-        .login-box .error {
+        #loginError {
+            display: none;
             color: var(--danger);
+            padding: 12px;
+            background: #fadbd8;
+            border-radius: 6px;
+            margin-bottom: 20px;
             text-align: center;
-            margin-top: 15px;
-            font-size: 14px;
+        }
+
+        /* Dashboard */
+        #dashboard {
             display: none;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
-        .dashboard {
-            width: 100%;
-            max-width: 1400px;
-        }
-
-        .dashboard.hidden {
-            display: none;
-        }
-
-        .header {
+        .dashboard-header {
             background: white;
-            padding: 20px;
+            padding: 30px;
             border-radius: 12px;
             margin-bottom: 30px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
-            gap: 15px;
         }
 
-        .header h1 {
+        .dashboard-header h1 {
             color: var(--dark);
-            margin: 0;
             font-size: 28px;
         }
 
-        .header-controls {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .btn {
+        .dashboard-header button {
             padding: 10px 20px;
+            background: var(--danger);
+            color: white;
             border: none;
             border-radius: 6px;
             cursor: pointer;
+            font-weight: 600;
+        }
+
+        .dashboard-header button:hover {
+            background: #b01a3a;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-left: 4px solid var(--primary);
+        }
+
+        .stat-card h3 {
+            color: #666;
             font-size: 14px;
             font-weight: 600;
-            transition: all 0.3s;
+            margin-bottom: 10px;
+            text-transform: uppercase;
         }
 
-        .btn-primary {
-            background: var(--primary);
-            color: white;
+        .stat-card .number {
+            color: var(--primary);
+            font-size: 32px;
+            font-weight: bold;
         }
 
-        .btn-primary:hover {
-            background: #c91e36;
-        }
-
-        .btn-secondary {
-            background: var(--light);
-            color: var(--dark);
-            border: 1px solid var(--border);
-        }
-
-        .btn-secondary:hover {
-            background: #e0e0e0;
-        }
-
-        .leads-table {
+        .leads-section {
             background: white;
             border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .leads-section h2 {
+            color: var(--dark);
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .filters {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .filters select, .filters input {
+            padding: 8px 12px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .filters button {
+            padding: 8px 16px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
         }
 
         table {
@@ -192,330 +222,459 @@
             border-collapse: collapse;
         }
 
-        th {
-            background: var(--secondary);
-            color: white;
-            padding: 15px;
+        table thead {
+            background: #f5f5f5;
+        }
+
+        table th, table td {
+            padding: 12px;
             text-align: left;
-            font-weight: 600;
+            border-bottom: 1px solid var(--border);
         }
 
-        td {
-            padding: 15px;
-            border-bottom: 1px solid var(--light);
-            font-size: 14px;
-        }
-
-        tr:hover {
-            background: #f8f9fa;
-        }
-
-        .lead-name {
+        table th {
             font-weight: 600;
             color: var(--dark);
+        }
+
+        table tr:hover {
+            background: #fafafa;
         }
 
         .lead-phone {
             color: var(--primary);
             text-decoration: none;
+            font-weight: 600;
+        }
+
+        .lead-phone:hover {
+            text-decoration: underline;
         }
 
         .badge {
-            display: inline-block;
-            padding: 6px 12px;
+            padding: 4px 12px;
             border-radius: 20px;
             font-size: 12px;
             font-weight: 600;
         }
 
-        .badge-hot {
-            background: #ffe5e5;
-            color: #c91e36;
-        }
-
-        .badge-warm {
-            background: #fff3e0;
-            color: #e67e22;
-        }
-
-        .badge-cold {
-            background: #e8f5e9;
-            color: #27ae60;
-        }
-
         .badge-new {
-            background: #e3f2fd;
-            color: #1976d2;
+            background: #fef3cd;
+            color: #856404;
         }
 
         .badge-called {
-            background: #f3e5f5;
-            color: #7b1fa2;
+            background: #d1ecf1;
+            color: #0c5460;
         }
 
         .badge-joined {
-            background: #e8f5e9;
-            color: #388e3c;
+            background: #d4edda;
+            color: #155724;
         }
 
-        .loading {
-            text-align: center;
-            padding: 40px;
-            color: var(--secondary);
-            font-size: 16px;
+        .badge-cold {
+            background: #f8d7da;
+            color: #721c24;
         }
 
         .empty-state {
             text-align: center;
             padding: 40px;
-            color: var(--secondary);
+            color: #666;
         }
 
-        .empty-state img {
-            width: 100px;
-            opacity: 0.5;
-            margin-bottom: 20px;
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: var(--primary);
+            font-weight: 600;
         }
 
-        .error-message {
-            background: #ffe5e5;
-            color: #c91e36;
-            padding: 15px;
+        .refresh-btn {
+            padding: 8px 16px;
+            background: var(--success);
+            color: white;
+            border: none;
             border-radius: 6px;
-            margin-bottom: 20px;
-            display: none;
+            cursor: pointer;
+            font-weight: 600;
         }
 
-        .success-message {
-            background: #e8f5e9;
-            color: #27ae60;
-            padding: 15px;
-            border-radius: 6px;
-            margin-bottom: 20px;
-            display: none;
+        .refresh-btn:hover {
+            background: #229954;
+        }
+
+        .last-update {
+            font-size: 12px;
+            color: #666;
+            margin-top: 10px;
+        }
+
+        .action-btn {
+            padding: 6px 12px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            margin-right: 5px;
+        }
+
+        .action-btn:hover {
+            background: #b01a3a;
         }
 
         .status-select {
-            padding: 6px 12px;
+            padding: 6px;
             border: 1px solid var(--border);
             border-radius: 4px;
             font-size: 12px;
-            cursor: pointer;
-        }
-
-        .refresh-time {
-            font-size: 12px;
-            color: #999;
         }
     </style>
 </head>
 <body>
     <!-- Login Overlay -->
-    <div class="login-overlay" id="loginOverlay">
+    <div id="loginOverlay" class="login-overlay">
         <div class="login-box">
-            <h2>Admin Login</h2>
-            <form id="loginForm" onsubmit="handleLogin(event)">
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" placeholder="admin@mmfitness.in" value="admin@mmfitness.in" required>
-                </div>
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" placeholder="Password" value="Admin@123" required>
-                </div>
-                <button type="submit" class="btn btn-primary">Log In</button>
-                <div class="error" id="loginError"></div>
-            </form>
+            <h2>MM Fitness Admin</h2>
+            <div id="loginError"></div>
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" id="email" placeholder="owner@mmfitness.in" value="owner@mmfitness.in">
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="password" placeholder="Enter password">
+            </div>
+            <button onclick="login()">Login</button>
         </div>
     </div>
 
     <!-- Dashboard -->
-    <div class="dashboard hidden" id="dashboard">
-        <div class="header">
+    <div id="dashboard" class="dashboard-hidden">
+        <div class="dashboard-header">
             <div>
-                <h1>📊 Leads Dashboard</h1>
-                <p class="refresh-time" id="lastRefresh"></p>
+                <h1>📊 MM Fitness Admin Dashboard</h1>
             </div>
-            <div class="header-controls">
-                <button class="btn btn-secondary" onclick="refreshLeads()">🔄 Refresh</button>
-                <button class="btn btn-secondary" onclick="logout()">Logout</button>
+            <button onclick="logout()">Logout</button>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>Total Leads</h3>
+                <div class="number" id="totalLeads">0</div>
+            </div>
+            <div class="stat-card">
+                <h3>New Leads</h3>
+                <div class="number" id="newLeads">0</div>
+            </div>
+            <div class="stat-card">
+                <h3>Called</h3>
+                <div class="number" id="calledLeads">0</div>
+            </div>
+            <div class="stat-card">
+                <h3>Joined</h3>
+                <div class="number" id="joinedLeads">0</div>
             </div>
         </div>
 
-        <div id="successMessage" class="success-message"></div>
-        <div id="errorMessage" class="error-message"></div>
+        <!-- Leads Table -->
+        <div class="leads-section">
+            <h2>
+                <span>📋 All Leads</span>
+                <button class="refresh-btn" onclick="refreshLeads()">🔄 Refresh</button>
+            </h2>
 
-        <div class="leads-table">
-            <div id="leadsContent">
-                <div class="loading">Loading leads...</div>
+            <div class="filters">
+                <select id="statusFilter" onchange="filterLeads()">
+                    <option value="">All Status</option>
+                    <option value="New">New</option>
+                    <option value="Called">Called</option>
+                    <option value="Joined">Joined</option>
+                    <option value="Not Interested">Not Interested</option>
+                </select>
+                <input type="text" id="searchBox" placeholder="Search name or phone..." onkeyup="filterLeads()">
+                <button onclick="downloadCSV()">📥 Download CSV</button>
+            </div>
+
+            <div id="leadsContent">Loading...</div>
+            <div class="last-update">
+                <span id="lastRefresh"></span>
             </div>
         </div>
     </div>
 
     <script>
-        const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.protocol === 'file:'
-            ? 'http://127.0.0.1:5000/api'
-            : '/api';
+        // ═══════════════════════════════════════════════════════════════
+        // SUPABASE CONFIG — UPDATE THESE WITH YOUR VALUES
+        // ═══════════════════════════════════════════════════════════════
+        
+        const SUPABASE_URL = 'https://yhwizfrtcebczhvhgcke.supabase.co'
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inlod2l6ZnJ0Y2ViY3podmhrZSIsInJvbGUiOiJhbm9uIiwiaWF0IjoxNzEwODcyNzk4LCJleHAiOjE5MjY0NDg3OTh9.zVKlLBLMEyrB5V8GqMHg2Y3jKWKB-T3lQzfZMyWj_ss'
+        
+        // Admin credentials (match your backend)
+        const ADMIN_EMAIL = 'owner@mmfitness.in'
+        const ADMIN_PASSWORD = 'MMFitness@2025'
 
-        let authToken = localStorage.getItem('adminToken');
+        let allLeads = []
+        let loggedIn = false
 
-        // Check if already logged in
-        if (authToken) {
-            showDashboard();
-            refreshLeads();
-        }
+        // ═══════════════════════════════════════════════════════════════
+        // LOGIN
+        // ═══════════════════════════════════════════════════════════════
+        function login() {
+            const email = document.getElementById('email').value
+            const password = document.getElementById('password').value
+            const errorDiv = document.getElementById('loginError')
 
-        async function handleLogin(event) {
-            event.preventDefault();
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            const errorDiv = document.getElementById('loginError');
-
-            try {
-                const res = await fetch(`${API_BASE}/admin/login`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email, password })
-                });
-
-                if (res.ok) {
-                    const data = await res.json();
-                    authToken = data.token;
-                    localStorage.setItem('adminToken', authToken);
-                    showDashboard();
-                    refreshLeads();
-                } else if (res.status === 429) {
-                    errorDiv.textContent = '⏳ Too many login attempts. Please try again in 15 minutes.';
-                    errorDiv.style.display = 'block';
-                } else {
-                    errorDiv.textContent = 'Invalid email or password';
-                    errorDiv.style.display = 'block';
-                }
-            } catch (err) {
-                errorDiv.textContent = 'Failed to connect to backend: ' + err.message;
-                errorDiv.style.display = 'block';
+            // Simple password check (in production, use your backend)
+            if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
+                loggedIn = true
+                localStorage.setItem('mmFitnessAdmin', 'true')
+                document.getElementById('loginOverlay').classList.add('hidden')
+                document.getElementById('dashboard').style.display = 'block'
+                refreshLeads()
+            } else {
+                errorDiv.textContent = '❌ Invalid email or password'
+                errorDiv.style.display = 'block'
             }
-        }
-
-        function showDashboard() {
-            document.getElementById('loginOverlay').classList.add('hidden');
-            document.getElementById('dashboard').classList.remove('hidden');
         }
 
         function logout() {
-            localStorage.removeItem('adminToken');
-            location.reload();
+            loggedIn = false
+            localStorage.removeItem('mmFitnessAdmin')
+            location.reload()
         }
 
+        // ═══════════════════════════════════════════════════════════════
+        // FETCH LEADS FROM SUPABASE
+        // ═══════════════════════════════════════════════════════════════
         async function refreshLeads() {
-            const content = document.getElementById('leadsContent');
-            content.innerHTML = '<div class="loading">Loading leads...</div>';
+            const content = document.getElementById('leadsContent')
+            content.innerHTML = '<div class="loading">📥 Loading leads from Supabase...</div>'
 
             try {
-                const res = await fetch(`${API_BASE}/admin/leads?limit=100&page=1`, {
-                    headers: { 'Authorization': `Bearer ${authToken}` }
-                });
+                const response = await fetch(
+                    `${SUPABASE_URL}/rest/v1/leads?order=created_at.desc`,
+                    {
+                        method: 'GET',
+                        headers: {
+                            'apikey': SUPABASE_ANON_KEY,
+                            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+                            'Content-Type': 'application/json',
+                            'Prefer': 'return=representation'
+                        }
+                    }
+                )
 
-                if (res.status === 401) {
-                    localStorage.removeItem('adminToken');
-                    location.reload();
-                    return;
+                if (!response.ok) {
+                    throw new Error(`Supabase error: ${response.status} ${response.statusText}`)
                 }
 
-                if (!res.ok) {
-                    throw new Error(`HTTP ${res.status}`);
-                }
+                allLeads = await response.json()
 
-                const data = await res.json();
-                const leads = data.leads || data || [];
+                // Update stats
+                updateStats()
 
-                document.getElementById('lastRefresh').textContent = `Last updated: ${new Date().toLocaleTimeString()}`;
+                // Render table
+                renderLeads(allLeads)
 
-                if (!leads.length) {
-                    content.innerHTML = '<div class="empty-state"><p>No leads found</p></div>';
-                    return;
-                }
+                document.getElementById('lastRefresh').textContent = `✅ Last updated: ${new Date().toLocaleTimeString()}`
 
-                let html = `
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Phone</th>
-                                <th>Email</th>
-                                <th>Goal</th>
-                                <th>Budget</th>
-                                <th>Urgency</th>
-                                <th>Status</th>
-                                <th>Created</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                `;
-
-                leads.forEach(lead => {
-                    const goal = formatGoal(lead.goal);
-                    const budget = formatBudget(lead.budget);
-                    const urgency = lead.urgency ? lead.urgency.replace('-', ' ') : 'N/A';
-                    const status = lead.status || 'New';
-                    const created = new Date(lead.created_at).toLocaleDateString();
-
-                    html += `
-                        <tr>
-                            <td><span class="lead-name">${lead.name}</span></td>
-                            <td><a href="tel:${lead.phone}" class="lead-phone">${lead.phone}</a></td>
-                            <td>${lead.email || 'N/A'}</td>
-                            <td>${goal}</td>
-                            <td>${budget}</td>
-                            <td>${urgency}</td>
-                            <td><span class="badge ${getStatusBadgeClass(status)}">${status}</span></td>
-                            <td>${created}</td>
-                        </tr>
-                    `;
-                });
-
-                html += `
-                        </tbody>
-                    </table>
-                `;
-
-                content.innerHTML = html;
             } catch (err) {
-                content.innerHTML = `<div class="empty-state"><p>Error loading leads: ${err.message}</p></div>`;
+                console.error('Fetch error:', err)
+                content.innerHTML = `<div class="empty-state"><p>❌ Error loading leads: ${err.message}</p><p>Check console for details</p></div>`
             }
         }
 
-        function formatGoal(g) {
-            if (!g) return 'N/A';
-            const map = {
-                'weight-loss': 'Weight Loss',
-                'muscle-gain': 'Muscle Gain',
-                'fitness': 'General Fitness',
-                'other': 'Other'
-            };
-            return map[g] || g;
+        // ═══════════════════════════════════════════════════════════════
+        // RENDER LEADS TABLE
+        // ═══════════════════════════════════════════════════════════════
+        function renderLeads(leads) {
+            const content = document.getElementById('leadsContent')
+
+            if (!leads || leads.length === 0) {
+                content.innerHTML = '<div class="empty-state">No leads found</div>'
+                return
+            }
+
+            let html = `
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Phone</th>
+                            <th>Email</th>
+                            <th>Goal</th>
+                            <th>Batch</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `
+
+            leads.forEach(lead => {
+                const created = new Date(lead.created_at).toLocaleDateString('en-IN')
+                const status = lead.status || 'New'
+                const statusClass = `badge-${status.toLowerCase().replace(' ', '-')}`
+
+                html += `
+                    <tr>
+                        <td><strong>${lead.name}</strong></td>
+                        <td><a href="tel:${lead.phone}" class="lead-phone">📱 ${lead.phone}</a></td>
+                        <td>${lead.email || '–'}</td>
+                        <td>${lead.goal || '–'}</td>
+                        <td>${lead.available_time || '–'}</td>
+                        <td><span class="badge ${statusClass}">${status}</span></td>
+                        <td>${created}</td>
+                        <td>
+                            <button class="action-btn" onclick="callLead('${lead.phone}')">📞 Call</button>
+                            <select class="status-select" onchange="updateStatus(${lead.id}, this.value, '${lead.phone}')">
+                                <option value="">Update Status</option>
+                                <option value="New">New</option>
+                                <option value="Called">Called</option>
+                                <option value="Joined">Joined</option>
+                                <option value="Not Interested">Not Interested</option>
+                            </select>
+                        </td>
+                    </tr>
+                `
+            })
+
+            html += `
+                    </tbody>
+                </table>
+            `
+
+            content.innerHTML = html
         }
 
-        function formatBudget(b) {
-            if (!b) return 'N/A';
-            if (b === 'under-1000') return '< ₹1000';
-            if (b === '1000-1500') return '₹1000–1500';
-            if (b === '1500-plus') return '₹1500+';
-            return b;
+        // ═══════════════════════════════════════════════════════════════
+        // UPDATE STATS
+        // ═══════════════════════════════════════════════════════════════
+        function updateStats() {
+            document.getElementById('totalLeads').textContent = allLeads.length
+            document.getElementById('newLeads').textContent = allLeads.filter(l => l.status === 'New').length
+            document.getElementById('calledLeads').textContent = allLeads.filter(l => l.status === 'Called').length
+            document.getElementById('joinedLeads').textContent = allLeads.filter(l => l.status === 'Joined').length
         }
 
-        function getStatusBadgeClass(status) {
-            const statusMap = {
-                'New': 'badge-new',
-                'Called': 'badge-called',
-                'Joined': 'badge-joined',
-                'Not Interested': 'badge-cold'
-            };
-            return statusMap[status] || 'badge-new';
+        // ═══════════════════════════════════════════════════════════════
+        // UPDATE LEAD STATUS IN SUPABASE
+        // ═══════════════════════════════════════════════════════════════
+        async function updateStatus(id, newStatus, phone) {
+            if (!newStatus) return
+
+            try {
+                const response = await fetch(
+                    `${SUPABASE_URL}/rest/v1/leads?id=eq.${id}`,
+                    {
+                        method: 'PATCH',
+                        headers: {
+                            'apikey': SUPABASE_ANON_KEY,
+                            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+                            'Content-Type': 'application/json',
+                            'Prefer': 'return=representation'
+                        },
+                        body: JSON.stringify({ status: newStatus, updated_at: new Date().toISOString() })
+                    }
+                )
+
+                if (!response.ok) {
+                    throw new Error(`Update failed: ${response.status}`)
+                }
+
+                // Update local data
+                allLeads = allLeads.map(l => l.id === id ? { ...l, status: newStatus } : l)
+                updateStats()
+                renderLeads(allLeads)
+                alert(`✅ Status updated to "${newStatus}"`)
+            } catch (err) {
+                alert(`❌ Error updating status: ${err.message}`)
+            }
         }
+
+        // ═══════════════════════════════════════════════════════════════
+        // FILTER & SEARCH
+        // ═══════════════════════════════════════════════════════════════
+        function filterLeads() {
+            const status = document.getElementById('statusFilter').value
+            const search = document.getElementById('searchBox').value.toLowerCase()
+
+            let filtered = allLeads.filter(lead => {
+                const matchStatus = !status || lead.status === status
+                const matchSearch = !search || 
+                    lead.name.toLowerCase().includes(search) ||
+                    lead.phone.includes(search)
+                return matchStatus && matchSearch
+            })
+
+            renderLeads(filtered)
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // DOWNLOAD CSV
+        // ═══════════════════════════════════════════════════════════════
+        function downloadCSV() {
+            if (!allLeads.length) {
+                alert('No leads to export')
+                return
+            }
+
+            const headers = ['ID', 'Name', 'Phone', 'Email', 'Goal', 'Batch', 'Status', 'Date']
+            const rows = allLeads.map(l => [
+                l.id,
+                l.name,
+                l.phone,
+                l.email || '',
+                l.goal || '',
+                l.available_time || '',
+                l.status || 'New',
+                new Date(l.created_at).toLocaleDateString('en-IN')
+            ])
+
+            let csv = headers.join(',') + '\n'
+            rows.forEach(row => {
+                csv += row.map(cell => `"${String(cell).replace(/"/g, '""')}"`.replace(/(\r\n|\n)/g, " ")).join(',') + '\n'
+            })
+
+            const blob = new Blob([csv], { type: 'text/csv' })
+            const url = window.URL.createObjectURL(blob)
+            const a = document.createElement('a')
+            a.href = url
+            a.download = `mm-fitness-leads-${new Date().toISOString().slice(0, 10)}.csv`
+            a.click()
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // CALL LEAD
+        // ═══════════════════════════════════════════════════════════════
+        function callLead(phone) {
+            window.location.href = `tel:${phone}`
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // AUTO-LOGIN IF ALREADY LOGGED IN
+        // ═══════════════════════════════════════════════════════════════
+        window.addEventListener('load', () => {
+            if (localStorage.getItem('mmFitnessAdmin')) {
+                document.getElementById('loginOverlay').classList.add('hidden')
+                document.getElementById('dashboard').style.display = 'block'
+                refreshLeads()
+            }
+        })
 
         // Auto-refresh every 30 seconds
-        setInterval(refreshLeads, 30000);
+        setInterval(() => {
+            if (loggedIn || localStorage.getItem('mmFitnessAdmin')) {
+                refreshLeads()
+            }
+        }, 30000)
     </script>
 </body>
 </html>
