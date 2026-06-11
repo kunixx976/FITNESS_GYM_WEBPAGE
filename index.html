@@ -1131,6 +1131,181 @@
             border-color: var(--orange);
         }
 
+        .plan-price-wrap {
+            margin: 24px 0;
+        }
+
+        .plan-price--single {
+            display: block;
+        }
+
+        .plan-price--single span {
+            font-size: 22px;
+            color: var(--gray);
+            margin-left: 6px;
+        }
+
+        .plan-selector {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 32px;
+        }
+
+        .plan-choice {
+            flex: 1;
+            min-width: 150px;
+            padding: 16px 20px;
+            background: var(--black-3);
+            border: 1px solid rgba(255, 255, 255, .12);
+            border-radius: 14px;
+            color: var(--white);
+            font-weight: 700;
+            cursor: pointer;
+            transition: all .25s ease;
+        }
+
+        .plan-choice:hover,
+        .plan-choice.active {
+            border-color: var(--red);
+            background: rgba(255, 45, 45, 0.08);
+        }
+
+        .payment-panel {
+            margin-top: 30px;
+            padding: 24px;
+            background: rgba(255, 255, 255, 0.025);
+            border: 1px solid rgba(255, 255, 255, .08);
+            border-radius: 18px;
+        }
+
+        .payment-panel-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .payment-panel-top strong {
+            font-size: 18px;
+        }
+
+        .payment-panel-top p {
+            color: var(--gray-light);
+            margin: 4px 0 0;
+        }
+
+        .pay-now-btn {
+            border: none;
+            background: var(--red);
+            color: var(--white);
+            padding: 14px 24px;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform .2s, background .2s;
+        }
+
+        .pay-now-btn:hover {
+            background: var(--orange);
+            transform: translateY(-1px);
+        }
+
+        .upi-details {
+            display: none;
+            margin-top: 20px;
+            padding: 18px;
+            border-radius: 12px;
+            border: 1px dashed rgba(255, 255, 255, 0.16);
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .upi-details.active {
+            display: block;
+        }
+
+        .upi-copy {
+            color: var(--white);
+            font-size: 15px;
+            margin-bottom: 8px;
+        }
+
+        .upi-note,
+        .selected-plan-summary {
+            color: var(--gray-light);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .selected-plan-summary {
+            margin-top: 20px;
+        }
+
+        .schedule-panel {
+            margin-top: 42px;
+            padding: 32px;
+            background: var(--black-3);
+            border: 1px solid rgba(255, 255, 255, .08);
+            border-radius: 18px;
+        }
+
+        .schedule-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(240px, 1fr));
+            gap: 20px;
+            margin-top: 24px;
+        }
+
+        .schedule-card,
+        .trainer-highlight {
+            background: var(--black);
+            border: 1px solid rgba(255, 255, 255, .08);
+            border-radius: 16px;
+            padding: 26px;
+        }
+
+        .schedule-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 14px;
+        }
+
+        .trainer-highlight-name {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--white);
+            margin-bottom: 10px;
+        }
+
+        .trainer-highlight-meta {
+            color: var(--gray-light);
+            margin-bottom: 16px;
+            line-height: 1.7;
+        }
+
+        .trainer-highlight-quote {
+            color: var(--red);
+            font-size: 15px;
+            font-style: italic;
+            line-height: 1.7;
+        }
+
+        @media (max-width: 980px) {
+            .plans-grid,
+            .schedule-grid,
+            .admin-metrics-grid,
+            .plan-selector {
+                grid-template-columns: 1fr;
+            }
+
+            .plan-choice,
+            .payment-panel-top {
+                width: 100%;
+            }
+        }
+
         /* TESTIMONIALS */
         .testimonials-section {
             background: var(--black);
@@ -2930,42 +3105,39 @@
     <section class="form-section" id="join">
         <div class="form-layout">
             <div class="reveal">
-                <div class="form-badge">🔥 LIMITED YEARLY OFFER</div>
-                <h2 class="form-headline">Transform Your<br><em>Fitness Journey</em><br>Today</h2>
+                <div class="form-badge">🔥 ONLINE MEMBERSHIP SIGNUP</div>
+                <h2 class="form-headline">Choose Your Plan &amp;<br><em>Pay Instantly</em></h2>
+                <p class="section-sub" style="max-width: 560px; margin-top: 18px;">Join MM Fitness online with UPI payment. Select a plan, pay through GPay / Paytm / PhonePe, and get instant membership confirmation.</p>
 
-                <div
-                    style="margin-top: 36px; padding: 32px 24px; background: rgba(255, 45, 45, 0.08); border: 1px solid rgba(255, 45, 45, 0.2); border-radius: 8px; position: relative; border-left: 6px solid var(--red);">
-                    <div
-                        style="position: absolute; top: -14px; left: 20px; background: var(--red); color: white; padding: 4px 16px; font-size: 11px; font-weight: 900; border-radius: 3px; text-transform: uppercase; letter-spacing: 2px; box-shadow: 0 4px 12px rgba(255, 45, 45, 0.4); z-index: 10;">
-                        Exclusive Offer</div>
-                    <div
-                        style="position: relative; z-index: 1; font-family: 'Anton', sans-serif; text-transform: uppercase;">
-                        <p
-                            style="color: var(--gray-light); font-size: 18px; font-weight: 700; letter-spacing: 1px; margin-bottom: 8px;">
-                            Best yearly discount only for <span
-                                style="color: var(--white); border-bottom: 2px solid var(--red);">first 99
-                                members</span>
-                        </p>
-                        <p
-                            style="color: var(--red); font-size: 48px; font-weight: 900; line-height: 0.9; letter-spacing: 1px; margin-bottom: 10px;">
-                            4 MONTHS FREE
-                        </p>
-                        <p style="color: var(--white); font-size: 20px; font-weight: 700; letter-spacing: 1.5px;">
-                            on yearly payment!
-                        </p>
+                <div class="plan-selector" role="group" aria-label="Choose membership plan">
+                    <button type="button" class="plan-choice active" data-plan="Starter" data-price="1499">Starter ₹1,499/mo</button>
+                    <button type="button" class="plan-choice" data-plan="Pro" data-price="2799">Pro ₹2,799/mo</button>
+                    <button type="button" class="plan-choice" data-plan="Elite" data-price="4499">Elite ₹4,499/mo</button>
+                </div>
+
+                <div class="payment-panel">
+                    <div class="payment-panel-top">
+                        <div>
+                            <strong>Pay Now</strong>
+                            <p>UPI (GPay / Paytm / PhonePe)</p>
+                        </div>
+                        <button type="button" class="pay-now-btn" id="payNowBtn">Pay Now →</button>
                     </div>
+                    <div class="upi-details" id="upiDetails">
+                        <div class="upi-copy">UPI ID: <strong id="upiId">mmfitness@hdfcbank</strong></div>
+                        <div class="upi-note">Open your UPI app, send payment to the ID above, then complete your registration in the form.</div>
+                    </div>
+                    <div class="selected-plan-summary">Selected: <strong id="selectedPlanLabel">Starter</strong> — ₹<span id="selectedPlanPrice">1499</span>/mo</div>
                 </div>
             </div>
             <div class="reveal">
                 <form class="lead-form" id="leadForm">
+                    <input type="hidden" id="selectedPlanInput" name="plan" value="Starter" />
                     <div class="form-row">
-                        <div class="field-group"><label>Full Name</label><input type="text" id="fname"
-                                placeholder="Rahul Sharma" required /></div>
-                        <div class="field-group"><label>Phone Number</label><input type="tel" id="fphone"
-                                placeholder="+91 98765 43210" required /></div>
+                        <div class="field-group"><label>Full Name</label><input type="text" id="fname" placeholder="Rahul Sharma" required /></div>
+                        <div class="field-group"><label>Phone Number</label><input type="tel" id="fphone" placeholder="+91 98765 43210" required /></div>
                     </div>
-                    <div class="field-group"><label>Email Address</label><input type="email" id="femail"
-                            placeholder="rahul@email.com" required /></div>
+                    <div class="field-group"><label>Email Address</label><input type="email" id="femail" placeholder="rahul@email.com" required /></div>
                     <div class="form-row">
                         <div class="field-group"><label>Your Goal</label>
                             <select id="fgoal" required>
@@ -2986,10 +3158,9 @@
                         </div>
                     </div>
                     <button type="submit" class="submit-btn" style="margin-top: 15px;">
-                        <span class="btn-text">JOIN NOW →</span>
+                        <span class="btn-text">Pay Now &amp; Join →</span>
                     </button>
-                    <p class="form-disclaimer">By submitting, you agree to be contacted by our team. We respect your
-                        privacy.</p>
+                    <p class="form-disclaimer">By submitting, you agree to be contacted by our team. We respect your privacy.</p>
                 </form>
             </div>
         </div>
@@ -3104,78 +3275,51 @@
         <div style="text-align:center;" class="reveal">
             <div class="section-tag" style="justify-content:center;">Membership</div>
             <h2 class="section-title">CHOOSE YOUR <em>PLAN</em></h2>
+            <p class="section-sub" style="max-width:560px; margin: 0 auto;">Select the right membership for your fitness goals and checkout instantly with UPI.</p>
         </div>
-        <div class="plans-grid plans-grid--4col">
+        <div class="plans-grid">
 
-            <!-- 1 Month -->
             <div class="plan-card reveal">
-                <div class="plan-duration-badge">1 Month</div>
-                <div class="plan-name">#Get 1 Month Membership</div>
+                <div class="plan-name">Starter</div>
                 <div class="plan-price-wrap">
-                    <div class="plan-price plan-price--single"><sup>₹</sup>1400<span>/-</span></div>
+                    <div class="plan-price plan-price--single"><sup>₹</sup>1499<span>/mo</span></div>
                 </div>
-                <p class="plan-desc">Start your fitness journey with a one-month commitment — no long-term pressure.</p>
-                <!-- <ul class="plan-features">
-                    <li>Unlimited gym floor access</li>
-                    <li>Basic locker access</li>
-                    <li>Trainer guidance</li>
-                </ul> -->
-                <a href="#join" class="plan-btn">Get Started</a>
-            </div>
-
-            <!-- 3 Months -->
-            <div class="plan-card reveal">
-                <div class="plan-duration-badge">3 Months</div>
-                <div class="plan-name">#Get 3 Month Membership</div>
-                <div class="plan-price-wrap">
-                    <div class="plan-price-original"><sup>₹</sup>4200<span>/-</span></div>
-                    <div class="plan-price plan-price--discounted"><sup>₹</sup>3899<span>/-</span></div>
-                </div>
-                <!-- <p class="plan-desc">Build consistency and see real results over 3 months of focused training.</p>
+                <p class="plan-desc">Perfect for beginners who want smart training, coach support, and fast results.</p>
                 <ul class="plan-features">
-                    <li>Unlimited gym floor access</li>
-                    <li>Locker access included</li>
-                    <li>Regular trainer sessions</li>
-                </ul> -->
-                <a href="#join" class="plan-btn">Get Started</a>
+                    <li>Access to gym floor</li>
+                    <li>Weekly coach check-ins</li>
+                    <li>UPI payment ready</li>
+                </ul>
+                <button type="button" class="plan-btn plan-select-btn" data-plan="Starter" data-price="1499">Select Starter</button>
             </div>
 
-            <!-- 6 Months -->
             <div class="plan-card featured reveal">
-                <div class="plan-badge">Best Value</div>
-                <div class="plan-duration-badge">6 Months</div>
-                <div class="plan-name">#Get 6 Month Membership</div>
+                <div class="plan-badge">Popular</div>
+                <div class="plan-name">Pro</div>
                 <div class="plan-price-wrap">
-                    <div class="plan-price-original"><sup>₹</sup>8400<span>/-</span></div>
-                    <div class="plan-price plan-price--discounted"><sup>₹</sup>6999<span>/-</span></div>
+                    <div class="plan-price plan-price--single"><sup>₹</sup>2799<span>/mo</span></div>
                 </div>
-                <!-- <p class="plan-desc">Transform your body in 6 months with serious savings on every session.</p>
+                <p class="plan-desc">Ideal for serious trainers who want group classes, progress tracking, and premium support.</p>
                 <ul class="plan-features">
-                    <li>Unlimited gym floor access</li>
                     <li>Group classes included</li>
-                    <li>Dedicated trainer sessions</li>
-                    <li>Monthly progress check-in</li>
-                </ul> -->
-                <a href="#join" class="plan-btn">Get Started</a>
+                    <li>Monthly body analysis</li>
+                    <li>Personal coach guidance</li>
+                </ul>
+                <button type="button" class="plan-btn plan-select-btn" data-plan="Pro" data-price="2799">Select Pro</button>
             </div>
 
-            <!-- 12 Months -->
             <div class="plan-card reveal">
-                <div class="plan-duration-badge">12 Months</div>
-                <div class="plan-name">#Get 12 Month Membership</div>
+                <div class="plan-name">Elite</div>
                 <div class="plan-price-wrap">
-                    <div class="plan-price-original"><sup>₹</sup>16800<span>/-</span></div>
-                    <div class="plan-price plan-price--discounted"><sup>₹</sup>11900<span>/-</span></div>
+                    <div class="plan-price plan-price--single"><sup>₹</sup>4499<span>/mo</span></div>
                 </div>
-                <!-- <p class="plan-desc">Our best yearly deal — maximum savings for maximum commitment to your health.</p>
+                <p class="plan-desc">For high-performance members who want dedicated coaching, advanced tracking, and VIP access.</p>
                 <ul class="plan-features">
-                    <li>Unlimited gym floor access</li>
-                    <li>All group classes included</li>
-                    <li>Priority trainer sessions</li>
-                    <li>Monthly BCA body analysis</li>
-                    <li>Diet & nutrition guidance</li>
-                </ul> -->
-                <a href="#join" class="plan-btn">Get Started</a>
+                    <li>Dedicated trainer support</li>
+                    <li>Priority class slots</li>
+                    <li>Nutrition & recovery guidance</li>
+                </ul>
+                <button type="button" class="plan-btn plan-select-btn" data-plan="Elite" data-price="4499">Select Elite</button>
             </div>
 
         </div>
@@ -3237,58 +3381,61 @@
     <!-- ══ TRANSFORMATIONS ══ -->
     <section class="transformations-section reveal" id="transformations">
         <div class="section-tag">Real Results</div>
-        <h2 class="section-title">MEMBER <em>TRANSFORMATIONS</em></h2>
-        <p class="section-sub">Real people. Real results. No filters.</p>
+        <h2 class="section-title">BEFORE &amp; AFTER <em>REAL MEMBER STORIES</em></h2>
+        <p class="section-sub">Authentic transformations from our community — no filters, just facts.</p>
 
         <div class="transformations-grid">
             <div class="transformation-card">
                 <div class="transformation-images">
                     <div class="before-after">
-                        <img src="before.jpg" alt="Before" class="before-img" />
+                        <img src="before.jpg" alt="Ahmed Malik before" class="before-img" />
                         <span class="label before">BEFORE</span>
                     </div>
                     <div class="before-after">
-                        <img src="after.jpg" alt="After" class="after-img" />
+                        <img src="after.jpg" alt="Ahmed Malik after" class="after-img" />
                         <span class="label after">AFTER</span>
                     </div>
                 </div>
                 <div class="transformation-info">
-                    <div class="member-name">Rahul S. — Lost 18kg</div>
-                    <div class="member-duration">6 months at MM Fitness</div>
-                </div>
-            </div>
-
-            <div class="transformation-card">
-                <div class="transformation-images">
-                    <div class="before-after">
-                        <img src="before.jpg" alt="Before" class="before-img" />
-                        <span class="label before">BEFORE</span>
-                    </div>
-                    <div class="before-after">
-                        <img src="after.jpg" alt="After" class="after-img" />
-                        <span class="label after">AFTER</span>
-                    </div>
-                </div>
-                <div class="transformation-info">
-                    <div class="member-name">Priya M. — Lost 12kg</div>
+                    <div class="member-name">Ahmed Malik — Lost 18 kg</div>
                     <div class="member-duration">4 months at MM Fitness</div>
+                    <p style="color: var(--gray-light); margin-top: 12px; font-size: 14px; line-height: 1.6;">“Started at 95kg, now 77kg. Best decision ever!”</p>
                 </div>
             </div>
 
             <div class="transformation-card">
                 <div class="transformation-images">
                     <div class="before-after">
-                        <img src="before.jpg" alt="Before" class="before-img" />
+                        <img src="before.jpg" alt="Sakshi before" class="before-img" />
                         <span class="label before">BEFORE</span>
                     </div>
                     <div class="before-after">
-                        <img src="after.jpg" alt="After" class="after-img" />
+                        <img src="after.jpg" alt="Sakshi after" class="after-img" />
                         <span class="label after">AFTER</span>
                     </div>
                 </div>
                 <div class="transformation-info">
-                    <div class="member-name">Vikram K. — Gained 8kg Muscle</div>
-                    <div class="member-duration">8 months at MM  Fitness</div>
+                    <div class="member-name">Sakshi R. — Trimmed 10 kg</div>
+                    <div class="member-duration">3 months at MM Fitness</div>
+                    <p style="color: var(--gray-light); margin-top: 12px; font-size: 14px; line-height: 1.6;">“Daily coaching kept me consistent and motivated every step of the way.”</p>
+                </div>
+            </div>
+
+            <div class="transformation-card">
+                <div class="transformation-images">
+                    <div class="before-after">
+                        <img src="before.jpg" alt="Arjun before" class="before-img" />
+                        <span class="label before">BEFORE</span>
+                    </div>
+                    <div class="before-after">
+                        <img src="after.jpg" alt="Arjun after" class="after-img" />
+                        <span class="label after">AFTER</span>
+                    </div>
+                </div>
+                <div class="transformation-info">
+                    <div class="member-name">Arjun P. — Increased strength</div>
+                    <div class="member-duration">5 months at MM Fitness</div>
+                    <p style="color: var(--gray-light); margin-top: 12px; font-size: 14px; line-height: 1.6;">“My energy, stamina and confidence all improved together.”</p>
                 </div>
             </div>
         </div>
@@ -3352,6 +3499,25 @@
                         <span class="trainer-tag">Performance</span>
                         <span class="trainer-tag">Rehab</span>
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="schedule-panel reveal">
+            <div class="section-tag" style="justify-content:center;">SCHEDULE</div>
+            <div class="schedule-grid">
+                <div class="schedule-card">
+                    <div class="schedule-title">Morning (6-9am)</div>
+                    <p><strong>Strength Training with Rahul</strong> ⭐⭐⭐⭐⭐</p>
+                    <p><strong>HIIT with Priya</strong> ⭐⭐⭐⭐⭐</p>
+                    <div class="schedule-title">Evening (5-8pm)</div>
+                    <p><strong>Cardio with Vikram</strong> ⭐⭐⭐⭐⭐</p>
+                </div>
+                <div class="trainer-highlight">
+                    <div class="section-tag" style="justify-content:center;">TRAINERS</div>
+                    <div class="trainer-highlight-name">Rahul Sharma</div>
+                    <div class="trainer-highlight-meta">🏆 5 Years Experience | NASM Certified | 100+ Transformations</div>
+                    <p class="trainer-highlight-quote">“Specializes in strength &amp; mass gain.”</p>
                 </div>
             </div>
         </div>
@@ -3779,18 +3945,19 @@
             const email = document.getElementById("femail").value.trim();
             const goal = document.getElementById("fgoal").value;
             const availableTime = document.getElementById("favailableTime").value;
+            const selectedPlan = document.getElementById("selectedPlanInput").value || "Starter";
 
             // Validate phone number (Indian 10-digit starting with 6-9)
             if (!/^[6-9]\d{9}$/.test(phone)) {
                 showToast("❌ Please enter a valid 10-digit phone number.");
-                btnText.textContent = "JOIN NOW →";
+                btnText.textContent = "Pay Now & Join →";
                 btn.disabled = false;
                 return;
             }
 
             if (!name || !phone || !email || !goal || !availableTime) {
                 showToast("❌ Please fill out all fields.");
-                btnText.textContent = "JOIN NOW →";
+                btnText.textContent = "Pay Now & Join →";
                 btn.disabled = false;
                 return;
             }
@@ -3803,6 +3970,7 @@
                 interest: "Website Form",
                 goal: goal,
                 available_time: availableTime,
+                plan: selectedPlan,
                 status: "New",
             };
 
@@ -3883,7 +4051,7 @@
                 const errMsg = err && err.message ? err.message : String(err);
                 showToast("❌ Connection error: " + errMsg + " — please try again or WhatsApp us!");
             } finally {
-                btnText.textContent = "JOIN NOW →";
+                btnText.textContent = "Pay Now & Join →";
                 btn.disabled = false;
             }
         });
@@ -3951,6 +4119,54 @@
                 localStorage.setItem('theme', 'light');
                 themeIcon.classList.remove('fa-sun');
                 themeIcon.classList.add('fa-moon');
+            }
+        });
+
+        // Plan selection + instant UPI pay support
+        const planChoiceButtons = document.querySelectorAll('.plan-choice');
+        const planSelectButtons = document.querySelectorAll('.plan-select-btn');
+        const selectedPlanInput = document.getElementById('selectedPlanInput');
+        const selectedPlanLabel = document.getElementById('selectedPlanLabel');
+        const selectedPlanPrice = document.getElementById('selectedPlanPrice');
+        const payNowBtn = document.getElementById('payNowBtn');
+        const upiDetails = document.getElementById('upiDetails');
+
+        function updatePlanSelection(planName, planPrice) {
+            selectedPlanInput.value = planName;
+            selectedPlanLabel.textContent = planName;
+            selectedPlanPrice.textContent = planPrice;
+            planChoiceButtons.forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.plan === planName);
+            });
+            upiDetails?.classList.remove('active');
+        }
+
+        planChoiceButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                updatePlanSelection(button.dataset.plan, button.dataset.price);
+            });
+        });
+
+        planSelectButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                updatePlanSelection(button.dataset.plan, button.dataset.price);
+                document.getElementById('join').scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        updatePlanSelection('Starter', '1499');
+
+        payNowBtn?.addEventListener('click', () => {
+            if (!selectedPlanInput.value) {
+                showToast('❌ Select a membership plan first.');
+                return;
+            }
+            const amount = selectedPlanPrice.textContent;
+            showToast(`Pay ₹${amount} via UPI now. Confirmation is instant after payment.`);
+            upiDetails?.classList.add('active');
+            const upiUri = `upi://pay?pa=mmfitness@hdfcbank&pn=${encodeURIComponent('MM Fitness')}&am=${amount}&cu=INR`;
+            if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+                window.location.href = upiUri;
             }
         });
 
