@@ -993,7 +993,7 @@
 
         .plans-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(4, 1fr);
             gap: 20px;
             margin-top: 60px;
         }
@@ -3110,9 +3110,10 @@
                 <p class="section-sub" style="max-width: 560px; margin-top: 18px;">Join MM Fitness online with UPI payment. Select a plan, pay through GPay / Paytm / PhonePe, and get instant membership confirmation.</p>
 
                 <div class="plan-selector" role="group" aria-label="Choose membership plan">
-                    <button type="button" class="plan-choice active" data-plan="Starter" data-price="1499">Starter ₹1,499/mo</button>
-                    <button type="button" class="plan-choice" data-plan="Pro" data-price="2799">Pro ₹2,799/mo</button>
-                    <button type="button" class="plan-choice" data-plan="Elite" data-price="4499">Elite ₹4,499/mo</button>
+                    <button type="button" class="plan-choice active" data-plan="1 Month" data-price="1400">1 Month ₹1400</button>
+                    <button type="button" class="plan-choice" data-plan="3 Month" data-price="3899">3 Month ₹3899</button>
+                    <button type="button" class="plan-choice" data-plan="6 Month" data-price="6999">6 Month ₹6999</button>
+                    <button type="button" class="plan-choice" data-plan="12 Month" data-price="11900">12 Month ₹11900</button>
                 </div>
 
                 <div class="payment-panel">
@@ -3127,12 +3128,12 @@
                         <div class="upi-copy">UPI ID: <strong id="upiId">mmfitness@hdfcbank</strong></div>
                         <div class="upi-note">Open your UPI app, send payment to the ID above, then complete your registration in the form.</div>
                     </div>
-                    <div class="selected-plan-summary">Selected: <strong id="selectedPlanLabel">Starter</strong> — ₹<span id="selectedPlanPrice">1499</span>/mo</div>
+                    <div class="selected-plan-summary">Selected: <strong id="selectedPlanLabel">1 Month</strong> — ₹<span id="selectedPlanPrice">1400</span></div>
                 </div>
             </div>
             <div class="reveal">
                 <form class="lead-form" id="leadForm">
-                    <input type="hidden" id="selectedPlanInput" name="plan" value="Starter" />
+                    <input type="hidden" id="selectedPlanInput" name="plan" value="1 Month" />
                     <div class="form-row">
                         <div class="field-group"><label>Full Name</label><input type="text" id="fname" placeholder="Rahul Sharma" required /></div>
                         <div class="field-group"><label>Phone Number</label><input type="tel" id="fphone" placeholder="+91 98765 43210" required /></div>
@@ -3280,46 +3281,60 @@
         <div class="plans-grid">
 
             <div class="plan-card reveal">
-                <div class="plan-name">Starter</div>
+                <div class="plan-name">1 Month</div>
                 <div class="plan-price-wrap">
-                    <div class="plan-price plan-price--single"><sup>₹</sup>1499<span>/mo</span></div>
+                    <div class="plan-price plan-price--single"><sup>₹</sup>1400</div>
                 </div>
-                <p class="plan-desc">Perfect for beginners who want smart training, coach support, and fast results.</p>
+                <p class="plan-desc">Perfect for beginners to kickstart their fitness journey and experience our facilities.</p>
                 <ul class="plan-features">
                     <li>Access to gym floor</li>
                     <li>Weekly coach check-ins</li>
                     <li>UPI payment ready</li>
                 </ul>
-                <button type="button" class="plan-btn plan-select-btn" data-plan="Starter" data-price="1499">Select Starter</button>
+                <button type="button" class="plan-btn plan-select-btn" data-plan="1 Month" data-price="1400">Select 1 Month</button>
             </div>
 
-            <div class="plan-card featured reveal">
-                <div class="plan-badge">Popular</div>
-                <div class="plan-name">Pro</div>
+            <div class="plan-card reveal">
+                <div class="plan-name">3 Month</div>
                 <div class="plan-price-wrap">
-                    <div class="plan-price plan-price--single"><sup>₹</sup>2799<span>/mo</span></div>
+                    <div class="plan-price plan-price--single"><del style="font-size: 0.6em; color: var(--gray-light); margin-right: 8px;">₹4200</del><sup>₹</sup>3899</div>
                 </div>
-                <p class="plan-desc">Ideal for serious trainers who want group classes, progress tracking, and premium support.</p>
+                <p class="plan-desc">Ideal for short-term goals, building consistency, and seeing initial progress.</p>
                 <ul class="plan-features">
                     <li>Group classes included</li>
                     <li>Monthly body analysis</li>
                     <li>Personal coach guidance</li>
                 </ul>
-                <button type="button" class="plan-btn plan-select-btn" data-plan="Pro" data-price="2799">Select Pro</button>
+                <button type="button" class="plan-btn plan-select-btn" data-plan="3 Month" data-price="3899">Select 3 Month</button>
             </div>
 
-            <div class="plan-card reveal">
-                <div class="plan-name">Elite</div>
+            <div class="plan-card featured reveal">
+                <div class="plan-badge">Popular</div>
+                <div class="plan-name">6 Month</div>
                 <div class="plan-price-wrap">
-                    <div class="plan-price plan-price--single"><sup>₹</sup>4499<span>/mo</span></div>
+                    <div class="plan-price plan-price--single"><del style="font-size: 0.6em; color: var(--gray-light); margin-right: 8px;">₹8400</del><sup>₹</sup>6999</div>
                 </div>
-                <p class="plan-desc">For high-performance members who want dedicated coaching, advanced tracking, and VIP access.</p>
+                <p class="plan-desc">Best value for dedicated individuals seeking real results and lasting lifestyle changes.</p>
                 <ul class="plan-features">
                     <li>Dedicated trainer support</li>
                     <li>Priority class slots</li>
                     <li>Nutrition & recovery guidance</li>
                 </ul>
-                <button type="button" class="plan-btn plan-select-btn" data-plan="Elite" data-price="4499">Select Elite</button>
+                <button type="button" class="plan-btn plan-select-btn" data-plan="6 Month" data-price="6999">Select 6 Month</button>
+            </div>
+
+            <div class="plan-card reveal">
+                <div class="plan-name">12 Month</div>
+                <div class="plan-price-wrap">
+                    <div class="plan-price plan-price--single"><del style="font-size: 0.6em; color: var(--gray-light); margin-right: 8px;">₹16800</del><sup>₹</sup>11900</div>
+                </div>
+                <p class="plan-desc">Ultimate commitment to your long-term health and wellness with VIP perks.</p>
+                <ul class="plan-features">
+                    <li>VIP access to all areas</li>
+                    <li>Advanced tracking</li>
+                    <li>Free guest passes</li>
+                </ul>
+                <button type="button" class="plan-btn plan-select-btn" data-plan="12 Month" data-price="11900">Select 12 Month</button>
             </div>
 
         </div>
@@ -4154,7 +4169,7 @@
             });
         });
 
-        updatePlanSelection('Starter', '1499');
+        updatePlanSelection('1 Month', '1400');
 
         payNowBtn?.addEventListener('click', () => {
             if (!selectedPlanInput.value) {
