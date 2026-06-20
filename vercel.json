@@ -6,10 +6,6 @@
       "use": "@vercel/static"
     },
     {
-      "src": "admin.html",
-      "use": "@vercel/static"
-    },
-    {
       "src": "*.jpg",
       "use": "@vercel/static"
     },
